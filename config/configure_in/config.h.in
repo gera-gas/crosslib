@@ -1,0 +1,19 @@
+#ifndef _CONFIG_H
+#define _CONFIG_H
+/**
+ *  @file    config.h
+ *  @brief   Configuration build file.
+ *  @author  Gerasimov A.S.
+ *  @date    2013-03-12 23:44:35 +0400
+ */
+
+/**
+ * Defined to control 'assert' macros.
+ * 
+ * 1 - kick all 'assert' macros from source code.
+ * 2 - add simple 'assert' macros with halt only (recommended for raw system).
+ * 3 - add 'assert' macros with output to STDOUT by fprintf.
+ */
+#cmakedefine CFG_ASSERTION @CFG_ASSERTION@
+
+#endif  /*  _CONFIG_H  */
