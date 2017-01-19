@@ -4,7 +4,7 @@
  *  @author   Gerasimov A.S.
  *  @date     07.04.2012
  */
-#include "memory.h"
+#include <stddef.h>
  
 
 /**
@@ -18,7 +18,7 @@
  *  @return
  *  Point to destination address (dst).
  */
-void* memcpy ( void *dst, const void *src, unsigned int size )
+void* memcpy ( void *dst, const void *src, size_t size )
 {
 	      register char *s1 = (char *)dst;
 	register const char *s2 = (const char *)src;

@@ -5,8 +5,8 @@ set( PROJECT_OUT       ${CMAKE_CURRENT_BINARY_DIR} )
 set( PROJECT_INSTALL   ${CMAKE_CURRENT_BINARY_DIR}/export )
 set( PROJECT_GENERATED ${CMAKE_CURRENT_SOURCE_DIR}/common/generated )
 
-#add_subdirectory( common/global )
 add_subdirectory( app/libc )
+add_subdirectory( app/gcclib )
 
 ################################################################################
 # CONFIGURE
@@ -16,14 +16,14 @@ add_subdirectory( app/libc )
 #
 # Defined to control 'assert' macros.
 #
-# 1 - kick all 'assert' macros from source code.
-# 2 - add simple 'assert' macros with halt only (recommended for raw system).
-# 3 - add 'assert' macros with output to STDOUT by fprintf.
+# 0 - kick all 'assert' macros from source code.
+# 1 - add simple 'assert' macros with halt only (recommended for raw system).
+# 2 - add 'assert' macros with output to STDOUT by fprintf.
 #
-if( ${ASSERT} MATCHES "[123]" )
+if( ${ASSERT} MATCHES "[012]" )
     set( CFG_ASSERTION ${ASSERT} )
 else()
-    set( CFG_ASSERTION "1" )
+    set( CFG_ASSERTION "0" )
 endif()
 
 # -DCTYPE_1BYTE=<C-type name>

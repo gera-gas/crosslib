@@ -1,4 +1,4 @@
-set( APP_NAME c ) 
+set( APP_NAME gcc ) 
 
 project( ${APP_NAME} )
 
@@ -11,10 +11,11 @@ file( GLOB_RECURSE HEADERS ${SRC_PATH}/*.h )
 # Add include directory.
 include_directories( ${SRC_PATH}/src
                      ${PROJECT_GENERATED}
-                     ${PROJECT_ROOT}/common/include )
+                     ${PROJECT_ROOT}/common/include
+                     ${PROJECT_ROOT}/app/libc/src )
 
 # Set build flags.
-set( CMAKE_C_FLAGS "-O2 -g -fno-builtin-strlen -fno-builtin-strchr -fno-builtin-strrchr -fno-builtin-pow -fno-builtin-free -fno-builtin-malloc -fno-builtin-calloc -fno-builtin-memset -fno-builtin-memcpy -fno-builtin-memmove -fno-builtin-memcmp" )
+set( CMAKE_C_FLAGS "-O2 -g" ${GLOBAL_C_FLAG} )
 
 # Build static library.
 add_library( ${APP_NAME} STATIC ${SOURCES} )

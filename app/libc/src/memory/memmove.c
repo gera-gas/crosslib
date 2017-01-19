@@ -4,7 +4,7 @@
  *  @author   Gerasimov A.S.
  *  @date     07.04.2012
  */
-#include "memory.h"
+#include <stddef.h>
 
 
 /**
@@ -18,7 +18,7 @@
  *  @return
  *  Point to destination address (dst).
  */
-void* memmove ( void *pdst, const void *psrc, unsigned int size )
+void* memmove ( void *pdst, const void *psrc, size_t size )
 {
 	      register char *s1 = (char *)pdst;
 	register const char *s2 = (const char *)psrc;

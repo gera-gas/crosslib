@@ -4,7 +4,7 @@
  *  @author   Gerasimov A.S.
  *  @date     07.04.2012
  */
-#include "memory.h"
+#include <stddef.h>
 
 
 /**
@@ -19,7 +19,7 @@
  *  @retval =0 : m1 = m2.
  *  @retval >0 : m1 > m2.
  */
-int memcmp ( const void *s1, const void *s2, unsigned int size )
+int memcmp ( const void *s1, const void *s2, size_t size )
 {
 	register unsigned char  *m1 = (unsigned char *)s1;
 	register unsigned char  *m2 = (unsigned char *)s2;

@@ -1,5 +1,5 @@
-#ifndef _CC_CPP_H
-#define _CC_CPP_H
+#ifndef CC_CPP_H_
+#define CC_CPP_H_
 /**
  *  @file     cc_cpp.h
  *  @brief    GCC C\C++ macros.
@@ -94,16 +94,7 @@
  *  веро€тно. ѕри таком способе код оптимизируетс€ дл€ наиболее веро€тного варианта.
  */
 
-/**
- *  ќрганизаци€ линейного кода дл€
- *  наибoлее веро€тной ветки
- */
 #define LIKELY( x )    __builtin_expect(!!(x), 1)
-
-/**
- *  ќрганизаци€ линейного кода дл€
- *  наименее веро€тной ветки
- */
 #define UNLIKELY( x )  __builtin_expect(!!(x), 0)
 
 
@@ -138,4 +129,4 @@
 } while (0)
 
 #endif  /*  __ASM__  */
-#endif  /*  _CC_CPP_H  */
+#endif  /*  CC_CPP_H_  */

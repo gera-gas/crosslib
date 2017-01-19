@@ -4,7 +4,7 @@
  *  @author   Gerasimov A.S.
  *  @date     07.04.2012
  */
-#include "memory.h"
+#include <stddef.h>
 
 
 /**
@@ -18,7 +18,7 @@
  *  @return
  *  Point to base memory address.
  */
-void* memset ( void *s, int c, unsigned int n )
+void* memset ( void *s, int c, size_t n )
 {
 	register unsigned char *m = (unsigned char *)s;
 

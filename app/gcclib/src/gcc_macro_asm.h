@@ -1,5 +1,5 @@
-#ifndef _CC_ASM_H
-#define _CC_ASM_H
+#ifndef CC_ASM_H_
+#define CC_ASM_H_
 /**
  *  @file     cc_asm.h
  *  @brief    GCC assembler macros.
@@ -110,4 +110,4 @@
 	.endr
  
 #endif  /*  __ASM__  */
-#endif  /*  _CC_ASM_H  */
+#endif  /*  CC_ASM_H_  */

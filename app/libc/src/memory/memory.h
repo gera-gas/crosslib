@@ -1,5 +1,5 @@
-#ifndef _MEMORY_H
-#define _MEMORY_H
+#ifndef MEMORY_H_
+#define MEMORY_H_
 /**
  *  @file    memory.h
  *  @brief   Standard memory LIBC functions.
@@ -10,13 +10,13 @@
 extern "C" {
 #endif
 
-void* memset  ( void *, int,   unsigned int );
-void* memcpy  ( void *, const void *, unsigned int );
-void* memmove ( void *, const void *, unsigned int );
-  int memcmp  ( const void *, const void *, unsigned int );
+void* memset  ( void *, int,   size_t );
+void* memcpy  ( void *, const void *, size_t );
+void* memmove ( void *, const void *, size_t );
+  int memcmp  ( const void *, const void *, size_t );
 
 #ifdef  __cplusplus
 }
 #endif
 
-#endif  /*  _MEMORY_H  */
+#endif  /*  MEMORY_H_  */
