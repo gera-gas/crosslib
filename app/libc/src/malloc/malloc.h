@@ -41,7 +41,7 @@ typedef struct {
 extern "C" {
 #endif
 
- void  heap_init    ( void *, void * );
+ void  heap_init    ( const void *, const void * );
 void*  memmap_block ( memmap_t *, size_t, unsigned int );
 void*  map_alloc    ( memmap_t *, size_t, unsigned int );
 void*  malloc       ( size_t );

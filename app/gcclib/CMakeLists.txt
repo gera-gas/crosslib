@@ -15,7 +15,7 @@ include_directories( ${SRC_PATH}/src
                      ${PROJECT_ROOT}/app/libc/src )
 
 # Set build flags.
-set( CMAKE_C_FLAGS "-O2 -g" ${GLOBAL_C_FLAG} )
+set( CMAKE_C_FLAGS "-O2 -g" )
 
 # Build static library.
 add_library( ${APP_NAME} STATIC ${SOURCES} )

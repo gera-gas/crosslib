@@ -10,11 +10,11 @@
 
 
 /**
- *  @brief  Macros to defenition for assembler macros.
- *  @param  name : [in] name of defenition macros.
+ *  @brief  Macros to definition for assembler macros.
+ *  @param  name : [in] name of definition macros.
  *  @param  ...  : [in] arguments of macros.
- *  @note   Pair macroses, BEGINM - start defenition,
- *          ENDM - end defenition.
+ *  @note   Pair macroses, BEGINM - start definition,
+ *          ENDM - end definition.
  */
 #define BEGINM( name, ... )\
 	.macro name __VA_ARGS__
@@ -24,7 +24,7 @@
 
 
 /**
- *  @brief  Macros to defenition global symbols.
+ *  @brief  Macros to definition global symbols.
  *  @param  mark : [in] name of mark.
  */
 #define GLOBAL( mark )\
@@ -32,7 +32,7 @@
 	mark:
 
 /**
- *  @brief  Macros to defenition local symbols.
+ *  @brief  Macros to definition local symbols.
  *  @param  mark : [in] name of mark.
  */
 #define LOCAL( mark )\
@@ -72,10 +72,10 @@
 
 
 /**
- *  @brief  Macros to defenition for assembler function name.
+ *  @brief  Macros to definition for assembler function name.
  *  @param  name : [in] name function.
- *  @note   Pair macroses, BEGINF - start defenition,
- *          ENDF - end defenition.
+ *  @note   Pair macroses, BEGINF - start definition,
+ *          ENDF - end definition.
  */
 #define BEGINF( name )\
 	_BEGINF  name

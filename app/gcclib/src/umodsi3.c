@@ -14,8 +14,7 @@
  *  @param  divider  : [in] divider.
  *
  *  @return
- *  Return 
- *  Возвращает mod of devide (dividend/divider).
+ *  Return mod of devide (dividend/divider).
  */
 uint32 __umodsi3 ( uint32 dividend, uint32 divider )
 {

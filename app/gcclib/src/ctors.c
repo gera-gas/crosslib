@@ -3,6 +3,15 @@
  *  @brief    Constructor organization for C++.
  *  @author   Gerasimov A.S.
  *  @date     2013-07-31 13:49:11 +0400
+ *
+ *  @details
+ *  Example rules for linker script.
+ *
+ *  .ctors : {
+ *    KEEP( *(.ctors.begin) )
+ *    KEEP( *(.ctors) )
+ *    KEEP( *(.ctors.end) )
+ *  } > <Your memory region>
  */
 #include "typedef.h"
 

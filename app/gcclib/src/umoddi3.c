@@ -16,8 +16,7 @@
  *  @param  B : [in] divider.
  *
  *  @return
- *  Return 
- *  Возвращает mod of devide (dividend/divider).
+ *  Return mod of devide (dividend/divider).
  */
 uint64 __umoddi3 ( uint64 A, uint64 B )
 {
@@ -49,5 +48,5 @@ uint64 __umoddi3 ( uint64 A, uint64 B )
 	dividend[0] = remainder[0]; remainder[0] = remainder[3]; remainder[3] = dividend[0];
 	dividend[0] = remainder[1]; remainder[1] = remainder[2]; remainder[2] = dividend[0];
 
-	return *(unsigned long long *)remainder;
+	return *(uint64 *)remainder;
 }

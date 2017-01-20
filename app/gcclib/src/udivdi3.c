@@ -1,7 +1,7 @@
 /**
  *  @file     udivdi3.c
  *  @brief    64 bit software devide.
- *  @author   Пурыкин С.
+ *  @author   Purykin S.
  *  @date     2013-07-19 09:07:22 +0400
  */
 #include "typedef.h"
@@ -49,5 +49,5 @@ uint64 __udivdi3 ( uint64 A, uint64 B )
 	dividend[0] = quotient[0]; quotient[0] = quotient[3]; quotient[3] = dividend[0];
 	dividend[0] = quotient[1]; quotient[1] = quotient[2]; quotient[2] = dividend[0];
 
-	return *(unsigned long long *)quotient;
+	return *(uint64 *)quotient;
 }

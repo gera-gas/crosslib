@@ -1,7 +1,7 @@
 /**
  *  @file    malloc.c
- *  @brief   Функции динамического выделения памяти.
- *  @author  Герасимов А.С., Судак И.
+ *  @brief   Functions dynamic memory allocation.
+ *  @author  Gerasimov A.S., Sudak I.
  *  @date    2013-04-12 14:45:55 +0400
  */
 #include <stddef.h>

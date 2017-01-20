@@ -14,7 +14,7 @@
  *  @param  b [in] : multiplier 'b'.
  *
  *  @return
- *  Return resutl of mull.
+ *  Return result of mull.
  */
 uint32 __mulsi3 ( uint32 a, uint32 b )
 {

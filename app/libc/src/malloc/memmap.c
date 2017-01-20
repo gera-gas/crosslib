@@ -1,7 +1,7 @@
 /**
  *  @file    memmap.c
- *  @brief   Функции динамического распределения памяти.
- *  @author  Герасимов А.С.
+ *  @brief   Functions dynamic memory allocation.
+ *  @author  Gerasimov A.S., Sudak I.
  *  @date    2013-04-12 14:45:55 +0400
  */
 #include <stddef.h>

@@ -1,7 +1,7 @@
 /**
  *  @file    heap.c
- *  @brief   Функции динамического распределения памяти.
- *  @author  Герасимов А.С.
+ *  @brief   Functions dynamic memory allocation.
+ *  @author  Gerasimov A.S.
  *  @date    2012.09.24 00:00:09 +0400
  */
 #include <stddef.h>
@@ -11,13 +11,12 @@ memmap_t heap_map = { 0 };
 
 /**
  *  @brief
- *  Функция инициализации кучи, т.е. выделяет под кучу указанное
- *  в параметрах адресное пространство.
+ *  Set memory region as heap, to use for memory allocation.
  *
- *  @param  start : [in] начальный адрес памяти.
- *  @param  end   : [in] конечный адрес памяти.
+ *  @param  start : [in] memory address of begin region.
+ *  @param  end   : [in] memory address of end region.
  */
-void heap_init ( void *start, void *end )
+void heap_init ( const void *start, const void *end )
 {
 	heap_map.cachelist = 0;
 	heap_map.start     = start;
@@ -28,7 +27,12 @@ void heap_init ( void *start, void *end )
 
 /**
  *  @brief
- *  Выделение блока памяти в куче.
+ *  Allocate memory area from heap.
+ *
+ *  @param size : [in] size memory area.
+ *
+ *  @retval >0 : [success] base address of allocated memory.
+ *  @retval =0 : [failed] bad allocate.
  */
 void* malloc ( size_t size )
 {
@@ -38,8 +42,16 @@ void* malloc ( size_t size )
 
 /**
  *  @brief
- *  Выделение блока памяти в куче с
- *  предварительной очичткой блока (чистое выделение).
+ *  Clear allocate memory area from heap.
+ *
+ *  @param num  : [in] block numbers.
+ *  @param size : [in] block size.
+ *
+ *  @retval >0 : [success] base address of allocated memory.
+ *  @retval =0 : [failed] bad allocate.
+ *
+ *  @example
+ *  int *mem = (int *)calloc( 10, sizeof(int) );
  */
 void* calloc ( size_t num, size_t size )
 {
