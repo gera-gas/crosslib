@@ -17,7 +17,7 @@
 #include <stdbool.h>
 #include "typedef.h"
 #include "memory/memory.h"
-#include "md5.h"
+#include "crypto/md5.h"
 
 #define S11 7
 #define S12 12

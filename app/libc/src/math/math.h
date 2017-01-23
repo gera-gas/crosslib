@@ -6,7 +6,7 @@
  *  @author  Gerasimov A.S.
  *  @date    2013-03-12 23:44:35 +0400
  */
-#define RANDOM_MAX  (ulong(-1))
+#define RANDOM_MAX  ((unsigned int)(-1))
 
 /**
  *  Generate pseudo random number in range ( rand( ) >= min && rand() =< max ).
