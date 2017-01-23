@@ -1,7 +1,7 @@
 #ifndef PSEUDO_THREAD_H_
 #define PSEUDO_THREAD_H_
 /**
- *  @file     smm.h
+ *  @file     pseudo_thread.h
  *  @brief    Pseudo thread export mechanism.
  *  @author   Gerasimov A.S.
  *  @date     2014-09-08 10:54:18
@@ -23,7 +23,7 @@ typedef enum {
  * @struct  pt_t
  * @brief   Structure with main contex of PT process.
  */
-typedef struct {
+typedef struct pt_st {
         char  *name;
         uint   stepmode;
         uint   numb;
@@ -70,7 +70,7 @@ typedef struct {
 extern "C" {
 #endif
 
-pt_result_t pt_start ( pt_t *smm, const void *argin, void *argout );
+pt_result_t pt_start ( pt_t *pt, const void *argin, void *argout );
 
 #ifdef __cplusplus
 }

@@ -9,12 +9,12 @@ set( SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src )
 include_directories( ${SRC_PATH}
                      ${PROJECT_GENERATED}
                      ${PROJECT_ROOT}/common/include
-                     ${PROJECT_ROOT}/app/libgcc/src
+                     ${PROJECT_ROOT}/app/gcclib/src
                      ${PROJECT_ROOT}/app/libc/src
-                     ${PROJECT_ROOT}/app/libsys/src )
+                     ${PROJECT_ROOT}/app/syslib/src )
 
 # Set build flags.
-set( CMAKE_C_FLAGS "-O2 -g" )
+set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -g" )
 
 # Set path to libraries search.
 link_directories( ${PROJECT_OUT}/app/syslib )
