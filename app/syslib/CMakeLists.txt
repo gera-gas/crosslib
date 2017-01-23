@@ -1,4 +1,4 @@
-set( APP_NAME gcc ) 
+set( APP_NAME sys ) 
 
 project( ${APP_NAME} )
 
@@ -15,7 +15,7 @@ include_directories( ${SRC_PATH}
                      ${PROJECT_ROOT}/app/libc/src )
 
 # Set build flags.
-set( CMAKE_C_FLAGS "-O2 -g -fno-builtin-pow" )
+set( CMAKE_C_FLAGS "-O2 -g" )
 
 # Build static library.
 add_library( ${APP_NAME} STATIC ${SOURCES} )

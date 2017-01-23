@@ -5,8 +5,9 @@
  *  @date    2013-04-12 14:45:55 +0400
  */
 #include <stddef.h>
-#include "math.h"
-#include "malloc.h"
+#include "typedef.h"
+#include "math/math.h"
+#include "malloc/malloc.h"
 
 
 /**

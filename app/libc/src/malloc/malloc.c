@@ -6,8 +6,8 @@
  */
 #include <stddef.h>
 #include "typedef.h"
-#include "math.h"
-#include "malloc.h"
+#include "math/math.h"
+#include "malloc/malloc.h"
 
 
 /**
@@ -22,7 +22,7 @@ struct __memcache* __get_cache ( memmap_t *mmap, size_t size, uint align )
 
 
 	cache_bfit = (struct __memcache *)0;
-	cache_size = (ulong)(-1);
+	cache_size = (size_t)(-1);
 	/* 
 	 *  »щем среди существующих кэшей по принципу
 	 *  первого идентичного и параллельно подбираем

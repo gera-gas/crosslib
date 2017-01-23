@@ -5,6 +5,7 @@
  *  @date    2013-03-24 14:11:13 +0400
  */
 #include "typedef.h"
+#include "gcc.h"
 
 /**
  *  @brief

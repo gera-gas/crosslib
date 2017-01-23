@@ -5,7 +5,8 @@
  *  @date    2012.09.24 00:00:09 +0400
  */
 #include <stddef.h>
-#include "malloc.h"
+#include "memory/memory.h"
+#include "malloc/malloc.h"
 
 memmap_t heap_map = { 0 };
 
@@ -19,9 +20,9 @@ memmap_t heap_map = { 0 };
 void heap_init ( const void *start, const void *end )
 {
 	heap_map.cachelist = 0;
-	heap_map.start     = start;
-	heap_map.ptr       = start;
-	heap_map.end       = end;
+	heap_map.start     = (void *)start;
+	heap_map.ptr       = (void *)start;
+	heap_map.end       = (void *)end;
 }
 
 

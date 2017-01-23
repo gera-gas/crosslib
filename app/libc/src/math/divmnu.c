@@ -6,8 +6,8 @@
  */
 #include <stddef.h>
 #include "typedef.h"
-#include "malloc.h"
-#include "math.h"
+#include "malloc/malloc.h"
+#include "math/math.h"
 
 
 /**
@@ -33,7 +33,7 @@ int divmnu ( unsigned short q[], unsigned short r[],
        const unsigned short v[],
              int m, int n )
 {
-    const unsigned b = 65536;   		/* Основание чисел (16 битов)	 */
+    const uint32_t b = 65536;	            /* Основание чисел (16 битов)	 */
     unsigned short *un, *vn;   	 		/* Нормализованный вид u и v	 */
     unsigned qhat;              		/* Предполагаемая цифра частного */
     unsigned rhat;              		/* Остаток			 */

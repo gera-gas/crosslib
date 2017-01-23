@@ -5,7 +5,7 @@
  *  @date     2013-07-19 09:07:22 +0400
  */
 #include "typedef.h"
-#include "math.h"
+#include "math/math.h"
 
 
 /**

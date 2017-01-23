@@ -7,6 +7,8 @@
  *  @date     2013-06-22 16:29:26 +0400
  *  @note     Change this type defines in CMake, special for you target.
  */
+#include <stdint.h>
+
 #define IN
 #define OUT
 #define nil  0
@@ -19,22 +21,18 @@
 #define NULL ((void *)nil)
 #endif
 
-#cmakedefine CTYPE_1BYTE @CTYPE_1BYTE@
-#cmakedefine CTYPE_2BYTE @CTYPE_2BYTE@
-#cmakedefine CTYPE_4BYTE @CTYPE_4BYTE@
-#cmakedefine CTYPE_8BYTE @CTYPE_8BYTE@
-
-typedef  signed CTYPE_1BYTE    int8;
-typedef  unsigned CTYPE_1BYTE  uint8;
-typedef  signed CTYPE_2BYTE    int16;
-typedef  unsigned CTYPE_2BYTE  uint16;
-typedef  signed CTYPE_4BYTE    int32;
-typedef  unsigned CTYPE_4BYTE  uint32;
-typedef  signed CTYPE_8BYTE    int64;
-typedef  unsigned CTYPE_8BYTE  uint64;
+#cmakedefine int8   @int8@
+#cmakedefine uint8  @uint8@
+#cmakedefine int16  @int16@
+#cmakedefine uint16 @uint16@
+#cmakedefine int32  @int32@
+#cmakedefine uint32 @uint32@
+#cmakedefine int64  @int64@
+#cmakedefine uint64 @uint64@
 
 typedef unsigned char   uchar;
 #ifndef _LINUX_TYPES_H
+typedef unsigned char   unchar;
 typedef unsigned short  ushort;
 typedef unsigned int    uint;
 typedef unsigned long   ulong;

@@ -9,13 +9,17 @@
 #define RANDOM_MAX  (ulong(-1))
 
 /**
- * Generate pseudo random number in range ( rand( ) >= min && rand() =< max ).
+ *  Generate pseudo random number in range ( rand( ) >= min && rand() =< max ).
  */
 #define random( _min, _max )\
 	( ( rand() % (((ulong)(_max)) - ((ulong)(_min))) ) + ((ulong)(_min)) )
 
 /**
+ *  @brief
  *  Calculate percent (half) "p" of "n" (amount).
+ *
+ *  @example
+ *  PERCENT( 4, 12 ); //return value 30 %
  */
 #define PERCENT( p, n )\
 	( ((p) * 100) / (n) )
@@ -82,7 +86,7 @@ ulong  pow      ( ulong, ulong );
 ulong  align_lo ( ulong, ulong );
 ulong  align_hi ( ulong, ulong );
 ulong  rand     ( void );
-uint32 clz32    ( uint32 );
+   int clz      ( uint32 );
 
    int divmnu ( unsigned short q[], unsigned short r[],
           const unsigned short u[],

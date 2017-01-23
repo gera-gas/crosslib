@@ -7,10 +7,19 @@ set( PROJECT_GENERATED ${CMAKE_CURRENT_SOURCE_DIR}/common/generated )
 
 add_subdirectory( app/libc )
 add_subdirectory( app/gcclib )
+add_subdirectory( app/syslib )
 
 ################################################################################
 # CONFIGURE
 ################################################################################
+
+#
+# -DBUILD_DEMO
+# 
+# Build demo executables.
+if( DEFINED BUILD_DEMO )
+    add_subdirectory( app/demo )
+endif()
 
 # -DASSERT=[0,1,2]
 #
@@ -26,34 +35,54 @@ else()
     set( CFG_ASSERTION "0" )
 endif()
 
-# -DCTYPE_1BYTE=<C-type name>
-# -DCTYPE_2BYTE=<C-type name>
-# -DCTYPE_4BYTE=<C-type name>
-# -DCTYPE_8BYTE=<C-type name>
+# -Dint8=<C-type name>
+# -Duint8=<C-type name>
+# -Dint16=<C-type name>
+# -Duint16=<C-type name>
+# -Dint32=<C-type name>
+# -Duint32=<C-type name>
+# -Dint64=<C-type name>
+# -Duint64=<C-type name>
 #
 # Alias indicated C type with bitness 'typedef' types.
 #
 # Default:
 #
-# -DCTYPE_1BYTE=char
-# -DCTYPE_2BYTE=short
-# -DCTYPE_4BYTE=int
-# -DCTYPE_8BYTE=long long
+# -Dint8=int8_t
+# -Duint8=uint8_t
+# -Dint16=int16_t
+# -Duint16=uint16_t
+# -Dint32=int32_t
+# -Duint32=uint32_t
+# -Dint64=int64_t
+# -Duint64=uint64_t
 #
-if( NOT DEFINED CTYPE_1BYTE )
-    set( CTYPE_1BYTE "char" )
+if( NOT DEFINED int8 )
+    set( int8 "int8_t" )
+endif()
+if( NOT DEFINED uint8 )
+    set( uint8 "uint8_t" )
 endif()
 
-if( NOT DEFINED CTYPE_2BYTE )
-    set( CTYPE_2BYTE "short" )
+if( NOT DEFINED int16 )
+    set( int16 "int16_t" )
+endif()
+if( NOT DEFINED uint16 )
+    set( uint16 "uint16_t" )
 endif()
 
-if( NOT DEFINED CTYPE_4BYTE )
-    set( CTYPE_4BYTE "int" )
+if( NOT DEFINED int32 )
+    set( int32 "int32_t" )
+endif()
+if( NOT DEFINED uint32 )
+    set( uint32 "uint32_t" )
 endif()
 
-if( NOT DEFINED CTYPE_8BYTE )
-    set( CTYPE_8BYTE "long long" )
+if( NOT DEFINED int64 )
+    set( int64 "int64_t" )
+endif()
+if( NOT DEFINED uint64 )
+    set( uint64 "uint64_t" )
 endif()
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/config.h.in ${PROJECT_GENERATED}/config.h @ONLY)

@@ -31,9 +31,9 @@ struct __memobject {
 typedef struct {
 	struct __memcache *cachelist;
 
-	void    *start;
-	void    *ptr;
-	void    *end;
+	void  *start;
+	void  *ptr;
+	void  *end;
 
 } memmap_t;
 

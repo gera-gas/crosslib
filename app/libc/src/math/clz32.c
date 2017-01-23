@@ -16,7 +16,7 @@
  *          most significant bit. The result in rD is 32 when rA is 0, and it is 0 if
  *          rA is 0xFFFFFFFF.
  */
-uint32 clz32 ( uint32 value )
+int clz ( uint32 value )
 {
 	register uint32  i;
 

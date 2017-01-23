@@ -5,7 +5,7 @@
  *  @date     28.07.2012
  */
 #include <stddef.h>
-
+#include "string/string.h"
 
 /**
  *  @brief
