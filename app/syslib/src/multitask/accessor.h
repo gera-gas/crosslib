@@ -6,6 +6,7 @@
  *  @author  Gerasimov A.S.
  *  @date    2014-09-08 10:54:18
  */
+#include <stdbool.h>
 #include "typedef.h"
 
 /**
@@ -18,11 +19,43 @@ typedef struct critical_section_st {
     fptr_t leave;
 } critical_section_t;
 
-typedef struct PresetLock__st {
-    uint8 i;
-    fptr_t leave;
-} preset_lock_t;
-
+/**
+ * @brief
+ * Type with create fixing limit synchronize object.
+ *
+ * @details
+ * This is simple and fast mechanism to synchronize access
+ * to shared resource. May be used for multi thread control
+ * and CPU interaction through shared memory.
+ * 
+ * @example
+ *
+ * FIXLOCK_CREATE( exlock, 2 );
+ *
+ * #define FXLOCK_ID_FOO 0x0
+ * #define FXLOCK_ID_BAR 0x1
+ *
+ * void foo_thread ( void )
+ * {
+ *     if( fixlock_try(&exlock, FXLOCK_ID_FOO) ) {
+ *         //TODO: your code
+ *         fixlock_free( &exlock );
+ *     }
+ * }
+ *
+ * void bar_thread ( void )
+ * {
+ *     if( fixlock_try(&exlock, FXLOCK_ID_BAR) ) {
+ *         //TODO: your code
+ *         fixlock_free( &exlock );
+ *     }
+ * }
+ */
+typedef struct fixlock_st {
+     uint state;
+     uint maxpos;
+    uint8 data[0];
+} fixlock_t;
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,7 +64,7 @@ extern "C" {
 extern critical_section_t critical_section;
 
 #ifdef __cplusplus
-extern "C" {
+}
 #endif
 
 /**
@@ -42,5 +75,39 @@ extern "C" {
 	__VA_ARGS__;\
 	critical_section.leave( );\
 } while( 0 )
+
+/**
+ * @def   FIXLOCK_CREATE
+ * @brief Create fixlock object.
+ *
+ * @param name   : name of fixlock object.
+ * @param maxpos : maximal clients number for this object.
+ */
+#define FIXLOCK_CREATE( name, maxpos )  fixlock_t name = { 0, maxpos }
+
+/**
+ * @def   FIXLOCK_TRY
+ * @brief Try catch of fixlock object by ID.
+ *
+ * @param fixlock : [in] fixlock object address.
+ * @param id      : [in] preset procedure ID.
+ *
+ * @retval true  : success catch.
+ * @retval false : failed catch.
+ */
+#define FIXLOCK_TRY( fixlock, id )  ((fixlock)->state == id ? true : false)
+
+/**
+ * @def   FIXLOCK_FREE
+ * @brief Free fixlock object for next owner.
+ *
+ * @param fixlock : [in] fixlock object address.
+ */
+#define FIXLOCK_FREE( fixlock ) do {\
+	(fixlock)->state++;\
+	if( (fixlock)->state >= (fixlock)->maxpos ) {\
+		(fixlock)->state = 0;\
+	}\
+} while( 0 );
 
 #endif  /*  ACCESSOR_H_  */
