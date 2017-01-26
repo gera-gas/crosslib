@@ -2,7 +2,7 @@
 #define _MD5_H
 /**
  *  @file     md5.h
- *  @brief    MD5 hash algorythm implementaion.
+ *  @brief    MD5 hash algorithm implementaion.
  *  @author   Gerasimov A.S.
  *  @date     2015-11-06 13:39:51 +0400
  */

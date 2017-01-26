@@ -8,7 +8,7 @@
 #include <stddef.h>
 
 #include "typedef.h"
-#include "multitask/pseudo_thread.h"
+#include "multitask/thread.h"
 
 PT_STATE( state_0 )
 {
