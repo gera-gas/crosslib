@@ -146,7 +146,7 @@
  */
 #define CALC_BITS32( v32 )\
 ({\
-	unsigned long  ret;\
+	uint32 ret;\
 	\
 	ret = (v32);\
 	/* посчет кол-ва единичных бит */\
