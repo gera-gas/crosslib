@@ -89,7 +89,7 @@ endif()
 #
 # -DNOSTDINC_STDINT_H
 # 
-# Kick std include header file - stdint.h.
+# Kick standard include header file - stdint.h.
 # Should be set in top project by add_definitions( -DNOSTDINC_STDINT_H )
 #
 

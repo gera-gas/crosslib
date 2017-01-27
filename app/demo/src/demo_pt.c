@@ -1,7 +1,7 @@
 /**
  * @file   main.c
  * @author Gerasimov A.S.
- * @brief  Using examples of library.
+ * @brief  Example of PT (pseudo thread) mechanism.
  */
 #include <stdbool.h>
 #include <stddef.h>

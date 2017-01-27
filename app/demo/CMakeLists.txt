@@ -20,5 +20,8 @@ set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2 -g" )
 link_directories( ${PROJECT_OUT}/app/syslib )
 
 # Build executable.
-add_executable( ${APP_NAME}_multitask ${SRC_PATH}/demo_multitask.c )
-target_link_libraries( ${APP_NAME}_multitask libsys.a )
+add_executable( ${APP_NAME}_pt ${SRC_PATH}/demo_pt.c )
+target_link_libraries( ${APP_NAME}_pt libsys.a )
+
+add_executable( ${APP_NAME}_fixlock ${SRC_PATH}/demo_fixlock.c )
+target_link_libraries( ${APP_NAME}_fixlock libsys.a )
