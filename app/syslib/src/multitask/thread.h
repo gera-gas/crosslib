@@ -10,8 +10,8 @@
 #include <stdbool.h>
 #include "typedef.h"
 
-typedef uint ( *ptfunc_t )( const void *, void * );
-typedef uint ptlock_t;
+typedef size_t ( *ptfunc_t )( const void *, void * );
+typedef size_t ptlock_t;
 
 /**
  * @enum   pt_result_t
@@ -47,11 +47,11 @@ typedef struct pt_st {
 /*
  * Possible values returned by state function.
  */
-#define PT_HOLD      (uint)(0)               /** Hold in current state.       */
-#define PT_NEXT      (uint)(1)               /** Go to next state of process. */
-#define PT_BACK      (uint)(-1)              /** Back to previous state.      */
-#define PT_JUMP( i ) (uint)(i)               /** Jump to any state.           */
-#define PT_RESET     (uint)((uint)(-1) / 2)  /** Complete process forcibly.   */
+#define PT_HOLD      (size_t)(0)               /** Hold in current state.       */
+#define PT_NEXT      (size_t)(1)               /** Go to next state of process. */
+#define PT_BACK      (size_t)(-1)              /** Back to previous state.      */
+#define PT_JUMP( i ) (size_t)(i)               /** Jump to any state.           */
+#define PT_RESET     (size_t)((size_t)(-1) / 2)  /** Complete process forcibly.   */
 
 /**
  *  @def    PT_STATE
@@ -59,7 +59,7 @@ typedef struct pt_st {
  *  @param  n : function name.
  */
 #define PT_STATE( name )\
-	uint name ( const void *argin, void *argout )
+	size_t name ( const void *argin, void *argout )
 
 /**
  *  @def    PT_CREATE
@@ -90,7 +90,7 @@ pt_result_t pt_start  ( pt_t *pt, const void *argin, void *argout );
 }
 #endif
 
-#define PTLOCK_FREE  ((uint)(-1))
-#define PTLOCK_OWNER ((uint)__builtin_return_address( 0 ))
+#define PTLOCK_FREE  ((size_t)(-1))
+#define PTLOCK_OWNER ((size_t)__builtin_return_address( 0 ))
 
 #endif  /*  THREAD_H_  */

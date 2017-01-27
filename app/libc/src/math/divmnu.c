@@ -33,7 +33,7 @@ int divmnu ( unsigned short q[], unsigned short r[],
        const unsigned short v[],
              int m, int n )
 {
-    const uint32_t b = 65536;	            /* Основание чисел (16 битов)	 */
+    const uint32 b = 65536;	            /* Основание чисел (16 битов)	 */
     unsigned short *un, *vn;   	 		/* Нормализованный вид u и v	 */
     unsigned qhat;              		/* Предполагаемая цифра частного */
     unsigned rhat;              		/* Остаток			 */

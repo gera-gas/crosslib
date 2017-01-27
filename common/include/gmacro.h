@@ -190,7 +190,7 @@
 /*
  * Calculate unit offset of struct. */
 #define offsetof( type, ident )\
-	((size_t) (unsigned long) &((type *)0)->ident)
+	((size_t) (size_t) &((type *)0)->ident)
 
 
 #endif  /*  GMACRO_H_  */

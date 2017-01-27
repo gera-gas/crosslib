@@ -17,6 +17,7 @@ add_subdirectory( app/syslib )
 # -DBUILD_DEMO
 # 
 # Build demo executables.
+#
 if( DEFINED BUILD_DEMO )
     add_subdirectory( app/demo )
 endif()
@@ -84,6 +85,13 @@ endif()
 if( NOT DEFINED uint64 )
     set( uint64 "uint64_t" )
 endif()
+
+#
+# -DNOSTDINC_STDINT_H
+# 
+# Kick std include header file - stdint.h.
+# Should be set in top project by add_definitions( -DNOSTDINC_STDINT_H )
+#
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/config.h.in ${PROJECT_GENERATED}/config.h @ONLY)
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/typedef.h.in ${PROJECT_GENERATED}/typedef.h @ONLY)

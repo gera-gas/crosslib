@@ -27,7 +27,7 @@ size_t wcsspn ( const wchar_t *pstr, const wchar_t *ptmp )
 
 	for( i = 0; pstr[i]; i++ )
 	{
-		if( !(unsigned int)wcschr( ptmp, pstr[i] ) )
+		if( !wcschr( ptmp, pstr[i] ) )
 			return  i;
 
 	}

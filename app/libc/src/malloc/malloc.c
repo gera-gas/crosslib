@@ -147,7 +147,7 @@ void free ( void *ptr )
 	struct __memobject *object;
 	struct __memcache  *cache;
 
-	object = (struct __memobject *)( ((ulong)(ptr)) - offsetof(struct __memobject, data) );
+	object = (struct __memobject *)( ((size_t)(ptr)) - offsetof(struct __memobject, data) );
 	cache  = object->cache;
 
 	object->next = cache->obj_list;

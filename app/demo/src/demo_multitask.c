@@ -4,35 +4,81 @@
  * @brief  Using examples of library.
  */
 #include <stdbool.h>
-#include <stdio.h>
 #include <stddef.h>
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <conio.h>
+#include <time.h>
 #include "typedef.h"
 #include "multitask/thread.h"
 
-PT_STATE( state_0 )
+/*
+ * Example work of two PT object.
+ */
+
+/*
+ * FOO PT object.
+ */
+clock_t goal;
+
+PT_STATE( foo_state_0 )
 {
-	printf( "State-0\n");
+	goal = 1000 + clock(); //delay 1000 ms
 
 	return PT_NEXT;
 }
 
-PT_STATE( state_1 )
+PT_STATE( foo_state_1 )
 {
-	printf( "State-1\n");
+	if( goal > clock() ) {
+		return PT_HOLD;
+	}
+
+	printf( "FOO: working...\n");
 	
 	return PT_NEXT;
 }
 
-PT_CREATE( pt_demo, false,
-	state_0,
-	state_1 );
+PT_CREATE( pt_foo, 0,
+	foo_state_0,
+	foo_state_1 );
+
+/*
+ * BAR PT object.
+ */
+PT_STATE( bar_state_0 )
+{
+	if( kbhit() ) {
+		return PT_NEXT;
+	}
+
+	return PT_HOLD;
+}
+
+PT_STATE( bar_state_1 )
+{
+	char c = getchar();
+
+	printf( "BAR: char=%c\n", c );
+
+	if( c == 'q' ) exit(0);
+	
+	return PT_NEXT;
+}
+
+PT_CREATE( pt_bar, 0,
+	bar_state_0,
+	bar_state_1 );
+
 
 int main ( void )
 {
-	printf( "Hello!!!\n");
+	printf( "*** Example work of two PT object ***\n");
 
-	pt_start( &pt_demo, NULL, NULL );
+	while( true ) {
+		PT( pt_foo );
+		PT( pt_bar );
+	}
 
 	return 0;
 }

@@ -3,9 +3,7 @@
 @md build
 @cd build
 
-@call %PROJDIR%tools/xilinx/xilinx_env.bat
-
-cmake -Wno-dev -G "Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=%PROJDIR%config/xilinx-powerpc.cmake ..
+cmake -Wno-dev -G "Eclipse CDT4 - Unix Makefiles" -DCMAKE_TOOLCHAIN_FILE=%PROJDIR%config/gcc.cmake .. -DBUILD_DEMO=TRUE
 cmake --build .
 make install
 

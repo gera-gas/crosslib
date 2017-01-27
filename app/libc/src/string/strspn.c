@@ -27,7 +27,7 @@ size_t strspn ( const char *pstr, const char *ptmp )
 
 	for( i = 0; pstr[i]; i++ )
 	{
-		if( !(unsigned int)strchr( ptmp, pstr[i] ) )
+		if( !strchr( ptmp, pstr[i] ) )
 			return  i;
 
 	}

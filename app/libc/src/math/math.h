@@ -6,13 +6,13 @@
  *  @author  Gerasimov A.S.
  *  @date    2013-03-12 23:44:35 +0400
  */
-#define RANDOM_MAX  ((unsigned int)(-1))
+#define RANDOM_MAX  ((size_t)(-1))
 
 /**
  *  Generate pseudo random number in range ( rand( ) >= min && rand() =< max ).
  */
 #define random( _min, _max )\
-	( ( rand() % (((ulong)(_max)) - ((ulong)(_min))) ) + ((ulong)(_min)) )
+	( ( rand() % (((size_t)(_max)) - ((size_t)(_min))) ) + ((size_t)(_min)) )
 
 /**
  *  @brief
@@ -40,7 +40,7 @@
  *  Align like manner "ALIGN_HI" but divisible by 2.
  */
 #define ALIGNe_HI( v, n )\
-        ( (typeof(v))( ((ulong)(v) + ((n)-1)) & ~((n)-1) ) )
+        ( (typeof(v))( ((size_t)(v) + ((n)-1)) & ~((n)-1) ) )
 
 /**
  *  Align down "v" up to divisible by "n".
@@ -57,7 +57,7 @@
  *  Align like manner "ALIGNe_LO" but divisible by 2.
  */
 #define ALIGNe_LO( v, n )\
-	( (typeof(v))( (ulong)(v) & ~((n)-1) ) )
+	( (typeof(v))( (size_t)(v) & ~((n)-1) ) )
 
 
 /**
