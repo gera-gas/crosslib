@@ -13,29 +13,31 @@
 #include "multitask/thread.h"
 
 /*
- * Example work of two PT object.
+ * Example work of two PT objects.
  */
+clock_t goal;
 
 /*
  * FOO PT object.
  */
-clock_t goal;
-
 PT_STATE( foo_state_0 )
 {
-	goal = 1000 + clock(); //delay 1000 ms
+	/* delay 1000 ms */
+	goal = 1000 + clock();
 
+	/* goto foo_state_1 */
 	return PT_NEXT;
 }
 
 PT_STATE( foo_state_1 )
 {
 	if( goal > clock() ) {
+		/* break next actions and stay in foo_state_1 */
 		return PT_HOLD;
 	}
 
 	printf( "FOO: working...\n");
-	
+
 	return PT_NEXT;
 }
 

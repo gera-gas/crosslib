@@ -24,9 +24,10 @@ typedef struct critical_section_st {
  * Type with create fixing limit synchronize object.
  *
  * @details
- * This is simple and fast mechanism to synchronize access
- * to shared resource. May be used for multi thread control
- * and CPU interaction through shared memory.
+ * Simple and fast non-blocking lock-free mechanism.
+ * Fixlock it's a fixing limit objects for synchronize.
+ * May be used for multi thread control and
+ * CPUs interaction through shared memory.
  * 
  * @example
  *

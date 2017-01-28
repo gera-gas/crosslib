@@ -6,20 +6,19 @@ set( CMAKE_SYSTEM_PROCESSOR arm )
 
 # Toolchain path settings.
 if( WIN32 )
-    set( TOOLCHAIN_DIR c:/SysGCC/msp430 )
+    set( TOOLCHAIN_DIR c:/SysGCC/arm-eabi )
 else()
-    set( TOOLCHAIN_DIR opt/msp430-toolchain )
+    set( TOOLCHAIN_DIR opt/arm-toolchain )
 endif()
 
 set( TOOLCHAIN_DIR_BIN  ${TOOLCHAIN_DIR}/bin )
-set( TOOLCHAIN_DIR_MSP  ${TOOLCHAIN_DIR}/msp430 )
-set( TOOLCHAIN_DIR_INC  ${TOOLCHAIN_DIR_MSP}/include )
-set( TOOLCHAIN_DIR_LIB  ${TOOLCHAIN_DIR_MSP}/lib )
+set( TOOLCHAIN_DIR_CPU  ${TOOLCHAIN_DIR}/arm-eabi )
+set( TOOLCHAIN_DIR_INC  ${TOOLCHAIN_DIR_CPU}/include )
+set( TOOLCHAIN_DIR_LIB  ${TOOLCHAIN_DIR_CPU}/lib )
 set( TOOLCHAIN_DIR_LD   ${TOOLCHAIN_DIR_LIB}/ldscripts )
-set( TOOLCHAIN_DIR_LDM  ${TOOLCHAIN_DIR_LD}/msp430f5529 )
 
 # Toolchain compiler definitions.
-set( GCC_PREF msp430- )
+set( GCC_PREF arm-eabi- )
 
 if( WIN32 )
     CMAKE_FORCE_C_COMPILER(   "${GCC_PREF}gcc.exe" GNU )
@@ -37,9 +36,7 @@ else()
     set( CMAKE_SIZE    ${GCC_PREF}size    CACHE INTERNAL "")
 endif()
 
-# Set default linker script.
-set( LDSCRIPT_DEFAULT "-T${TOOLCHAIN_DIR_LD}/msp430.x" CACHE INTERNAL "")
-
-# Set general options.
-set( CMAKE_C_FLAGS "-mmcu=msp430f5529 -Wall" CACHE INTERNAL "c compiler flags")
-set( CMAKE_EXE_LINKER_FLAGS "-mmcu=msp430f5529 -Wl,-Map -Wl,main.map -L${TOOLCHAIN_DIR_LD} -L${TOOLCHAIN_DIR_LDM} -L${TOOLCHAIN_DIR_LIB}" CACHE INTERNAL "exe link flags")
+# Set build flags.
+set( CMAKE_C_FLAGS "-mthumb -mcpu=cortex-m3 -Wall -mlittle-endian" CACHE INTERNAL "c compiler flags")
+set( CMAKE_CXX_FLAGS "-mthumb -mcpu=cortex-m3 -Wall" CACHE INTERNAL "cxx compiler flags")
+set( CMAKE_EXE_LINKER_FLAGS "-nostartfiles -Wl,-Map -Wl,main.map -mthumb -mcpu=cortex-m3 -L${TOOLCHAIN_DIR_LIB}" CACHE INTERNAL "exe link flags")

@@ -4,7 +4,7 @@ Library collections contain:
 * devlib -- drivers for any device and hardware modules.
 * gcclib -- part of standard GCC compiler files.
 * libc   -- some files standard C library.
-* [syslib](app/syslib/) -- library for system creation. (Pseudo thread mechanisms. Simple and fast non locking lock-free mechanisms).
+* [syslib](app/syslib/) -- library for system creation. (Pseudo thread, simple and fast non-blocking lock-free mechanism).
 
 ## Tools
 * [CMake version 2.8.7+](https://cmake.org/download/)
@@ -19,12 +19,12 @@ Because in examples used a Windows mechanisms.
 
 ###### -DASSERT=[0,1,2]
 Defined to control assert macros.
-* 0 -- kick all assert macros from source code.
+* 0 -- kick all assert macros from source code (default).
 * 1 -- add simple assert macros with halt only (recommended for raw system).
 * 2 -- add assert macros with output to STDOUT by fprintf.
 
 ###### -Dint[bits]=[C-type name]
-Alias indicated C type with bitness 'typedef' types.
+Set specific bitness types in `typedef.h`.
 Default:
 * -Dint8=int8_t
 * -Duint8=uint8_t
