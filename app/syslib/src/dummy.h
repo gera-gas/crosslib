@@ -1,5 +1,5 @@
-#ifndef _DUMMY_H
-#define _DUMMY_H
+#ifndef DUMMY_H_
+#define DUMMY_H_
 /**
  *  @file     dummy.h
  *  @brief    Header with dummy prototypes.
@@ -18,4 +18,4 @@ void dummy_loop  ( void );
 }
 #endif
 
-#endif  /*  _DUMMY_H  */ 
+#endif  /*  DUMMY_H_  */ 

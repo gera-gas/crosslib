@@ -1,5 +1,5 @@
 /**
- *  @file     esc.c
+ *  @file     vt100_esc.c
  *  @brief    File with ESC sequences.
  *  @author   Gerasimov A.S.
  *  @date     08.11.2012

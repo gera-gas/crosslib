@@ -74,9 +74,14 @@ typedef struct pt_st {
 	pt_t name = { #name, flags, (sizeof(__##name)/sizeof(__##name[0])) - 1, PTLOCK_FREE, &__##name[0], &__##name[0] };
 
 /**
- * Starting PT process without arguments.
+ * Starting PT without arguments.
  */
 #define PT( pt ) pt_start( &pt, NULL, NULL )
+
+/**
+ * Starting PT and wait until they will be finished.
+ */
+#define PT_WAIT( ... ) while( pt_start( __VA_ARGS__ ) != PT_STATE_FINISH )
 
 #ifdef __cplusplus
 extern "C" {
