@@ -10,21 +10,10 @@
 #include <stddef.h>
 
 /**
- * Device type.
- */
-typedef enum {
-	DEVTYPE_IFACE,
-	DEVTYPE_SERVICE
-} devtype_t;
-
-
-/**
  * Type describe hardware device.
  */
 typedef struct device_st {
 	struct device_st *next;
-
-	devtype_t type;
 
 	union {
 		struct iface_st *driver;
@@ -97,45 +86,36 @@ typedef struct iface_st {
 
 /*
  * Call <init/fini> methods of device driver.
+ * dev -- point to address of device_t object.
  */
-#define IFACE_INIT( dev ) dev.iface.driver->init.f( &dev )
-#define IFACE_FINI( dev ) dev.iface.driver->fini.f( &dev )
-
-#define pIFACE_INIT( dev ) dev->iface.driver->init.f( &dev )
-#define pIFACE_FINI( dev ) dev->iface.driver->fini.f( &dev )
+#define IFACE_INIT( dev ) ((device_t *)(dev))->iface.driver->init.f( ((device_t *)(dev)) )
+#define IFACE_FINI( dev ) ((device_t *)(dev))->iface.driver->fini.f( ((device_t *)(dev)) )
 
 /*
  * Call <cmd> methods of device driver.
+ * dev -- point to address of device_t object.
  */
-#define IFACE_CMD( dev, cmd, par ) dev.iface.driver->cmd.f( &dev, cmd, par )
-#define pIFACE_CMD( dev, cmd, par ) dev->iface.driver->cmd.f( &dev, cmd, par )
+#define IFACE_CMD( dev, cmd, par ) ((device_t *)(dev))->iface.driver->cmd.f( ((device_t *)(dev)), cmd, par )
 
 /*
  * Call tx/rx ready methods of device driver.
+ * dev -- point to address of device_t object.
  */
-
-#define IFACE_TX_READY( dev ) dev.iface.driver->tx_ready.f( &dev )
-#define IFACE_RX_READY( dev ) dev.iface.driver->rx_ready.f( &dev )
-
-#define pIFACE_TX_READY( dev ) dev->iface.driver->tx_ready.f( &dev )
-#define pIFACE_RX_READY( dev ) dev->iface.driver->rx_ready.f( &dev )
+#define IFACE_TX_READY( dev ) ((device_t *)(dev))->iface.driver->tx_ready.f( ((device_t *)(dev)) )
+#define IFACE_RX_READY( dev ) ((device_t *)(dev))->iface.driver->rx_ready.f( ((device_t *)(dev)) )
 
 /*
  * Call tx/rx char methods of device driver.
+ * dev -- point to address of device_t object.
  */
-#define IFACE_TX_CHAR( dev, c ) dev.iface.driver->tx.fchar( &dev, c )
-#define IFACE_RX_CHAR( dev )    dev.iface.driver->rx.fchar( &dev )
-
-#define pIFACE_TX_CHAR( dev, c ) dev->iface.driver->tx.fchar( &dev, c )
-#define pIFACE_RX_CHAR( dev )    dev->iface.driver->rx.fchar( &dev )
+#define IFACE_TX_CHAR( dev, c ) ((device_t *)(dev))->iface.driver->tx.fchar( ((device_t *)(dev)), c )
+#define IFACE_RX_CHAR( dev )    ((device_t *)(dev))->iface.driver->rx.fchar( ((device_t *)(dev)) )
 
 /*
  * Call tx/rx block methods of device driver.
+ * dev -- point to address of device_t object.
  */
-#define IFACE_TX_BLOCK( dev, blk, size ) dev.iface.driver->tx.fblock( &dev, blk, size )
-#define IFACE_TX_BLOCK( dev, blk, size ) dev.iface.driver->tx.fblock( &dev, blk, size )
-
-#define pIFACE_TX_BLOCK( dev, blk, size ) dev->iface.driver->tx.fblock( &dev, blk, size )
-#define pIFACE_TX_BLOCK( dev, blk, size ) dev->iface.driver->tx.fblock( &dev, blk, size )
+#define IFACE_TX_BLOCK( dev, blk, size ) ((device_t *)(dev))->iface.driver->tx.fblock( ((device_t *)(dev)), blk, size )
+#define IFACE_TX_BLOCK( dev, blk, size ) ((device_t *)(dev))->iface.driver->tx.fblock( ((device_t *)(dev)), blk, size )
 
 #endif  /*  HAL_H_  */

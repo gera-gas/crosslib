@@ -18,6 +18,7 @@ typedef size_t ptlock_t;
  * @brief  Return types of PT process.
  */
 typedef enum {
+	PT_FLAG_NONE     = 0x0,
 	PT_FLAG_STEPMODE = 0x1,  /** PT do one function in step only  */
 	PT_FLAG_SHARED   = 0x2   /** Use critical section for lock PT */
 } ptflag_t;
@@ -81,7 +82,7 @@ typedef struct pt_st {
 /**
  * Starting PT and wait until they will be finished.
  */
-#define PT_WAIT( ... ) while( pt_start( __VA_ARGS__ ) != PT_STATE_FINISH )
+#define PT_WAIT( ... ) while( pt_start( &__VA_ARGS__ ) != PT_STATE_FINISH )
 
 #ifdef __cplusplus
 extern "C" {
