@@ -9,13 +9,13 @@
 #include <stddef.h>
 
 typedef size_t clock_t;
-typedef clock_t (*clock)( void );
+typedef clock_t (*clockfunc_t)( void );
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-extern clock = 0;
+extern clockfunc_t clock;
 
 #ifdef __cplusplus
 }
