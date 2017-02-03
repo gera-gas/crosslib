@@ -11,7 +11,7 @@
 #include <stddef.h>
 #include "typedef.h"
 
-
+#if 0
 /**
  * VT-100 context type.
  */
@@ -94,14 +94,26 @@ typedef struct vt100_menu_st {
 	vt100_menuitem_t *items;
 
 } vt100_menu_t;
+#endif
 
+/**
+ * VT-100 context type.
+ */
+typedef struct vt100ctx_st {
+	ioctx_t *ioctx;
+} vt100ctx_t;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+size_t vt100_rcv ( const vt100ctx_t *, char *, size_t );
+  void vt100_snd ( const vt100ctx_t *, const char *, const char * );
+
+#if 0
 extern pt_t vt100_rcv;
 extern pt_t vt100_snd;
+#endif
 
 #ifdef __cplusplus
 }

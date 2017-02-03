@@ -1,7 +1,7 @@
 /**
- *  @file     io.c
- *  @brief    IO service based on PT mechanisms.
- *  @author   Gerasimov A.S.
+ * @file     io_pt.c
+ * @brief    Base IO functions to custom device based on PT.
+ * @author   Gerasimov A.S.
  */
 #include "typedef.h"
 #include "buffer/buffer.h"

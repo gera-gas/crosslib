@@ -1,171 +1,47 @@
 /**
- * @file     vt100_snd.c
- * @brief    VT-100 send functions.
+ * @file     vt100_rcv.c
+ * @brief    VT-100 data exchange functions.
  * @author   Gerasimov A.S.
- * @date     08.11.2012
- * @note     Implemented by PT.
  */
-#include "string/string.h"
-#include "hal/hal.h"
-#include "multitask/thread.h"
+#include "typedef.h"
 #include "buffer/buffer.h"
-#include "proto/vt100/vt100_esc.h"
+#include "hal/hal.h"
+#include "io/io.h"
 #include "proto/vt100/vt100.h"
 
-static PT_STATE( vt100_snd_state_init );
-static PT_STATE( vt100_snd_state_tx_ready );
-static PT_STATE( vt100_snd_state_snd_esc );
-static PT_STATE( vt100_snd_state_snd_param );
-static PT_STATE( vt100_snd_state_snd_cmd );
 /**
- * @brief
- * Send message at VT-100 protocol format.
+ * @brief 
+ * Send message by VT-100 protocol.
  *
- * @param argin  : [in] used as in/out parameter for context.
- * @param argout : [out] not use.
- *
- * @example
- *
- * char bufmem[ 40 ];
- *
- * buffer_t buffer = {
- * 	.addr = bufmem,
- * 	.size = sizeof( bufmem )
- * };
- * 
- * vt100_ctx_t vt100_ctx = {
- * 	.io_device = &<device>,
- * 	.io_buffer = &buffer,
- * 	.count = 0
- * };
- *
- * vt100_ctx.io_buffer->addr = "123";
- * vt100_ctx.io_param = "AB";
- * //
- * // Send VT-100 message from vt100_ctx.io_buffer (bufmem)
- * //
- * PT_WAIT( vt100_snd, &vt100_ctx, NULL );
+ * @param ctx   : [in] point module context object.
+ * @param esc   : [in] string with ESC sequence.
+ * @param param : [in] string with parameters for sequence or 0.
  */
-PT_CREATE( vt100_snd, PT_FLAG_NONE,
-	/* 0 */ vt100_snd_state_init,
-	/* 1 */ vt100_snd_state_tx_ready,
-	/* 2 */ vt100_snd_state_snd_esc,
-	/* 3 */ vt100_snd_state_tx_ready,
-	/* 4 */ vt100_snd_state_snd_param,
-	/* 5 */ vt100_snd_state_tx_ready,
-	/* 6 */ vt100_snd_state_snd_cmd );
-
-
-/**
- * @brief
- * Initialize VT-100 SND state machine.
- */
-static PT_STATE( vt100_snd_state_init )
+void vt100_snd ( const vt100ctx_t *ctx, const char *esc, const char *param )
 {
-	vt100_ctx_t *ctx = (vt100_ctx_t *)argin;
-
-	ctx->count = 0;
-
-	if( !ctx->io_device )
-	{
-		return PT_RESET;
-	}
-
-	return PT_NEXT;
-}
-
-
-/**
- * @brief
- * Check TX ready to send.
- */
-static PT_STATE( vt100_snd_state_tx_ready )
-{
-	vt100_ctx_t *ctx = (vt100_ctx_t *)argin;
+	ioctx_t *ioctx = ctx->ioctx;
 
 	/*
-	 * Check on exist char in RX.
+	 * Output body of ESC string.
+	 *
+	 * If next char is empty, thouse last char
+	 * is command of ESC sequnece.
 	 */
-	if( !IFACE_TX_READY( ctx->io_device ) )
+	while( (*esc != '\0') && ((*(esc+1)) != '\0') )
 	{
-		return PT_HOLD;
+		io_putc( ioctx, *esc++ );
+	}
+	
+	/*
+	 * Otuput parameters of ESC string.
+	 */
+	if( param )
+	{
+		io_puts( ioctx, param );
 	}
 
-	return PT_NEXT;
-}
-
-
-/**
- * @brief
- * Send char from ESC string.
- */
-static PT_STATE( vt100_snd_state_snd_esc )
-{
-	vt100_ctx_t *ctx = (vt100_ctx_t *)argin;
-
-	uint8 *esc = ctx->io_buffer->addr;
 	/*
-	 * Send char from ESC string except last char (command).
+	 * Output command of ESC sequence.
 	 */
-	if( esc[ ctx->count + 1 ] == '\0' )
-	{
-		ctx->count = 0;
-		/*
-		 * Check parameters on exist.
-		 * If parameters apsent, jump to command sending.
-		 */
-		if( !ctx->io_param )
-		{
-			return PT_JUMP( 3 );
-		}
-		return PT_NEXT;
-	}
-
-	IFACE_TX_CHAR( ctx->io_device, esc[ ctx->count++ ] );
-
-	return PT_BACK;
-}
-
-/* Here tx_ready called */
-
-/**
- * @brief
- * Send additional parameters.
- */
-static PT_STATE( vt100_snd_state_snd_param )
-{
-	vt100_ctx_t *ctx = (vt100_ctx_t *)argin;
-
-	/*
-	 * If parameters is not exist, skip this state.
-	 */
-	if( ctx->io_param[ ctx->count ] == '\0' )
-	{
-		return PT_NEXT;
-	}
-
-	IFACE_TX_CHAR( ctx->io_device, ctx->io_param[ ctx->count++ ] );
-
-	return PT_BACK;
-}
-
-/* Here tx_ready called */
-
-/**
- * @brief
- * Send ESC command char.
- */
-static PT_STATE( vt100_snd_state_snd_cmd )
-{
-	vt100_ctx_t *ctx = (vt100_ctx_t *)argin;
-
-	uint8 *esc = ctx->io_buffer->addr;
-	/*
-	 * Get offset of last char in ESC string.
-	 */
-	size_t cmd = strlen( esc ) - 1;
-
-	IFACE_TX_CHAR( ctx->io_device, esc[ cmd ] );
-
-	return PT_NEXT;
+	io_putc( ioctx, *esc );
 }
