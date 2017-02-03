@@ -17,7 +17,7 @@
  *  @retval >0 : [success] point to address string with sought char.
  *  @retval =0 : [failed] sought char don't searching.
  */
-char* strrchr ( const char *pstr, char c )
+char* strrchr ( const char *pstr, int c )
 {
 	unsigned int  i;
 

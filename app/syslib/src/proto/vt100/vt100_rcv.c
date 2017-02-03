@@ -12,6 +12,7 @@
 #include "proto/vt100/vt100.h"
 
 
+static PT_STATE( vt100_rcv_state_init );
 static PT_STATE( vt100_rcv_state_0 );
 static PT_STATE( vt100_rcv_state_1 );
 /**
@@ -20,10 +21,50 @@ static PT_STATE( vt100_rcv_state_1 );
  *
  * @param argin  : [in] used as in/out parameter for context.
  * @param argout : [out] not use.
+ *
+ * @example
+ *
+ * char bufmem[ 40 ];
+ *
+ * buffer_t buffer = {
+ * 	.addr = bufmem,
+ * 	.size = sizeof( bufmem )
+ * };
+ * 
+ * vt100_ctx_t vt100_ctx = {
+ * 	.io_device = &<device>,
+ * 	.io_buffer = &buffer,
+ * 	.count = 0
+ * };
+ * 
+ * //
+ * // Collect VT-100 message to vt100_ctx.io_buffer (bufmem)
+ * //
+ * PT_WAIT( vt100_rcv, &vt100_ctx, NULL );
  */
-PT_CREATE( pt_vt100, PT_FLAG_NONE,
+PT_CREATE( vt100_rcv, PT_FLAG_NONE,
+	vt100_rcv_state_init,
 	vt100_rcv_state_0,
 	vt100_rcv_state_1 );
+
+
+/**
+ * @brief
+ * Initialize VT-100 RCV state machine.
+ */
+static PT_STATE( vt100_rcv_state_init )
+{
+	vt100_ctx_t *ctx = (vt100_ctx_t *)argin;
+
+	ctx->count = 0;
+
+	if( !ctx->io_device )
+	{
+		return PT_RESET;
+	}
+
+	return PT_NEXT;
+}
 
 
 /**

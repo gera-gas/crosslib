@@ -6,6 +6,8 @@
  *  @author  Gerasimov A.S.
  *  @date    2013-03-12 23:44:35 +0400
  */
+#include <stddef.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -13,8 +15,8 @@ extern "C" {
 size_t strlen   ( const char * );
    int strcmp   ( const char *, const char * );
    int strncmp  ( const char *, const char *, size_t );
- char* strchr   ( const char *, char );
- char* strrchr  ( const char *, char );
+ char* strchr   ( const char *, int );
+ char* strrchr  ( const char *, int );
 size_t strnumc  ( const char *, char );
  char* strrepc  ( char *, char, char );
  char* strcpy   ( char *, const char * );

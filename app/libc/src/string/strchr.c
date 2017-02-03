@@ -17,7 +17,7 @@
  *  @retval >0 : [success] point to address string with sought char.
  *  @retval =0 : [failed] sought char don't searching.
  */
-char* strchr ( const char *pstr, char c )
+char* strchr ( const char *pstr, int c )
 {
 	while( *pstr )
 	{
