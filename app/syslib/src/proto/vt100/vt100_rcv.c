@@ -13,7 +13,7 @@
  * @brief 
  * Receive message by VT-100 protocol.
  *
- * @param ctx    : [in] point module context object.
+ * @param ctx    : [in] point to VT-100 context object.
  * @param buffer : [out] address of output buffer.
  * @param size   : [in] size of output buffer.
  *

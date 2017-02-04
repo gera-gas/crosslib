@@ -13,7 +13,7 @@
  * @brief 
  * Send message by VT-100 protocol.
  *
- * @param ctx   : [in] point module context object.
+ * @param ctx   : [in] point to VT-100 context object.
  * @param esc   : [in] string with ESC sequence.
  * @param param : [in] string with parameters for sequence or 0.
  */
