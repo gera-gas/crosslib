@@ -4,21 +4,9 @@ set( CMAKE_SYSTEM_NAME "Generic" )
 set( CMAKE_SYSTEM_VERSION 1 )
 set( CMAKE_SYSTEM_PROCESSOR arm )
 
-# Toolchain path settings.
-if( WIN32 )
-    set( TOOLCHAIN_DIR c:/SysGCC/arm-eabi )
-else()
-    set( TOOLCHAIN_DIR opt/arm-toolchain )
-endif()
-
-set( TOOLCHAIN_DIR_BIN  ${TOOLCHAIN_DIR}/bin )
-set( TOOLCHAIN_DIR_CPU  ${TOOLCHAIN_DIR}/arm-eabi )
-set( TOOLCHAIN_DIR_INC  ${TOOLCHAIN_DIR_CPU}/include )
-set( TOOLCHAIN_DIR_LIB  ${TOOLCHAIN_DIR_CPU}/lib )
-set( TOOLCHAIN_DIR_LD   ${TOOLCHAIN_DIR_LIB}/ldscripts )
-
 # Toolchain compiler definitions.
-set( GCC_PREF arm-eabi- )
+#set( GCC_PREF arm-eabi- )
+set( GCC_PREF arm-none-eabi- )
 
 if( WIN32 )
     CMAKE_FORCE_C_COMPILER(   "${GCC_PREF}gcc.exe" GNU )
