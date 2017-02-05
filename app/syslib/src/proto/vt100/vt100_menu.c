@@ -6,9 +6,11 @@
  */
 #include <stdbool.h>
 #include <stddef.h>
+#include "config.h"
 #include "typedef.h"
 #include "stdio/stdio.h"
 #include "memory/memory.h"
+#include "string/string.h"
 #include "buffer/buffer.h"
 #include "hal/hal.h"
 #include "io/io.h"
@@ -22,7 +24,7 @@
  *
  * @param *menu_ctx : [in] point to menu context.
  */
-get_item_index ( vt100ctx_menu_t *menu_ctx )
+size_t get_item_index ( vt100ctx_menu_t *menu_ctx )
 {
 	size_t i;
 	vt100_menuitem_t *item;
@@ -181,7 +183,7 @@ void cursor_move_down( vt100ctx_menu_t *menu_ctx )
  */
 int navigate_on_menu ( vt100ctx_menu_t *menu_ctx, char keycode )
 {
-#define ESCCMD( esc_ ) esc_[strlen( esc_ ) - 1]
+#define ESCCMD( esc_ ) esc_[strlen(esc_) - 1]
 
 	/*
 	 * Cursor up (up arrow).
@@ -259,7 +261,7 @@ void vt100_menu_start ( vt100ctx_menu_t *menu_ctx )
 		 */
 		while( true )
 		{
-			len = vt100_rcv( menu_ctx->vt100ctx, buffer, 40 );
+			len = vt100_rcv( menu_ctx->vt100ctx, buffer, sizeof(buffer) );
 		
 			if( !len ) {
 				continue;

@@ -39,6 +39,10 @@ Default:
 Kick standard include header file - `stdint.h.`
 Should be set in CMake top project by `add_definitions( -DNOSTDINC_STDINT_H )`
 
+###### -DUSE_BUILTIN_LIBC
+Enable using builtin LIBC functions from GCC compiler.
+Else LIBC will be used from [app]/[libc].
+
 ## Build
 Library building is expected as part of your top CMake project.
 Examples of standalone build you can find in `[tools]` directory.

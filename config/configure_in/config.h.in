@@ -16,4 +16,15 @@
  */
 #cmakedefine CFG_ASSERTION @CFG_ASSERTION@
 
+/**
+ * Kick standard include header file - stdint.h
+ */
+#cmakedefine NOSTDINC_STDINT_H @NOSTDINC_STDINT_H@
+
+/**
+ * Enable using builtin LIBC functions from GCC compiler.
+ * Else LIBC will be used from [app]/[libc].
+ */
+#cmakedefine USE_BUILTIN_LIBC @USE_BUILTIN_LIBC@
+
 #endif  /*  CONFIG_H_  */
