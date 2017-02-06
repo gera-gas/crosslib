@@ -7,20 +7,19 @@
 #include "buffer/buffer.h"
 #include "hal/hal.h"
 #include "io/io.h"
+#include "io/tty.h"
 #include "proto/vt100/vt100.h"
 
 /**
  * @brief 
  * Send message by VT-100 protocol.
  *
- * @param ctx   : [in] point to VT-100 context object.
+ * @param ctx   : [in] point to IO context object.
  * @param esc   : [in] string with ESC sequence.
  * @param param : [in] string with parameters for sequence or 0.
  */
-void vt100_snd ( const vt100ctx_t *ctx, const char *esc, const char *param )
+void vt100_snd ( const tty_t *tty, const char *esc, const char *param )
 {
-	ioctx_t *ioctx = ctx->ioctx;
-
 	/*
 	 * Output body of ESC string.
 	 *
@@ -29,7 +28,7 @@ void vt100_snd ( const vt100ctx_t *ctx, const char *esc, const char *param )
 	 */
 	while( (*esc != '\0') && ((*(esc+1)) != '\0') )
 	{
-		io_putc( ioctx, *esc++ );
+		io_putc( tty->ioctx, *esc++ );
 	}
 	
 	/*
@@ -37,11 +36,11 @@ void vt100_snd ( const vt100ctx_t *ctx, const char *esc, const char *param )
 	 */
 	if( param )
 	{
-		io_puts( ioctx, param );
+		io_puts( tty->ioctx, param );
 	}
 
 	/*
 	 * Output command of ESC sequence.
 	 */
-	io_putc( ioctx, *esc );
+	io_putc( tty->ioctx, *esc );
 }

@@ -13,7 +13,6 @@ add_subdirectory( app/syslib )
 # CONFIGURE
 ################################################################################
 
-#
 # -DBUILD_DEMO
 # 
 # Build demo executables.
@@ -86,7 +85,6 @@ if( NOT DEFINED uint64 )
     set( uint64 "uint64_t" )
 endif()
 
-#
 # -DNOSTDINC_STDINT_H
 # 
 # Kick standard include header file - stdint.h.
@@ -96,7 +94,6 @@ if( DEFINED NOSTDINC_STDINT_H )
     set( NOSTDINC_STDINT_H "1" )
 endif()
 
-#
 # -DUSE_BUILTIN_LIBC
 # 
 # Enable using builtin LIBC functions from GCC compiler.
@@ -104,6 +101,15 @@ endif()
 #
 if( DEFINED USE_BUILTIN_LIBC )
     set( USE_BUILTIN_LIBC "1" )
+endif()
+
+# -DUSE_REGEXP_LOCALE
+#
+# Enable using compare in regular expression by locale mechanism.
+# If locale and USE_BUILTIN_LIBC is not set, compare using only C locale (ASCII).
+#
+if( DEFINED USE_REGEXP_LOCALE )
+    set( USE_REGEXP_LOCALE "1" )
 endif()
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/config.h.in ${PROJECT_GENERATED}/config.h @ONLY)

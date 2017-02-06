@@ -4,6 +4,11 @@
  * @file    io.h
  * @brief   Input/Output service functions.
  * @author  Gerasimov A.S.
+ * @note
+ * Header dependencies:
+ *
+ * #include "buffer.h"
+ * #include "hal.h"
  */
 #include <stddef.h>
 

@@ -13,6 +13,9 @@
 #define ascii_todigit( c )  ( (c) - '0' )
 #define ascii_tochar( n )   ( (char)((n) + '0') )
 #define ascii_isdigit( c )  ( (unsigned)ascii_todigit(c) <= 9 )
+#define ascii_isbdigit( c ) ( (unsigned)ascii_todigit(c) <= 1 )
+#define ascii_isxdigit( c ) ( (ascii_isdigit(c)) || (((c) >= 'A') && ((c) <= 'F')) || (((c) >= 'a') && ((c) <= 'f')) )
+#define ascii_isalpha( c )  ( (((c) >= 'A') && ((c) <= 'Z')) || (((c) >= 'a') && ((c) <= 'z')) )
 
 #define isascii( c )  ( (c) <= 0x7F )
 #define toascii( c )  ( (c)  & 0x7F )

@@ -27,4 +27,10 @@
  */
 #cmakedefine USE_BUILTIN_LIBC @USE_BUILTIN_LIBC@
 
+/**
+ * Enable using compare in regular expression by locale mechanism.
+ * If locale and USE_BUILTIN_LIBC is not set, compare using only C locale (ASCII).
+ */
+#cmakedefine USE_REGEXP_LOCALE @USE_REGEXP_LOCALE@
+
 #endif  /*  CONFIG_H_  */

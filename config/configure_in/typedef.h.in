@@ -7,6 +7,7 @@
  *  @date     2013-06-22 16:29:26 +0400
  *  @note     Change this type defines in CMake, special for you target.
  */
+#include "config.h"
 #ifndef NOSTDINC_STDINT_H
 #include <stdint.h>
 #endif

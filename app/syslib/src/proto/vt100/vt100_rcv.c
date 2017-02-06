@@ -7,29 +7,28 @@
 #include "buffer/buffer.h"
 #include "hal/hal.h"
 #include "io/io.h"
+#include "io/tty.h"
 #include "proto/vt100/vt100.h"
 
 /**
  * @brief 
  * Receive message by VT-100 protocol.
  *
- * @param ctx    : [in] point to VT-100 context object.
+ * @param ctx    : [in] point to IO context object.
  * @param buffer : [out] address of output buffer.
  * @param size   : [in] size of output buffer.
  *
  * @return
  * Received message size in bytes.
  */
-size_t vt100_rcv ( const vt100ctx_t *ctx, char *buffer, size_t bufsize )
+size_t vt100_rcv ( const tty_t *tty, char *buffer, size_t bufsize )
 {
-	ioctx_t *ioctx = ctx->ioctx;
-
 	char   c;
 	size_t len;
 
 	for( len = 0; ; )
 	{
-		c = io_getch( ioctx );
+		c = io_getch( tty->ioctx );
 
 		len++;
 

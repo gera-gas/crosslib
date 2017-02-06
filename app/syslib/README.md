@@ -17,3 +17,6 @@ Cryptography functions.
 
 ### proto
 Various protocols implementation.
+
+### ui
+Simple user interfaces implementation.

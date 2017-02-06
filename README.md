@@ -37,11 +37,14 @@ Default:
 
 ###### -DNOSTDINC_STDINT_H
 Kick standard include header file - `stdint.h.`
-Should be set in CMake top project by `add_definitions( -DNOSTDINC_STDINT_H )`
 
 ###### -DUSE_BUILTIN_LIBC
 Enable using builtin LIBC functions from GCC compiler.
 Else LIBC will be used from [app]/[libc].
+
+###### -DUSE_REGEXP_LOCALE
+Enable using compare in regular expression by locale mechanism.
+If locale and USE_BUILTIN_LIBC is not set, compare using only C locale (ASCII).
 
 ## Build
 Library building is expected as part of your top CMake project.
