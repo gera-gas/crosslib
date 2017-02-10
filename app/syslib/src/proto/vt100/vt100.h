@@ -64,6 +64,7 @@ tty_t name_ = {\
 	/*\
 	 * Set single code control key.\
 	 */\
+	.esc       = 0x1b,\
 	.enter     = 13,\
 	.tab       = 9,\
 	.backspace = 8,\

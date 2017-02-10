@@ -116,24 +116,24 @@
  *  ____________________________________________________________________________
  */
 #define LPART8( w )\
-	(((uint8)w) & 0xF)
+	(((uint8)(w)) & 0xF)
 #define HPART8( w )\
-	((((uint8)w) >> 4) & 0xF)
+	((((uint8)(w)) >> 4) & 0xF)
 
 #define LPART16( w )\
-	(((uint16)w) & 0xFF)
+	(((uint16)(w)) & 0xFF)
 #define HPART16( w )\
-	((((uint16)w) >> 8) & 0xFF)
+	((((uint16)(w)) >> 8) & 0xFF)
 
 #define LPART32( w )\
-	(((uint32)w) & 0xFFFF)
+	(((uint32)(w)) & 0xFFFF)
 #define HPART32( w )\
-	((((uint32)w) >> 16) & 0xFFFF)
+	((((uint32)(w)) >> 16) & 0xFFFF)
 
 #define LPART64( w )\
-	(((uint64)w) & 0xFFFFFFFF)
+	(((uint64)(w)) & 0xFFFFFFFF)
 #define HPART64( w )\
-	((((uint64)w) >> 32) & 0xFFFFFFFF)
+	((((uint64)(w)) >> 32) & 0xFFFFFFFF)
 
 
 /*  ____________________________________________________________________________
@@ -187,10 +187,12 @@
 #define ARRAY_SIZE( m )\
 	sizeof(m)/sizeof(m[0])
 
+#if !defined(offsetof)
 /*
  * Calculate unit offset of struct. */
 #define offsetof( type, ident )\
 	((size_t) (size_t) &((type *)0)->ident)
 
+#endif /* !defined(offsetof) */
 
 #endif  /*  GMACRO_H_  */

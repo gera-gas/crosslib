@@ -1,7 +1,7 @@
 #ifndef CC_CPP_H_
 #define CC_CPP_H_
 /**
- *  @file     cc_cpp.h
+ *  @file     gcc_macro_cpp.h
  *  @brief    GCC C\C++ macros.
  *  @author   Gerasimov A.S.
  *  @date     2013-06-24

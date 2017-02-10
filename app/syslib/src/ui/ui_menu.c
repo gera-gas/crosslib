@@ -18,7 +18,7 @@
 #include "buffer/buffer.h"
 #include "hal/hal.h"
 #include "io/io.h"
-#include "io/tty.h"
+#include "io/tty/tty.h"
 #include "ui/ui_menu.h"
 
 

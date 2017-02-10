@@ -16,11 +16,12 @@
  * @param pt     : [in]  address of PT object.
  * @param argin  : [in]  memory address of input parameters for state handlers.
  * @param argout : [out] memory address of output parameters for state handlers.
+ * @param flags  : [in]  PT control flags.
  *
  * @retval PT_STATE_ATWORK : PT is not finish.
  * @retval PT_STATE_FINISH : PT finish (all states is walked or reset).
  */
-pt_result_t pt_start ( pt_t *pt, const void *argin, void *argout )
+pt_result_t pt_start ( pt_t *pt, const void *argin, void *argout, ptflag_t flags )
 {
 	        register uint index = 0;
 	register pt_result_t result = PT_STATE_ATWORK;
@@ -32,14 +33,14 @@ pt_result_t pt_start ( pt_t *pt, const void *argin, void *argout )
 	 * If PT locked, check address of caller procedure.
 	 * If caller address and current lock address is equal, then go to managing.
 	 */
-	if( pt->flags & PT_FLAG_SHARED )
+	if( (pt->flags & PT_FLAG_SHARED) || (flags & PT_FLAG_SHARED) )
 	{
 		critical_section.entry( );
 	}
 
 	bool lock = pt_lock( pt, PTLOCK_OWNER );
 
-	if( pt->flags & PT_FLAG_SHARED )
+	if( (pt->flags & PT_FLAG_SHARED) || (flags & PT_FLAG_SHARED) )
 	{
 		critical_section.leave( );
 	}
@@ -55,7 +56,7 @@ pt_result_t pt_start ( pt_t *pt, const void *argin, void *argout )
 	 * and until state is not halted (not null).
 	 */
 	do {
-		index = (*pt->state)( argin, argout );
+		index = (*pt->state)( argin, argout, flags );
 		/*
 		 * PT of forcibly completed.
 		 */

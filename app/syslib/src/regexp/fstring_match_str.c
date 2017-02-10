@@ -1,5 +1,5 @@
 /**
- *  @file     regexp_match_szs.c
+ *  @file     fstring_match_str.c
  *  @brief    Export data structure implementation mechanisms.
  *  @author   Gerasimov A.S.
  */
@@ -17,7 +17,7 @@
  * @retval true  : [success] input string matching to etalon template.
  * @retval false : [failed] not matching.
  */
-bool regexp_match_szs ( const regexp_sz_t *etalon, const char *pstr )
+bool fstring_match_str ( const fstring_t *etalon, const char *pstr )
 {
 	bool result = true;
 

@@ -22,6 +22,7 @@ typedef struct critical_section_st {
 /**
  * @brief
  * Type with create fixing limit synchronize object.
+ * This is ordered orient mechanism, by also may be used fixlock_set.
  *
  * @details
  * Simple and fast non-blocking lock-free mechanism.
@@ -53,9 +54,9 @@ typedef struct critical_section_st {
  * }
  */
 typedef struct fixlock_st {
-     uint state;
-     uint maxpos;
-    uint8 data[0];
+    uint state;
+    uint maxpos;
+    char data[0];
 } fixlock_t;
 
 #ifdef __cplusplus

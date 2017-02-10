@@ -33,4 +33,10 @@
  */
 #cmakedefine USE_REGEXP_LOCALE @USE_REGEXP_LOCALE@
 
+/**
+ * Including C++ global initialization/deinitializtion code into
+ * CPU boot code of [devlib]/[cpu]/[...].
+ */
+#cmakedefine CPUINIT_CXX @CPUINIT_CXX@
+
 #endif  /*  CONFIG_H_  */

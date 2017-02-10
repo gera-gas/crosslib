@@ -7,11 +7,15 @@
  *  @details
  *  Example rules for linker script.
  *
- *  .ctors : {
- *    KEEP( *(.ctors.begin) )
- *    KEEP( *(.ctors) )
- *    KEEP( *(.ctors.end) )
- *  } > <Your memory region>
+.ctors : {
+    __CTOR_LIST__ = .;
+    ___CTORS_LIST___ = .;
+    KEEP( *(.ctors.begin) )
+    KEEP( *(.ctors) )
+    KEEP( *(.ctors.end) )
+    __CTOR_END__ = .;
+    ___CTORS_END___ = .;
+    } > <Your memory region>
  */
 #include "typedef.h"
 

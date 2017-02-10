@@ -7,11 +7,15 @@
  *  @details
  *  Example rules for linker script.
  *
- *  .dtors : {
- *    KEEP( *(.dtors.begin) )
- *    KEEP( *(.dtors) )
- *    KEEP( *(.dtors.end) )
- *  } > <Your memory region>
+.dtors : {
+    __DTOR_LIST__ = .;
+    ___DTORS_LIST___ = .;
+    KEEP( *(.dtors.begin) )
+    KEEP( *(.dtors) )
+    KEEP( *(.dtors.end) )
+    __DTOR_END__ = .;
+    ___DTORS_END___ = .;
+    } > <Your memory region>
  */
 #include "typedef.h"
 

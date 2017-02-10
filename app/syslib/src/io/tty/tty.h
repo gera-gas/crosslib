@@ -2,7 +2,7 @@
 #define TTY_H_
 /**
  * @file     tty.h
- * @brief    Base display manipulation functions.
+ * @brief    Base type for TTY devices.
  * @author   Gerasimov A.S.
  * @note
  * Header dependencies:
@@ -36,6 +36,7 @@ typedef struct tty_st {
 	/*
 	 * Single char control keys.
 	 */
+	int esc;
 	int enter;
 	int tab;
 	int backspace;
@@ -71,5 +72,15 @@ typedef struct tty_st {
 	void   (*m_snd) ( const struct tty_st *, const char *, const char * );
 
 } tty_t;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void tty_cursor_set ( tty_t *tty, size_t x, size_t y );
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif  /* TTY_H_ */

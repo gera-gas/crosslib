@@ -4,16 +4,6 @@
  *  @author   Gerasimov A.S.
  *  @date     08.11.2012
  */
-#include "typedef.h"
-#include "buffer/buffer.h"
-#include "hal/hal.h"
-#include "io/io.h"
-#include "io/tty.h"
-#include "proto/vt100/vt100.h"
-
-/*
- * Strings with VT-100 ESC sequences.
- */
 const char vt100_esc_cursor_up[]    = { 0x1B, 0x5B, 0x41, '\0' };
 const char vt100_esc_cursor_down[]  = { 0x1B, 0x5B, 0x42, '\0' };
 const char vt100_esc_cursor_left[]  = { 0x1B, 0x5B, 0x44, '\0' };

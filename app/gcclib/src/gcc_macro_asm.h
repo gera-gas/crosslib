@@ -1,7 +1,7 @@
 #ifndef CC_ASM_H_
 #define CC_ASM_H_
 /**
- *  @file     cc_asm.h
+ *  @file     gcc_macro_asm.h
  *  @brief    GCC assembler macros.
  *  @author   Gerasimov A.S.
  *  @date     2013-06-24

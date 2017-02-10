@@ -46,6 +46,10 @@ Else LIBC will be used from [app]/[libc].
 Enable using compare in regular expression by locale mechanism.
 If locale and USE_BUILTIN_LIBC is not set, compare using only C locale (ASCII).
 
+###### -DCPUINIT_CXX
+Including C++ global initialization/deinitializtion code into
+CPU boot code of [devlib]/[cpu]/[...].
+
 ## Build
 Library building is expected as part of your top CMake project.
 Examples of standalone build you can find in `[tools]` directory.

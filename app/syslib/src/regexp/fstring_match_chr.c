@@ -1,5 +1,5 @@
 /**
- *  @file     regexp_match_szc.c
+ *  @file     fstring_match_chr.c
  *  @brief    Export data structure implementation mechanisms.
  *  @author   Gerasimov A.S.
  */
@@ -24,13 +24,13 @@
  * @retval true  : [success] input char matching to etalon template.
  * @retval false : [failed] not matching.
  */
-bool regexp_match_szc ( const regexp_sz_t *etalon, char c )
+bool fstring_match_chr ( const fstring_t *etalon, char c )
 {
 	bool result = true;
 
 	switch( etalon->type )
 	{
-	case REGEXP_TYPE_BINCHAR:
+	case FSTRING_TYPE_BINCHAR:
 		if( !ascii_isbdigit( c ) )
 		{
 			result = false;
@@ -38,7 +38,7 @@ bool regexp_match_szc ( const regexp_sz_t *etalon, char c )
 
 	break;
 
-	case REGEXP_TYPE_DECCHAR:
+	case FSTRING_TYPE_DECCHAR:
 		if( !ascii_isdigit( c ) )
 		{
 			result = false;
@@ -46,7 +46,7 @@ bool regexp_match_szc ( const regexp_sz_t *etalon, char c )
 
 	break;
 
-	case REGEXP_TYPE_HEXCHAR:
+	case FSTRING_TYPE_HEXCHAR:
 		if( !ascii_isxdigit( c ) )
 		{
 			result = false;
@@ -54,7 +54,7 @@ bool regexp_match_szc ( const regexp_sz_t *etalon, char c )
 
 	break;
 
-	case REGEXP_TYPE_LETTERS:
+	case FSTRING_TYPE_LETTERS:
 #if ( defined(USE_BUILTIN_LIBC) || defined(USE_REGEXP_LOCALE) )
 		if( !isalpha( c ) )
 #else
@@ -66,12 +66,16 @@ bool regexp_match_szc ( const regexp_sz_t *etalon, char c )
 
 	break;
 
-	case REGEXP_TYPE_CUSTOM:
+	case FSTRING_TYPE_CUSTOM:
 		if( !strchr( etalon->custom, c ) )
 		{
 			result = false;
 		}
 
+	break;
+
+	case FSTRING_TYPE_NONE:
+		result = true;
 	break;
 	}
 

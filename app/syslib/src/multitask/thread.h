@@ -10,7 +10,6 @@
 #include <stdbool.h>
 #include "typedef.h"
 
-typedef size_t ( *ptfunc_t )( const void *, void * );
 typedef size_t ptlock_t;
 
 /**
@@ -31,6 +30,8 @@ typedef enum {
 	PT_STATE_ATWORK, /** PT walk in state functions.             */
 	PT_STATE_FINISH  /** PT went all functions or will be reset. */
 } pt_result_t;
+
+typedef pt_result_t ( *ptfunc_t )( const void *, void *, ptflag_t );
 
 /**
  * @struct  pt_t
@@ -60,7 +61,7 @@ typedef struct pt_st {
  *  @param  n : function name.
  */
 #define PT_STATE( name )\
-	size_t name ( const void *argin, void *argout )
+	pt_result_t name ( const void *argin, void *argout, ptflag_t flags )
 
 /**
  *  @def    PT_CREATE
@@ -88,7 +89,7 @@ typedef struct pt_st {
 extern "C" {
 #endif
 
-pt_result_t pt_start  ( pt_t *pt, const void *argin, void *argout );
+pt_result_t pt_start  ( pt_t *pt, const void *argin, void *argout, ptflag_t flags );
        bool pt_lock   ( pt_t *pt, ptlock_t owner );
        void pt_unlock ( pt_t *pt );
 

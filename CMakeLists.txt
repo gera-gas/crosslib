@@ -8,6 +8,7 @@ set( PROJECT_GENERATED ${CMAKE_CURRENT_SOURCE_DIR}/common/generated )
 add_subdirectory( app/libc )
 add_subdirectory( app/gcclib )
 add_subdirectory( app/syslib )
+add_subdirectory( app/devlib )
 
 ################################################################################
 # CONFIGURE
@@ -110,6 +111,15 @@ endif()
 #
 if( DEFINED USE_REGEXP_LOCALE )
     set( USE_REGEXP_LOCALE "1" )
+endif()
+
+# -DCPUINIT_CXX
+#
+# Including C++ global initialization/deinitializtion code into
+# CPU boot code of [devlib]/[cpu]/[...].
+#
+if( DEFINED CPUINIT_CXX )
+    set( CPUINIT_CXX "1" )
 endif()
 
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/config.h.in ${PROJECT_GENERATED}/config.h @ONLY)

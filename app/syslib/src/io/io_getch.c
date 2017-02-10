@@ -12,7 +12,7 @@
  * @brief
  * Get char from IO device.
  *
- * @param devio : [in] IO context.
+ * @param ioctx : [in] IO context.
  */
 char io_getch ( const ioctx_t *ioctx )
 {

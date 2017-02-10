@@ -12,7 +12,7 @@
  * @brief
  * Put char to output device.
  *
- * @param devio : [in] IO context.
+ * @param ioctx : [in] IO context.
  * @param c     : [in] char for output.
  */
 void io_putc ( const ioctx_t *ioctx, char c )

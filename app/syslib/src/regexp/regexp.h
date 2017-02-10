@@ -8,18 +8,19 @@
 #include <stdbool.h>
 
 /**
- * Type describes simple string regular expression.
+ * Type describes simple filter rules for string.
  */
-typedef struct regexp_sz_st {
+typedef struct fstring_st {
 	/*
-	 * Data template type.
+	 * Rules type.
 	 */
 	enum etype {
-		REGEXP_TYPE_BINCHAR,
-		REGEXP_TYPE_DECCHAR,
-		REGEXP_TYPE_HEXCHAR,
-		REGEXP_TYPE_LETTERS,
-		REGEXP_TYPE_CUSTOM
+		FSTRING_TYPE_NONE,
+		FSTRING_TYPE_BINCHAR,
+		FSTRING_TYPE_DECCHAR,
+		FSTRING_TYPE_HEXCHAR,
+		FSTRING_TYPE_LETTERS,
+		FSTRING_TYPE_CUSTOM
 	} type;
 
 	/*
@@ -27,14 +28,14 @@ typedef struct regexp_sz_st {
 	 */
 	const char *custom;
 
-} regexp_sz_t;
+} fstring_t;
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-bool regexp_match_szc ( const regexp_sz_t *, char c );
-bool regexp_match_szs ( const regexp_sz_t *, const char * );
+bool fstring_match_chr ( const fstring_t *, char c );
+bool fstring_match_str ( const fstring_t *, const char * );
 
 #ifdef __cplusplus
 }
