@@ -11,6 +11,7 @@ extern "C" {
 #endif
 
  int dummy_ret0  ( void );
+ int dummy_ret1  ( void );
 void dummy_empty ( void );
 void dummy_loop  ( void );
 

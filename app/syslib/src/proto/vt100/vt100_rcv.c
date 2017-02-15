@@ -14,7 +14,7 @@
  * @brief 
  * Receive message by VT-100 protocol.
  *
- * @param ctx    : [in] point to IO context object.
+ * @param ctx    : [in] point to this object.
  * @param buffer : [out] address of output buffer.
  * @param size   : [in] size of output buffer.
  *
@@ -25,6 +25,7 @@ size_t vt100_rcv ( const tty_t *tty, char *buffer, size_t bufsize )
 {
 	char   c;
 	size_t len;
+	
 
 	for( len = 0; ; )
 	{

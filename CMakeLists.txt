@@ -89,7 +89,6 @@ endif()
 # -DNOSTDINC_STDINT_H
 # 
 # Kick standard include header file - stdint.h.
-# Should be set in top project by add_definitions( -DNOSTDINC_STDINT_H )
 #
 if( DEFINED NOSTDINC_STDINT_H )
     set( NOSTDINC_STDINT_H "1" )

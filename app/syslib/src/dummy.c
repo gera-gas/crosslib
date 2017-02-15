@@ -9,6 +9,11 @@ int dummy_ret0 ( void )
 	return 0;
 }
 
+int dummy_ret1 ( void )
+{
+	return 0;
+}
+
 void dummy_empty ( void )
 {
 	;
