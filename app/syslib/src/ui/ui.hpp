@@ -70,7 +70,7 @@ public:
 		/*
 		 * List provided variables.
 		 */
-		LIST_OBJ(Parameter);
+		LIST_ITEM(Parameter);
 	};
 
 	/**

@@ -49,6 +49,8 @@ public:
 
 		prev->next = e;
 		prev = e;
+
+		size_++;
 	}
 
 	/**
@@ -74,6 +76,17 @@ public:
 	{
 		return this->prev;
 	}
+
+	/**
+	 * Return list items number (size of list).
+	 */
+	size_t size ( void )
+	{
+		return size_;
+	}
+
+private:
+	size_t size_;
 };
 
 /**
@@ -94,7 +107,7 @@ public:
 /**
  * Create list provided variables.
  */
-#define LIST_OBJ( type )\
+#define LIST_ITEM( type )\
 	type prev, next
 
 } /* namespace sys */

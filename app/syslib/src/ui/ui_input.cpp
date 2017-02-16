@@ -114,8 +114,8 @@ void UI_Input::start ( void )
 
 			if( param == paramlist_.head() )
 			{
-				param = paramlist_.first();
-				i = 1;
+				param = paramlist_.last();
+				i = paramlist_.size();
 			}
 
 			tty_->cursor_set( strlen(param->startinfo_) + strlen(param->buffer_) + 1, i );
@@ -130,7 +130,7 @@ void UI_Input::start ( void )
 
 			if( param == paramlist_.head() )
 			{
-				param = paramlist_.last();
+				param = paramlist_.first();
 				i = 1;
 			}
 
