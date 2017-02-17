@@ -6,6 +6,7 @@
  * @author   Gerasimov A.S.
  */
 #include <stddef.h>
+#include "gmacro.h"
 
 namespace sys {
 
@@ -17,48 +18,22 @@ public:
 	T *prev;
 	T *next;
 
-#define __LIST_THIS  reinterpret_cast<T*>(this)
-
 	/**
 	 * Default list constructor.
 	 */
-	List ( void ) : prev(__LIST_THIS), next(__LIST_THIS) { };
-
-	/**
-	 * Check to list empty.
-	 *
-	 * @retval true  : list is empty.
-	 * @retval false : list is not empty.
-	 */
-	bool is_empty ( void )
-	{
-		if( next == __LIST_THIS ) {
-			return true;
-		}
-
-		return false;
-	}
+	List ( void ) : prev(TOCAST(T,this)), next(TOCAST(T,this)), size_(0) { };
 
 	/**
 	 * Add element to list tail.
 	 */
-	void add_tail ( T *e )
-	{
-		e->prev = prev;
-		e->next = __LIST_THIS;
-
-		prev->next = e;
-		prev = e;
-
-		size_++;
-	}
+	void add_tail ( T *e );
 
 	/**
 	 * Return head address.
 	 */
 	T* head ( void )
 	{
-		return __LIST_THIS;
+		return TOCAST(T,this);
 	}
 
 	/**
@@ -90,6 +65,20 @@ private:
 };
 
 /**
+ * Add element to list tail.
+ */
+template <class T> void List<T>::add_tail ( T *e )
+{
+	e->prev = prev;
+	e->next = TOCAST(T,this);
+
+	prev->next = e;
+	prev       = e;
+
+	size_++;
+}
+
+/**
  * Walk on list down ( head => tail ).
  */
 #define list_foreach_down( item, list )\
@@ -106,9 +95,10 @@ private:
 
 /**
  * Create list provided variables.
+ * Must be allocate to up of object.
  */
 #define LIST_ITEM( type )\
-	type prev, next
+	type *prev, *next
 
 } /* namespace sys */
 

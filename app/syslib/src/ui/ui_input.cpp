@@ -38,7 +38,7 @@ void UI_Input::start ( void )
 	/*
 	 * Check parameters on exist.
 	 */
-	if( paramlist_.is_empty() ) {
+	if( paramlist_.size() == 0 ) {
 		return;
 	}
 
@@ -85,12 +85,13 @@ void UI_Input::start ( void )
 		}
 	}
 	
+
+	param = paramlist_.first();
 	/*
 	 * Set cursor position to first argument.
 	 */
 	tty_->cursor_set( strlen(param->startinfo_) + strlen(param->buffer_) + 1, 1 );
 
-	param = paramlist_.first();
 	/*
 	 * Handling all user inputs.
 	 * Variable <i> play role of Y position into cycle.
@@ -148,9 +149,9 @@ void UI_Input::start ( void )
 			 */
 			if( keycode == tty_->enter )
 			{
-				len = strlen( param->buffer );
+				len = strlen( param->buffer_ );
 
-				param->buffer[ len ] = '\0';
+				param->buffer_[ len ] = '\0';
 
 				i++;
 				param = param->next;
@@ -168,14 +169,14 @@ void UI_Input::start ( void )
 			 */
 			else if( keycode == tty_->backspace )
 			{
-				len = strlen( param->buffer );
+				len = strlen( param->buffer_ );
 
 				if( len )
 				{
 					tty_->snd( tty_->esc_cursor_left );
 					tty_->snd( tty_->esc_clear_char );
 
-					param->buffer[ len - 1 ] = '\0';
+					param->buffer_[ len - 1 ] = '\0';
 				}
 			}
 			/*
@@ -184,22 +185,28 @@ void UI_Input::start ( void )
 			 */
 			else
 			{
+				bool enable_input = true;
 				/*
 				 * Check char on filter rules if rules was set.
 				 */
 				if( param->filter_ )
 				{
-					if( param->filter_->match(keycode) )
+					if( !param->filter_->match(keycode) )
 					{
-						len = strlen( param->buffer );
+						enable_input = false;
+					}
+				}
 
-						if( len < (param->bufsize - 1) )
-						{
-							param->buffer[ len+0 ] = keycode;
-							param->buffer[ len+1 ] = '\0';
+				if( enable_input )
+				{
+					len = strlen( param->buffer_ );
 
-							tty_->m_snd( buffer );
-						}
+					if( len < (param->bufsize_ - 1) )
+					{
+						param->buffer_[ len+0 ] = keycode;
+						param->buffer_[ len+1 ] = '\0';
+                                        
+						tty_->snd( buffer );
 					}
 				}
 			}

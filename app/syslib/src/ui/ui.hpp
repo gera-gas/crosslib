@@ -25,6 +25,11 @@ public:
 	 */
 	struct Parameter {
 	public:
+		/*
+		 * List provided variables.
+		 */
+		LIST_ITEM(Parameter);
+
 
 		/**
 		 * @brief
@@ -39,7 +44,8 @@ public:
 			buffer_(buffer),
 			bufsize_(bufsize),
 			startinfo_(startinfo),
-			filter_(filter)
+			filter_(filter),
+			prev(NULL), next(NULL)
 		{
 			;
 		}
@@ -66,11 +72,6 @@ public:
 		 * For addition information see <regexp.h>
 		 */
 		FilterString *filter_;
-
-		/*
-		 * List provided variables.
-		 */
-		LIST_ITEM(Parameter);
 	};
 
 	/**
