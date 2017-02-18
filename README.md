@@ -1,10 +1,10 @@
 ## crosslib
 Software project with cross compile library for embedded system.
 Library collections contain:
-* devlib -- drivers for any device and hardware modules.
+* devlib -- drivers for any devices and hardware modules.
 * gcclib -- part of standard GCC compiler files.
 * libc   -- some files standard C library.
-* [syslib](app/syslib/) -- library for system creation. (Pseudo thread, simple and fast non-blocking lock-free mechanism).
+* [syslib](app/syslib/) -- library for system creation. (Pseudo thread, simple and fast non-blocking lock-free mechanism, HAL, IO, etc).
 
 ## Tools
 * [CMake version 2.8.7+](https://cmake.org/download/)
