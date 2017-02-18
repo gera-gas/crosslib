@@ -88,6 +88,11 @@
 #define pTYPE( t, v )\
 	(*(t*)(v))
 
+#ifdef __cplusplus
+#define TOCAST( t, v )\
+	reinterpret_cast<t*>(v)
+#endif
+
 #define pUINT8(p)    (*(uint8 *)(p))
 #define pINT8(p)     (*(int8 *)(p))
 #define pvUINT8(p)   (*(volatile uint8 *)(p))

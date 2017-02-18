@@ -12,6 +12,7 @@
 #include "string/string.h"
 #include "stdio/stdio.h"
 #endif
+#include "dummy.h"
 #include "hal/hal.hpp"
 #include "io/io.hpp"
 #include "io/tty/tty.hpp"
@@ -25,7 +26,6 @@ namespace sys {
  * @param [in] : address of IO object.
  */
 TTY::TTY( InOut *io ) :
-	io_(io),
 	newline("\n\r"),
 	/*
 	 * Single char control keys.
@@ -52,7 +52,11 @@ TTY::TTY( InOut *io ) :
 	esc_outmode_underline(NULL),
 	esc_status_on(NULL),
 	esc_status_off(NULL),
-	esc_charcode(NULL)
+	esc_charcode(NULL),
+	/*
+	 * Set IO context.
+	 */
+	io_(io)
 {
 	snd_ = reinterpret_cast<void (*)(void *, const char *, const char *)>(dummy_loop);
 	rcv_ = reinterpret_cast<size_t (*)(void *, char *, size_t)>(dummy_loop);

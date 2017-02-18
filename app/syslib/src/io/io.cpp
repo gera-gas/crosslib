@@ -10,25 +10,6 @@ namespace sys {
 
 /**
  * @brief
- * IO service contructor.
- *
- * @param [in] : address of IO device object.
- */
-InOut::InOut ( DevicePort *device ) :
-	device_(device) {
-	/*
-	 * Set default IO methods.
-	 */
-	putc_  = io_putc;
-	puts_  = io_puts;
-	getch_ = io_getch;
-	read_  = io_read;
-	write_ = io_write;
-};
-
-
-/**
- * @brief
  * Put char to output device.
  *
  * @param ioctx : [in] IO object.
@@ -130,5 +111,24 @@ size_t io_write ( InOut *ioctx, const char *pdata, size_t size )
 
 	return i;
 }
+
+
+/**
+ * @brief
+ * IO service contructor.
+ *
+ * @param [in] : address of IO device object.
+ */
+InOut::InOut ( DevicePort *device ) :
+	device_(device) {
+	/*
+	 * Set default IO methods.
+	 */
+	putc_  = io_putc;
+	puts_  = io_puts;
+	getch_ = io_getch;
+	read_  = io_read;
+	write_ = io_write;
+};
 
 } /* namespace sys */

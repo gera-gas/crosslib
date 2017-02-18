@@ -21,62 +21,53 @@ public:
 	/**
 	 * Default list constructor.
 	 */
-	List ( void ) : prev(TOCAST(T,this)), next(TOCAST(T,this)), size_(0) { };
+	List ( void ) : prev(TOCAST(T,this)), next(TOCAST(T,this)), size_(0) { }
 
 	/**
 	 * Add element to list tail.
 	 */
-	void add_tail ( T *e );
+	void add_tail ( T *e )
+	{
+		e->prev = prev;
+		e->next = TOCAST(T,this);
+
+		prev->next = e;
+		prev       = e;
+
+		size_++;
+	}
 
 	/**
 	 * Return head address.
 	 */
-	T* head ( void )
-	{
+	T* head ( void ) {
 		return TOCAST(T,this);
 	}
 
 	/**
 	 * Return first element from address.
 	 */
-	T* first ( void )
-	{
+	T* first ( void ) {
 		return this->next;
 	}
 
 	/**
 	 * Return last element from address.
 	 */
-	T* last ( void )
-	{
+	T* last ( void ) {
 		return this->prev;
 	}
 
 	/**
 	 * Return list items number (size of list).
 	 */
-	size_t size ( void )
-	{
+	size_t size ( void ) {
 		return size_;
 	}
 
 private:
 	size_t size_;
 };
-
-/**
- * Add element to list tail.
- */
-template <class T> void List<T>::add_tail ( T *e )
-{
-	e->prev = prev;
-	e->next = TOCAST(T,this);
-
-	prev->next = e;
-	prev       = e;
-
-	size_++;
-}
 
 /**
  * Walk on list down ( head => tail ).

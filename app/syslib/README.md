@@ -20,3 +20,5 @@ Various protocols implementation.
 
 ### ui
 Simple user interfaces implementation.
+* [ui_input](src/ui/README.md#ui_input_anchor) -- Various user input helper through TTY (TeraTerm on Windows or Minicom on Linux).
+* [ui_menu](src/ui/README.md#ui_menu_anchor) -- Various user menu helper through TTY (TeraTerm on Windows or Minicom on Linux).  

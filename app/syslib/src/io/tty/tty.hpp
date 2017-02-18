@@ -14,7 +14,8 @@
 namespace sys {
 
 /**
- * General TTY type.
+ * TTY API type.
+ * Base (general) class for any tty specific emplementation.
  */
 class TTY {
 public:
@@ -90,13 +91,12 @@ public:
 	}
 
 protected:
+	InOut *io_;
 	/*
 	 * Points to TTY IO methods.
 	 */
 	size_t (*rcv_) ( void *, char *, size_t );
 	void   (*snd_) ( void *, const char *, const char * );
-
-	InOut *io_;
 };
 
 } /* namespace sys */

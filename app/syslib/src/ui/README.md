@@ -1,4 +1,4 @@
-## Example of UI_Input class using.
+### <a name="ui_input_anchor"></a>Example of UI_Input class using.
 
 ```cpp
 //UI Input --------------------------------
@@ -71,7 +71,7 @@ int main ( void )
 }
 ```
 
-## Example of UI_Menu class using.
+### <a name="ui_menu_anchor"></a>Example of UI_Menu class using.
 
-```C++
+```cpp
 ```

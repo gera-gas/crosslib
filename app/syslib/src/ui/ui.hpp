@@ -30,7 +30,6 @@ public:
 		 */
 		LIST_ITEM(Parameter);
 
-
 		/**
 		 * @brief
 		 * Create object of UI input parameters.
@@ -41,11 +40,10 @@ public:
 		 * @param filter    : [in] point to filter object or NULL (optional).
 		 */
 		Parameter ( char *buffer, size_t bufsize, const char *startinfo, FilterString *filter=NULL ) :
-			buffer_(buffer),
-			bufsize_(bufsize),
+			prev(NULL), next(NULL),
+			buffer_(buffer), bufsize_(bufsize),
 			startinfo_(startinfo),
-			filter_(filter),
-			prev(NULL), next(NULL)
+			filter_(filter)
 		{
 			;
 		}
@@ -100,8 +98,7 @@ public:
 
 	/**
 	 * @brief
-	 * Start UI input procedure and manage
-	 * of users input.
+	 * Start UI input procedure and manage of users input.
 	 */
 	void start ( void );
 
@@ -112,9 +109,153 @@ private:
 	TTY *tty_;
 
 	/*
-	 * Point to first parameter into list with input parameters.
+	 * Head of list with input parameters.
 	 */
 	List<Parameter> paramlist_;
+};
+
+
+/**
+ * UI Menu context type.
+ */
+class UI_Menu {
+public:
+	/**
+	 * UI Menu item type.
+	 */
+	class Item {
+	public:
+		/*
+		 * List provided variables.
+		 */
+		LIST_ITEM(Item);
+
+		/**
+		 * Create item object.
+		 */
+		Item ( const char *item_name ) : prev(NULL), next(NULL), name(item_name) { }
+
+		/**
+		 * Result type of menu item handler.
+		 */
+		enum HandlerResult {
+			HANDLER_RESULT_STAY,
+			HANDLER_RESULT_EXIT,
+		};
+
+		/*
+		 * String with item name.
+		 */
+		const char *name;
+
+		/*
+		 * Item handler type.
+		 * NOTE:
+		 * It's not declarated here, because rtti is not avaliable.
+		 *
+		 * EXAMPLE:
+		 * public: sys::UI_Menu::Item::enum HandlerResult handler (void);
+		 */
+		enum HandlerResult handler ( void );
+	};
+
+	/**
+	 * Create UI menu descriptor.
+	 *
+	 * @param : [in] point to TTY object.
+	 * @param : [in] point to string with menu title.
+	 */
+	UI_Menu ( TTY *tty, const char *title ) :
+		tty_(tty),
+		itemlist_(),
+		current_item_(NULL),
+		current_item_idx_(0),
+		title_(title)
+	{
+		;
+	}
+
+	/**
+	 * @brief
+	 * Start and manage UI menu.
+	 */
+	void start ( void );
+
+private:
+	/*
+	 * Point to tty dscriptor.
+	 */
+	TTY *tty_;
+
+	/*
+	 * Head of list with menu items.
+	 */
+	List<Item> itemlist_;
+
+	/*
+	 * Point to current menu item.
+	 */
+	Item *current_item_;
+
+	/*
+	 * Number of current item starting by 0.
+	 */
+	size_t current_item_idx_;
+
+	/*
+	 *  String with menu title.
+	 */
+	const char *title_;
+#if 0
+	/**
+	 * @brief
+	 * Calculate index of current menu item.
+	 */
+	size_t get_item_index ( void );
+#endif
+	/**
+	 * @brief
+	 * Various down cursor position relative start item position (y=2).
+	 *
+	 * @param pos : [in] number of down step.
+	 */
+	void down_cursor ( size_t pos );
+
+	/**
+	 * @brief
+	 * Indicate menu item.
+	 *
+	 * @param item_name : [in] point to string with item name.
+	 */
+	void indicate_item ( const char *item_name );
+
+	/**
+	 * @brief
+	 * Display menu from parameters context.
+	 *
+	 * @param *menu_ctx : [in] point to menu context.
+	 */
+	void display_menu ( void );
+
+	/**
+	 * @brief
+	 * Set previous cursor position on menu items.
+	 */
+	friend void item_point_move_up ( UI_Menu* );
+
+	/**
+	 * @brief
+	 * Set next cursor position on menu items.
+	 */
+	friend void item_point_move_down ( UI_Menu* );
+
+	/**
+	 * @brief
+	 * Execute cursor navigating on menu items.
+	 *
+	 * @param *sequence : [in] point to received ESC sequence.
+	 */
+	void navigate_on_menu ( const char *sequence );
 };
 
 } /* namespace sys */
