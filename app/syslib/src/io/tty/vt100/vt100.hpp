@@ -56,4 +56,4 @@ private:
 
 } /* namespace sys */
 
-#endif  /* TTY_HPP_ */
+#endif  /* VT100_HPP_ */

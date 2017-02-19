@@ -5,8 +5,8 @@ project( ${APP_NAME} )
 # Create list with sources.
 set( SRC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/src )
 
-file( GLOB_RECURSE SOURCES ${SRC_PATH}/*.c )
-file( GLOB_RECURSE HEADERS ${SRC_PATH}/*.h )
+file( GLOB_RECURSE SOURCES ${SRC_PATH}/*.c ${SRC_PATH}/*.cpp )
+file( GLOB_RECURSE HEADERS ${SRC_PATH}/*.h ${SRC_PATH}/*.hpp )
 
 # Add include directory.
 include_directories( ${SRC_PATH}

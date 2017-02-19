@@ -14,6 +14,7 @@ int main ( void )
 	 */
 	sys::InOut io( &uart );
 
+	io.puts( "Hello World!" );
 	/*
 	 * Crete VT100 descriptor based on IO.
 	 */

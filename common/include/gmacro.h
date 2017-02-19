@@ -140,6 +140,14 @@
 #define HPART64( w )\
 	((((uint64)(w)) >> 32) & 0xFFFFFFFF)
 
+/*
+ * Get byte from 32 bit integer.
+ * Byte order: 0x[BYTE1] ... [BYTE4]
+ */
+#define I32_BYTE1( v )  ( ((v) >> 24) & 0xFF )
+#define I32_BYTE2( v )  ( ((v) >> 16) & 0xFF )
+#define I32_BYTE3( v )  ( ((v) >> 8)  & 0xFF )
+#define I32_BYTE4( v )  ( ((v) >> 0)  & 0xFF )
 
 /*  ____________________________________________________________________________
  *
@@ -197,7 +205,6 @@
  * Calculate unit offset of struct. */
 #define offsetof( type, ident )\
 	((size_t) (size_t) &((type *)0)->ident)
-
-#endif /* !defined(offsetof) */
+#endif
 
 #endif  /*  GMACRO_H_  */

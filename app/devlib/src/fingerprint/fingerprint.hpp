@@ -68,14 +68,14 @@ public:
 	 * @brief
 	 * Remove fingerprint from base.
 	 *
-	 * @param id : Page ID (Flash location of the template).
+	 * @param pageid : Page ID (Flash location of the template).
 	 *
 	 * @retval true  : success.
 	 * @retval false : failed.
 	 */
-	bool remove ( int id )
+	bool remove ( int pageid )
 	{
-		return remove_( this );
+		return remove_( this, pageid );
 	}
 
 	/**

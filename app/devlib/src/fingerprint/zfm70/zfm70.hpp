@@ -24,31 +24,9 @@ namespace dev {
 class ZFM70 : public Fingerprint {
 public:
 	/**
-	 * @brief
 	 * ZFM70 device descriptor consctructor.
-	 *
-	 * @param [in] : Point to device IO object.
-	 * @param [in] : Package address (optional).
 	 */
-	ZFM70 ( sys::DevicePort *fp_port, uint32 package_address = 0xFFFFFFFF ) :
-		Fingerprint(fp_port),
-		io_(fp_port),
-		package_address_(package_address)
-	{
-		#if 0
-		info_     = reinterpret_cast<bool (*)(void*, void*)>(dummy_loop);
-		enroll_   = reinterpret_cast<int (*)(void*)>(dummy_loop);
-		remove_   = reinterpret_cast<bool (*)(void*, int)>(dummy_loop);
-		clear_    = reinterpret_cast<bool (*)(void*)>(dummy_loop);
-		identify_ = reinterpret_cast<int (*)(void*)>(dummy_loop);
-		#endif;
-	}
-
-private:
-	/*
-	 * Object for IO.
-	 */
-	sys::InOut io_;
+	ZFM70 ( sys::DevicePort *, uint32 );
 
 	/**
 	 * ZFM70 device commands.
@@ -107,6 +85,40 @@ private:
 	};
 
 	/**
+	 * Describe module specific parameters.
+	 */
+	struct SystemParam {
+		uint16 status_register;
+		uint16 system_id;
+		uint16 library_size;
+		uint16 security_level;
+		uint32 device_address;
+		uint16 packet_size;
+		uint16 baud_settings;
+	};
+
+	/*
+	 * Below declaration device specifically ZFM70 public API.
+	 */
+	enum Acknowledge handshake    ( void );
+	enum Acknowledge getimage     ( void );
+	enum Acknowledge img2Tz       ( uint8 );
+	enum Acknowledge create_model ( void );
+	enum Acknowledge store_model  ( uint16 );
+	enum Acknowledge load_model   ( uint16 );
+	enum Acknowledge delete_model ( uint16 );
+	enum Acknowledge empty_base   ( void );
+	enum Acknowledge search       ( uint8, uint16 * );
+	enum Acknowledge get_template ( uint16 * );
+	enum Acknowledge read_info    ( SystemParam * );
+
+private:
+	/*
+	 * Object for IO.
+	 */
+	sys::InOut io_;
+
+	/**
 	 * Package identifier type definition
 	 */
 	enum PID {
@@ -117,10 +129,44 @@ private:
 	};
 
 	/**
-	 * Package address.
+	 * Module address.
 	 */
-	uint32 package_address_;
+	const uint32 module_address_;
 
+	/**
+	 * @brief
+	 * Send package with varoius data to the fingerprint scanner.
+	 *
+	 * @param   pid  : [in] package identifier.
+	 * @param   data : [in] pointer to the buffer with data.
+	 * @param   len  : [in] length of data in bytes.
+	 */
+	void package_snd ( enum PID pid, const uint8 *data, size_t len );
+
+	/**
+	 * @brief
+	 * Receive package from the fingerprint scanner.
+	 *
+	 * @param  pid : [out] pointer to the buffer with identifier of received package.
+	 * @param  dst : [out] pointer to the destination buffer of received data.
+	 * @param  len : [out] pointer to the buffer for length of received data.
+	 *
+	 * @retval true  : successfully received package, otherwise '0'.
+	 * @retval false : bad receive.
+	 */
+	bool package_rcv( enum PID *pid, uint8 *data, uint16 *len );
+
+	/**
+	 * @brief
+	 * Executing one command transaction.
+	 *
+	 * @param data : [in/out] address of data buffer for send/receive data transaction.
+	 * @param len  : [in/out] length of data buffer in bytes.
+	 *
+	 * @return
+	 * Confirmation code from zfm70.
+	 */
+	enum Acknowledge cmd_transaction ( uint8 *data, uint16 *len );
 };
 
 } /* namespace dev */

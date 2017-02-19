@@ -82,7 +82,7 @@ size_t io_read ( InOut *ioctx, char *pdata, size_t size )
 
 	for( i = 0; i < size; i++ )
 	{
-		pdata[i] = (uint8)io_getch( ioctx );
+		pdata[i] = io_getch( ioctx );
 	}
 
 	return i;
