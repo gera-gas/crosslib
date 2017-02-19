@@ -221,7 +221,7 @@ enum ZFM70::Acknowledge ZFM70::handshake ( void )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::getimage ( void )
+enum ZFM70::Acknowledge ZFM70::get_image ( void )
 {
 	uint8  buffer[2];
 	uint16 length;
@@ -448,7 +448,7 @@ enum ZFM70::Acknowledge ZFM70::search ( uint8 bufid, uint16 *pageid )
 	}
 
 	((uint8 *)pageid)[0] = buffer[2];
-    ((uint8 *)pageid)[1] = buffer[1];
+	((uint8 *)pageid)[1] = buffer[1];
 
 	return ack;
 }
@@ -481,7 +481,7 @@ enum ZFM70::Acknowledge ZFM70::get_template ( uint16 *tmpnum )
 	}
 
 	((uint8 *)tmpnum)[0] = buffer[2];
-    ((uint8 *)tmpnum)[1] = buffer[1];
+	((uint8 *)tmpnum)[1] = buffer[1];
 
 	return ack;
 }
@@ -519,6 +519,220 @@ enum ZFM70::Acknowledge ZFM70::read_info ( SystemParam *sys_param )
 
 /**
  * @brief
+ * Get device information.
+ *
+ * @param outbuffer : [out] buffer address for store information.
+ *
+ * @retval true  : success.
+ * @retval false : failed.
+ */
+bool zfm70_info ( ZFM70 *zfm70, void *outbuffer )
+{
+	enum ZFM70::Acknowledge ack;
+
+	//delay(1000);
+
+	ack = zfm70->handshake( );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return false;
+	}
+
+	//delay(1000);
+
+	ack = zfm70->read_info( (ZFM70::SystemParam *)outbuffer );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return false;
+	}
+
+	return true;
+}
+
+
+/**
+ * @brief
+ * Enroll new fingerprint.
+ *
+ * @retval >=0 : Page ID (Flash location of the template).
+ * @retval  <0 : failed.
+ */
+int zfm70_enroll ( ZFM70 *zfm70 )
+{
+	enum ZFM70::Acknowledge ack;
+
+	for( int i = 0; i < 2; )
+	{
+		/*
+		 * Create finger image.
+		 */
+		do {
+			ack = zfm70->get_image( );
+		}
+		while( ack == ZFM70::ACK_NO_FINGER );
+
+		if( ack != ZFM70::ACK_COMPLETE )
+		{
+			zfm70->errorcode = ack;
+			return -1;
+		}
+
+		/*
+		 * Image compression.
+		 */
+		ack = zfm70->img2Tz( ++i );
+
+		if( ack != ZFM70::ACK_COMPLETE )
+		{
+			zfm70->errorcode = ack;
+			return -1;
+		}
+	}
+
+	/*
+	 * Create model.
+	 */
+	ack = zfm70->create_model( );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return -1;
+	}
+
+	uint16 tmpnum;
+	/*
+	 * Get tempalte number.
+	 */
+	ack = zfm70->get_template( &tmpnum );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return -1;
+	}
+
+	/*
+	 * Save model.
+	 */
+	ack = zfm70->store_model( tmpnum );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return -1;
+	}
+
+	return tmpnum;
+}
+
+
+/**
+ * @brief
+ * Remove fingerprint from base.
+ *
+ * @param pageid : Page ID (Flash location of the template).
+ *
+ * @retval true  : success.
+ * @retval false : failed.
+ */
+bool zfm70_remove ( ZFM70 *zfm70, int pageid )
+{
+	enum ZFM70::Acknowledge ack;
+
+	ack = zfm70->delete_model( pageid );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return false;
+	}
+
+	return true;
+}
+
+
+/**
+ * @brief
+ * Clear device (Remove all fingerprints from base).
+ *
+ * @retval true  : success.
+ * @retval false : failed.
+ */
+bool zfm70_clear ( ZFM70 *zfm70 )
+{
+	enum ZFM70::Acknowledge ack;
+
+	ack = zfm70->empty_base( );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return false;
+	}
+
+	return true;
+}
+
+
+/**
+ * @brief
+ * Identify fingerprint.
+ *
+ * @retval >=0 : Page ID (Flash location of the template).
+ * @retval  <0 : failed.
+ */
+int zfm70_identify ( ZFM70 *zfm70 )
+{
+	enum ZFM70::Acknowledge ack;
+	
+	/*
+	 * Create finger image.
+	 */
+	do {
+		ack = zfm70->get_image( );
+	}
+	while( ack == ZFM70::ACK_NO_FINGER );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return -1;
+	}
+
+	/*
+	 * Image compression.
+	 */
+	ack = zfm70->img2Tz( 1 );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return -1;
+	}
+
+	uint16_t pageid;
+	/*
+	 * Serach fingerprint image in base.
+	 */
+	ack = zfm70->search( 1, &pageid );
+
+	if( ack != ZFM70::ACK_COMPLETE )
+	{
+		zfm70->errorcode = ack;
+		return -1;
+	}
+
+	return pageid;
+}
+
+
+/**
+ * @brief
  * ZFM70 device descriptor consctructor.
  *
  * @param fp_port        : [in] Point to device IO object.
@@ -529,13 +743,11 @@ ZFM70::ZFM70 ( sys::DevicePort *fp_port, uint32 module_address = 0xFFFFFFFF ) :
 	io_(fp_port),
 	module_address_(module_address)
 {
-	#if 0
-	info_     = reinterpret_cast<bool (*)(void*, void*)>(dummy_loop);
-	enroll_   = reinterpret_cast<int (*)(void*)>(dummy_loop);
-	remove_   = reinterpret_cast<bool (*)(void*, int)>(dummy_loop);
-	clear_    = reinterpret_cast<bool (*)(void*)>(dummy_loop);
-	identify_ = reinterpret_cast<int (*)(void*)>(dummy_loop);
-	#endif
+	info_     = reinterpret_cast<bool (*)(void*, void*)>(zfm70_info);
+	enroll_   = reinterpret_cast<int (*)(void*)>(zfm70_enroll);
+	remove_   = reinterpret_cast<bool (*)(void*, int)>(zfm70_remove);
+	clear_    = reinterpret_cast<bool (*)(void*)>(zfm70_clear);
+	identify_ = reinterpret_cast<int (*)(void*)>(zfm70_identify);
 }
 
 } /* namespace dev */

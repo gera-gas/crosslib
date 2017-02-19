@@ -101,7 +101,7 @@ public:
 	 * Below declaration device specifically ZFM70 public API.
 	 */
 	enum Acknowledge handshake    ( void );
-	enum Acknowledge getimage     ( void );
+	enum Acknowledge get_image    ( void );
 	enum Acknowledge img2Tz       ( uint8 );
 	enum Acknowledge create_model ( void );
 	enum Acknowledge store_model  ( uint16 );
@@ -111,6 +111,14 @@ public:
 	enum Acknowledge search       ( uint8, uint16 * );
 	enum Acknowledge get_template ( uint16 * );
 	enum Acknowledge read_info    ( SystemParam * );
+
+	/*
+	 * Reload public parrent method to read device information.
+	 */
+	bool info ( SystemParam *sys_param )
+	{
+		return zfm70_info( this, sys_param );
+	}
 
 private:
 	/*
@@ -167,6 +175,15 @@ private:
 	 * Confirmation code from zfm70.
 	 */
 	enum Acknowledge cmd_transaction ( uint8 *data, uint16 *len );
+
+	/*
+	 * Functions for overriding parent virtual methods.
+	 */
+	friend bool zfm70_info     ( ZFM70 *zfm70, void *outbuffer );
+	friend int  zfm70_enroll   ( ZFM70 *zfm70 );
+	friend bool zfm70_remove   ( ZFM70 *zfm70, int pageid );
+	friend bool zfm70_clear    ( ZFM70 *zfm70 );
+	friend int  zfm70_identify ( ZFM70 *zfm70 );
 };
 
 } /* namespace dev */
