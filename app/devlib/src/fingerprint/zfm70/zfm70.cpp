@@ -606,7 +606,7 @@ int zfm70_enroll ( ZFM70 *zfm70 )
 
 	uint16 tmpnum;
 	/*
-	 * Get tempalte number.
+	 * Get template number.
 	 */
 	ack = zfm70->get_template( &tmpnum );
 
@@ -715,7 +715,7 @@ int zfm70_identify ( ZFM70 *zfm70 )
 		return -1;
 	}
 
-	uint16_t pageid;
+	uint16 pageid;
 	/*
 	 * Serach fingerprint image in base.
 	 */

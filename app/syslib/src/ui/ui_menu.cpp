@@ -157,7 +157,7 @@ void item_point_move_up ( UI_Menu *pmenu )
 	if( pmenu->current_item_ == pmenu->itemlist_.head() )
 	{
 		pmenu->current_item_ = pmenu->itemlist_.last();
-		pmenu->current_item_idx_ = 0;
+		pmenu->current_item_idx_ = pmenu->itemlist_.size() - 1;
 	}
 }
 
@@ -176,7 +176,7 @@ void item_point_move_down ( UI_Menu *pmenu )
 	if( pmenu->current_item_ == pmenu->itemlist_.head() )
 	{
 		pmenu->current_item_ = pmenu->itemlist_.first();
-		pmenu->current_item_idx_ = pmenu->itemlist_.size();
+		pmenu->current_item_idx_ = 0;
 	}
 }
 
@@ -237,6 +237,21 @@ void UI_Menu::start ( void )
 {
 	  char  buffer[40];
 	size_t  len;
+
+	/*
+	 * Check parameters on exist.
+	 */
+	if( itemlist_.size() == 0 ) {
+		return;
+	}
+
+	/*
+	 * Set item point to first menu item.
+	 */
+	if( !current_item_ )
+	{
+		current_item_ = itemlist_.first();
+	}
 
 	do {
 		display_menu( );

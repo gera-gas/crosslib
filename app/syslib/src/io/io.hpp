@@ -55,6 +55,11 @@ public:
 		return read_ ( this, data, size );
 	}
 
+	bool kbhit ( void )
+	{
+		return kbhit_ ( this );
+	}
+
 protected:
 	/*
 	 * Points to IO methods.
@@ -64,6 +69,7 @@ protected:
 	char   (*getch_) ( InOut * );
 	size_t (*write_) ( InOut *, const char *, size_t );
 	size_t (*read_)  ( InOut *, char *, size_t );
+	bool   (*kbhit_) ( InOut * );
 
 private:
 	/*
@@ -79,6 +85,7 @@ private:
 	friend char   io_getch ( InOut * );
 	friend size_t io_write ( InOut *, const char *, size_t );
 	friend size_t io_read  ( InOut *, char *, size_t );
+	friend bool   io_kbhit ( InOut * );
 };
 
 } /* namespace sys */

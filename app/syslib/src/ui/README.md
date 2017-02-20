@@ -83,3 +83,60 @@ int main ( void )
 	return 0;
 }
 ```
+
+### <a name="ui_menu_anchor"></a>Example of UI_Menu class using.
+UI descriptor using [VT100](../io/README.md#io_anchor) such as TTY context.
+
+```cpp
+#include "memory.h"
+#include "hal.hpp"
+#include "io.hpp"
+#include "tty.hpp"
+#include "vt100.hpp"
+#include "regexp.hpp"
+#include "buffer.hpp"
+#include "ui.hpp"
+
+/*
+ * Create item-1 for UI menu.
+ */
+enum sys::UI_Menu::Item::HandlerResult item1_handler ( void )
+{
+	D0::App::io.puts( "ITEM-1 was selected ..." );
+	D0::App::io.getch( );
+
+	return sys::UI_Menu::Item::HANDLER_RESULT_STAY;
+}
+
+/*
+ * Create item-2 for UI menu by special macros.
+ */
+UI_MENU_ITEM( item2_handler )
+{
+	D0::App::io.puts( "ITEM-2 it's exit from menu, bye!" );
+	D0::App::io.getch( );
+
+	return UI_MENU_ITEM_EXIT;
+}
+
+int main ( void )
+{
+	sys::VT100 tty( &D0::App::io );
+
+	/* Create menu item objects. */
+	sys::UI_Menu::Item item1( "ITEM-1", item1_handler );
+	sys::UI_Menu::Item item2( "ITEM-2", item2_handler );
+
+	/* Create main menu descriptor. */
+	sys::UI_Menu ui_menu( &tty, "VT-100 DEMO MENU" );
+
+	/* Add items to menu. */
+	ui_menu.add_item( &item1 );
+	ui_menu.add_item( &item2 );
+
+	/* Run menu. */
+	ui_menu.start( );
+
+	return 0;
+}
+```

@@ -59,22 +59,22 @@ public:
 		/*
 		 * Set exported driver methods.
 		 */
-		init_  = uart_init;
-		fini_  = uart_fini;
-		ioctl_ = uart_ioctl;
+		init_  = reinterpret_cast<void (*)(void*)>(uart_init);
+		fini_  = reinterpret_cast<void (*)(void*)>(uart_fini);
+		ioctl_ = reinterpret_cast<bool (*)(void*,int,void*)>(uart_ioctl);
 
-		tx_ready_ = uart_txrdy;
-		rx_ready_ = uart_rxrdy;
+		tx_ready_ = reinterpret_cast<bool (*)(void*)>(uart_txrdy);
+		rx_ready_ = reinterpret_cast<bool (*)(void*)>(uart_rxrdy);
 
-		tx_ = uart_tx;
-		rx_ = uart_rx;
+		tx_ = reinterpret_cast<void (*)(void*,size_t)>(uart_tx);
+		rx_ = reinterpret_cast<size_t (*)(void*)>(uart_rx);
 	};
 
 protected:
 	/*
 	 * UART memory map.
 	 */
-	struct Map {
+	struct MemMap {
 		volatile uint32 control;
 		volatile uint32 mode;
 
@@ -105,13 +105,13 @@ protected:
 	/*
 	 * UART methods implementation.
 	 */
-	friend void   uart_init  ( void * );
-	friend void   uart_fini  ( void * );
-	friend bool   uart_ioctl ( void *, int, void * );
-	friend bool   uart_txrdy ( void * );
-	friend bool   uart_rxrdy ( void * );
-	friend void   uart_tx    ( void *, size_t );
-	friend size_t uart_rx    ( void * );
+	friend void   uart_init  ( UART * );
+	friend void   uart_fini  ( UART * );
+	friend bool   uart_ioctl ( UART *, int, void * );
+	friend bool   uart_txrdy ( UART * );
+	friend bool   uart_rxrdy ( UART * );
+	friend void   uart_tx    ( UART *, size_t );
+	friend size_t uart_rx    ( UART * );
 
 private:
 	/*
@@ -125,10 +125,9 @@ private:
  * Driver method for UART initialize.
  * Set default baud: 115200, mode: 8N1.
  */
-void uart_init ( void *obj )
+void uart_init ( UART *uart )
 {
-	UART *uart = reinterpret_cast<UART*>(obj);
-	Map  *regs = reinterpret_cast<Map*>( const_cast<void*>(basemem_) );
+	UART::MemMap *regs = reinterpret_cast<Map*>( const_cast<void*>(basemem_) );
 
 	/* Unable UART CLK */
 	regs->control = static_cast<uint32>(REG_CTRL_ENABLE);
@@ -147,8 +146,10 @@ void uart_init ( void *obj )
 /**
  * Driver method for UART deinitialize.
  */
-void uart_fini ( void *obj )
+void uart_fini ( UART *uart )
 {
+	UART::MemMap *regs = reinterpret_cast<Map*>( const_cast<void*>(basemem_) );
+
 	/* Disable UART CLK */
 	regs->control = static_cast<uint32>(REG_CTRL_DISABLE);
 }
@@ -165,9 +166,8 @@ void uart_fini ( void *obj )
  * @retval true  : success.
  * @retval false : failed.
  */
-bool uart_ioctl ( void *obj, int cmd, void *param )
+bool uart_ioctl ( UART *uart, int cmd, void *param )
 {
-	UART        *uart       = reinterpret_cast<UART*>(obj);
 	UART::Param *uart_param = reinterpret_cast<UART::Param*>(param);
 
 	bool result = true;
@@ -234,10 +234,9 @@ bool uart_ioctl ( void *obj, int cmd, void *param )
  * @brief
  * Return <true> if uart ready to TX.
  */
-bool uart_txrdy ( void *obj )
+bool uart_txrdy ( UART *uart )
 {
-	UART      *uart = reinterpret_cast<UART*>(obj);
-	UART::Map *regs = reinterpret_cast<UART::Map*>( const_cast<void*>(uart->basemem_) );
+	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
 
 	return ( regs->status & static_cast<uint32>(UART::REG_STAT_TX) );
 }
@@ -247,10 +246,9 @@ bool uart_txrdy ( void *obj )
  * @brief
  * Return <true> if exist data on RX.
  */
-bool uart_rxrdy ( void *obj )
+bool uart_rxrdy ( UART *uart )
 {
-	UART      *uart = reinterpret_cast<UART*>(obj);
-	UART::Map *regs = reinterpret_cast<UART::Map*>( const_cast<void*>(uart->basemem_) );
+	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
 
 	return ( regs->status & static_cast<uint32>(UART::REG_STAT_RX) );
 }
@@ -260,10 +258,9 @@ bool uart_rxrdy ( void *obj )
  * @brief
  * Write char to UART TX buffer.
  */
-void uart_tx ( void *obj, size_t c )
+void uart_tx ( UART *uart, size_t c )
 {
-	UART      *uart = reinterpret_cast<UART*>(obj);
-	UART::Map *regs = reinterpret_cast<UART::Map*>( const_cast<void*>(uart->basemem_) );
+	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
 
 	regs->tx = static_cast<uint32>(c);
 }
@@ -273,10 +270,9 @@ void uart_tx ( void *obj, size_t c )
  * @brief
  * Read char from UART RX buffer.
  */
-size_t uart_rx ( void *obj )
+size_t uart_rx ( UART *uart )
 {
-	UART      *uart = reinterpret_cast<UART*>(obj);
-	UART::Map *regs = reinterpret_cast<UART::Map*>( const_cast<void*>(uart->basemem_) );
+	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
 
 	return regs->rx;
 }

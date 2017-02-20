@@ -61,7 +61,7 @@ public:
 	/**
 	 * Return list items number (size of list).
 	 */
-	size_t size ( void ) {
+	size_t size ( void ) const {
 		return size_;
 	}
 

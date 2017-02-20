@@ -131,22 +131,12 @@ public:
 		LIST_ITEM(Item);
 
 		/**
-		 * Create item object.
-		 */
-		Item ( const char *item_name ) : prev(NULL), next(NULL), name(item_name) { }
-
-		/**
 		 * Result type of menu item handler.
 		 */
 		enum HandlerResult {
 			HANDLER_RESULT_STAY,
 			HANDLER_RESULT_EXIT,
 		};
-
-		/*
-		 * String with item name.
-		 */
-		const char *name;
 
 		/*
 		 * Item handler type.
@@ -156,7 +146,31 @@ public:
 		 * EXAMPLE:
 		 * public: sys::UI_Menu::Item::enum HandlerResult handler (void);
 		 */
-		enum HandlerResult handler ( void );
+		typedef enum HandlerResult (*handler_t) ( void );
+
+		/**
+		 * Create item object.
+		 */
+		Item ( const char *item_name, handler_t handler = reinterpret_cast<handler_t>(dummy_loop) ) :
+			prev(NULL), next(NULL),
+			name(item_name),
+			handler_(handler) { }
+
+		/*
+		 * String with item name.
+		 */
+		const char *name;
+
+		/*
+		 * Call item handler.
+		 */
+		enum HandlerResult handler ( void )
+		{
+			return handler_( );
+		}
+
+	private:
+		handler_t handler_;
 	};
 
 	/**
@@ -173,6 +187,17 @@ public:
 		title_(title)
 	{
 		;
+	}
+
+	/**
+	 * @brief
+	 * Add UI menu paramter object.
+	 *
+	 * @param : [in] point to UI_Menu::Item object.
+	 */
+	void add_item ( Item *item )
+	{
+		itemlist_.add_tail( item );
 	}
 
 	/**
@@ -257,6 +282,15 @@ private:
 	 */
 	void navigate_on_menu ( const char *sequence );
 };
+
+#define UI_MENU_ITEM( n )\
+	enum sys::UI_Menu::Item::HandlerResult n ( void )
+
+#define UI_MENU_ITEM_STAY\
+	sys::UI_Menu::Item::HANDLER_RESULT_STAY
+
+#define UI_MENU_ITEM_EXIT\
+	sys::UI_Menu::Item::HANDLER_RESULT_EXIT
 
 } /* namespace sys */
 

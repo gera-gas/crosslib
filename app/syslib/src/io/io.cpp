@@ -115,6 +115,24 @@ size_t io_write ( InOut *ioctx, const char *pdata, size_t size )
 
 /**
  * @brief
+ * Check char exists on receive.
+ *
+ * @retval true  : char exist.
+ * @retval false : no chars on receive.
+ */
+bool io_kbhit ( InOut *ioctx )
+{
+	if( ioctx->device_->rx_ready() )
+	{
+		return true;
+	}
+
+	return false;
+}
+
+
+/**
+ * @brief
  * IO service contructor.
  *
  * @param [in] : address of IO device object.
@@ -129,6 +147,7 @@ InOut::InOut ( DevicePort *device ) :
 	getch_ = io_getch;
 	read_  = io_read;
 	write_ = io_write;
+	kbhit_ = io_kbhit;
 };
 
 } /* namespace sys */
