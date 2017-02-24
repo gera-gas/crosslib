@@ -1,12 +1,12 @@
 /**
- * @file    io.cpp
+ * @file    InOut.cpp
  * @brief   Input/Output methods emplementation.
  * @author  Gerasimov A.S.
  */
-#include "hal/hal.hpp"
-#include "io/io.hpp"
+#include "hal/Port.hpp"
+#include "io/InOut.hpp"
 
-namespace sys {
+namespace io {
 
 /**
  * @brief
@@ -17,9 +17,9 @@ namespace sys {
  */
 void io_putc ( InOut *ioctx, char c )
 {
-	while( !ioctx->device_->tx_ready() );
+	while( !ioctx->port_->tx_ready() );
 
-	ioctx->device_->tx( c );
+	ioctx->port_->tx( c );
 }
 
 
@@ -59,9 +59,9 @@ void io_puts ( InOut *ioctx, const char *pstr )
  */
 char io_getch ( InOut *ioctx )
 {
-	while( !ioctx->device_->rx_ready() );
+	while( !ioctx->port_->rx_ready() );
 
-	return ioctx->device_->rx( );
+	return ioctx->port_->rx( );
 }
 
 
@@ -122,7 +122,7 @@ size_t io_write ( InOut *ioctx, const char *pdata, size_t size )
  */
 bool io_kbhit ( InOut *ioctx )
 {
-	if( ioctx->device_->rx_ready() )
+	if( ioctx->port_->rx_ready() )
 	{
 		return true;
 	}
@@ -137,8 +137,8 @@ bool io_kbhit ( InOut *ioctx )
  *
  * @param [in] : address of IO device object.
  */
-InOut::InOut ( DevicePort *device ) :
-	device_(device) {
+InOut::InOut ( hal::Port *port ) :
+	port_(port) {
 	/*
 	 * Set default IO methods.
 	 */
@@ -150,4 +150,4 @@ InOut::InOut ( DevicePort *device ) :
 	kbhit_ = io_kbhit;
 };
 
-} /* namespace sys */
+} /* namespace io */

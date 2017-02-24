@@ -1,5 +1,5 @@
 /**
- * @file     tty.c
+ * @file     TeleType.c
  * @brief    Base TTY manipulation functions.
  * @author   Gerasimov A.S.
  * @note
@@ -13,11 +13,11 @@
 #include "stdio/stdio.h"
 #endif
 #include "dummy.h"
-#include "hal/hal.hpp"
-#include "io/io.hpp"
-#include "io/tty/tty.hpp"
+#include "hal/Port.hpp"
+#include "io/InOut.hpp"
+#include "io/tty/TeleType.hpp"
 
-namespace sys {
+namespace tty {
 
 /**
  * @brief
@@ -25,7 +25,7 @@ namespace sys {
  *
  * @param [in] : address of IO object.
  */
-TTY::TTY( InOut *io ) :
+TeleType::TeleType( io::InOut *io ) :
 	newline("\n\r"),
 	/*
 	 * Single char control keys.
@@ -70,10 +70,14 @@ TTY::TTY( InOut *io ) :
  * @param x : [in] new value of X coordinate.
  * @param y : [in] new value of Y coordinate.
  */
-void TTY::cursor_set ( size_t x=1, size_t y=1 )
+void TeleType::cursor_set ( size_t x=1, size_t y=1 )
 {
 	size_t i;
 	char buffer[80];
+
+	if( !esc_cursor_home ) {
+		return;
+	}
 
 	/*
 	 * Set Y position.
@@ -93,4 +97,4 @@ void TTY::cursor_set ( size_t x=1, size_t y=1 )
 	snd( esc_cursor_home, buffer );
 }
 
-} /* namespace sys */
+} /* namespace tty */

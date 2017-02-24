@@ -50,6 +50,9 @@ If locale and USE_BUILTIN_LIBC is not set, compare using only C locale (ASCII).
 Including C++ global initialization/deinitializtion code into
 CPU boot code of [devlib]/[cpu]/[...].
 
+###### -DCXX_RTTI
+If defined, build class with RTTI supports.
+
 ## Build
 Library building is expected as part of your top CMake project.
 Examples of standalone build you can find in `[tools]` directory.

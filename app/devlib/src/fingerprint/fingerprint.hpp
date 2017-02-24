@@ -7,7 +7,8 @@
  * @note
  * Header dependencies:
  *
- * #include "hal.hpp"
+ * #include "hal/Port.hpp"
+ * #include "hal/Device.hpp"
  */
 #include <stddef.h>
 #include "dummy.h"
@@ -17,19 +18,13 @@ namespace dev {
 /**
  * API class for fingerprint scanner devices.
  */
-class Fingerprint {
+class Fingerprint : public hal::Device {
 public:
-	/**
-	 * Contain specific error code.
-	 */
-	int errorcode;
-
 	/**
 	 * Fingerprint consctructor.
 	 */
-	Fingerprint ( sys::DevicePort *fp_port ) :
-		errorcode(0),
-		fp_port_(fp_port)
+	Fingerprint ( hal::Port *fp_port ) :
+		Device(fp_port)
 	{
 		info_     = reinterpret_cast<bool (*)(void*, void*)>(dummy_loop);
 		enroll_   = reinterpret_cast<int (*)(void*)>(dummy_loop);
@@ -103,11 +98,6 @@ public:
 	}
 
 protected:
-	/*
-	 * Point to port device through device connected.
-	 */
-	sys::DevicePort *fp_port_;
-
 	/*
 	 * Overrided point to main API methods.
 	 */

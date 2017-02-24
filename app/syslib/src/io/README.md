@@ -5,6 +5,7 @@ IO descriptor using [UART device](../hal/README.md#hal_uart_anchor) such as IO d
 #include "typedef.h"
 #include "hal.hpp"
 #include "io.hpp"
+#include "tty.hpp"
 #include "uart.hpp"
 
 int main ( void )
@@ -12,13 +13,13 @@ int main ( void )
 	/*
  	 * IO descriptor.
 	 */
-	sys::InOut io( &uart );
+	io::InOut io( &uart );
 
 	io.puts( "Hello World!" );
 	/*
 	 * Crete VT100 descriptor based on IO.
 	 */
-	sys::VT100 tty( &io );
+	tty::Vt100 tty( &io );
 
 	tty.snd( tty_->esc_clear_screen );
 	tty.snd( tty_->esc_cursor_home );

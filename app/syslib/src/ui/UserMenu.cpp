@@ -1,5 +1,5 @@
 /**
- * @file     ui_menu.cpp
+ * @file     UserMenu.cpp
  * @brief    VT-100 menu service functions.
  * @author   Gerasimov A.S.
  * @date     08.11.2012
@@ -14,21 +14,21 @@
 #include "string/string.h"
 #include "stdio/stdio.h"
 #endif
-#include "buffer/buffer.hpp"
-#include "regexp/regexp.hpp"
-#include "hal/hal.hpp"
-#include "io/io.hpp"
-#include "io/tty/tty.hpp"
-#include "ui/ui.hpp"
+#include "hal/Port.hpp"
+#include "io/InOut.hpp"
+#include "io/tty/TeleType.hpp"
+#include "buffer/Array.hpp"
+#include "buffer/List.hpp"
+#include "ui/UserMenu.hpp"
 
-namespace sys {
+namespace ui {
 
 #if 0
 /**
  * @brief
  * Calculate index of current menu item.
  */
-size_t UI_Menu::get_item_index ( void )
+size_t UserMenu::get_item_index ( void )
 {
 	size_t i;
 	Item *item;
@@ -53,7 +53,7 @@ size_t UI_Menu::get_item_index ( void )
  *
  * @param pos : [in] number of down step.
  */
-void UI_Menu::down_cursor ( size_t pos )
+void UserMenu::down_cursor ( size_t pos )
 {
 	char buffer[ 40 ];
 
@@ -75,7 +75,7 @@ void UI_Menu::down_cursor ( size_t pos )
  *
  * @param item_name : [in] point to string with item name.
  */
-void UI_Menu::indicate_item ( const char *item_name )
+void UserMenu::indicate_item ( const char *item_name )
 {
 	/*
 	 * Set REVERSE output mode.
@@ -100,7 +100,7 @@ void UI_Menu::indicate_item ( const char *item_name )
  *
  * @param *menu_ctx : [in] point to menu context.
  */
-void UI_Menu::display_menu ( void )
+void UserMenu::display_menu ( void )
 {
 	Item *item;
 
@@ -147,7 +147,7 @@ void UI_Menu::display_menu ( void )
  * @brief
  * Set previous cursor position on menu items.
  */
-void item_point_move_up ( UI_Menu *pmenu )
+void item_point_move_up ( UserMenu *pmenu )
 {
 	pmenu->current_item_idx_--;
 	pmenu->current_item_ = pmenu->current_item_->prev;
@@ -157,7 +157,7 @@ void item_point_move_up ( UI_Menu *pmenu )
 	if( pmenu->current_item_ == pmenu->itemlist_.head() )
 	{
 		pmenu->current_item_ = pmenu->itemlist_.last();
-		pmenu->current_item_idx_ = pmenu->itemlist_.size() - 1;
+		pmenu->current_item_idx_ = pmenu->itemlist_.len() - 1;
 	}
 }
 
@@ -166,7 +166,7 @@ void item_point_move_up ( UI_Menu *pmenu )
  * @brief
  * Set next cursor position on menu items.
  */
-void item_point_move_down ( UI_Menu *pmenu )
+void item_point_move_down ( UserMenu *pmenu )
 {
 	pmenu->current_item_idx_++;
 	pmenu->current_item_ = pmenu->current_item_->next;
@@ -187,9 +187,9 @@ void item_point_move_down ( UI_Menu *pmenu )
  *
  * @param *sequence : [in] point to received ESC sequence.
  */
-void UI_Menu::navigate_on_menu ( const char *sequence )
+void UserMenu::navigate_on_menu ( const char *sequence )
 {
-	void (*move_item_point)( UI_Menu* );
+	void (*move_item_point)( UserMenu* );
 
 	/*
 	 * Cursor up (up arrow).
@@ -233,7 +233,7 @@ void UI_Menu::navigate_on_menu ( const char *sequence )
  * @brief
  * Start and manage UI menu.
  */
-void UI_Menu::start ( void )
+void UserMenu::start ( void )
 {
 	  char  buffer[40];
 	size_t  len;
@@ -241,7 +241,7 @@ void UI_Menu::start ( void )
 	/*
 	 * Check parameters on exist.
 	 */
-	if( itemlist_.size() == 0 ) {
+	if( itemlist_.len() == 0 ) {
 		return;
 	}
 

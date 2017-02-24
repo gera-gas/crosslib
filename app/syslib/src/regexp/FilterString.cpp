@@ -1,5 +1,5 @@
 /**
- *  @file     fstring.cpp
+ *  @file     FilterString.cpp
  *  @brief    Methods for simple filter string.
  *  @author   Gerasimov A.S.
  */
@@ -12,9 +12,9 @@
 #include <ctype.h>
 #include <string.h>
 #endif
-#include "regexp/regexp.hpp"
+#include "regexp/FilterString.hpp"
 
-namespace sys {
+namespace regexp {
 
 /**
  * @brief
@@ -109,4 +109,4 @@ bool FilterString::match ( const char *pstr )
 	return result;
 }
 
-} /* namespace sys */
+} /* namespace regexp */

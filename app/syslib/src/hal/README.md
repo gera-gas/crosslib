@@ -9,7 +9,7 @@ namespace device {
 /**
  * Class describe UART driver.
  */
-class UART : public sys::DevicePort {
+class Uart : public hal::Port {
 public:
 	/**
 	 * IO control commands for UART.
@@ -54,8 +54,8 @@ public:
 	 *
 	 * @param basemem : [in] Base address of device.
 	 */
-	UART( const void *basemem ) :
-		DevicePort( basemem ) {
+	Uart( const void *basemem ) :
+		Port( basemem ) {
 		/*
 		 * Set exported driver methods.
 		 */
@@ -105,13 +105,13 @@ protected:
 	/*
 	 * UART methods implementation.
 	 */
-	friend void   uart_init  ( UART * );
-	friend void   uart_fini  ( UART * );
-	friend bool   uart_ioctl ( UART *, int, void * );
-	friend bool   uart_txrdy ( UART * );
-	friend bool   uart_rxrdy ( UART * );
-	friend void   uart_tx    ( UART *, size_t );
-	friend size_t uart_rx    ( UART * );
+	friend void   uart_init  ( Uart * );
+	friend void   uart_fini  ( Uart * );
+	friend bool   uart_ioctl ( Uart *, int, void * );
+	friend bool   uart_txrdy ( Uart * );
+	friend bool   uart_rxrdy ( Uart * );
+	friend void   uart_tx    ( Uart *, size_t );
+	friend size_t uart_rx    ( Uart * );
 
 private:
 	/*
@@ -125,9 +125,9 @@ private:
  * Driver method for UART initialize.
  * Set default baud: 115200, mode: 8N1.
  */
-void uart_init ( UART *uart )
+void uart_init ( Uart *uart )
 {
-	UART::MemMap *regs = reinterpret_cast<Map*>( const_cast<void*>(basemem_) );
+	Uart::MemMap *regs = reinterpret_cast<Map*>( const_cast<void*>(basemem_) );
 
 	/* Unable UART CLK */
 	regs->control = static_cast<uint32>(REG_CTRL_ENABLE);
@@ -146,9 +146,9 @@ void uart_init ( UART *uart )
 /**
  * Driver method for UART deinitialize.
  */
-void uart_fini ( UART *uart )
+void uart_fini ( Uart *uart )
 {
-	UART::MemMap *regs = reinterpret_cast<Map*>( const_cast<void*>(basemem_) );
+	Uart::MemMap *regs = reinterpret_cast<Map*>( const_cast<void*>(basemem_) );
 
 	/* Disable UART CLK */
 	regs->control = static_cast<uint32>(REG_CTRL_DISABLE);
@@ -166,29 +166,29 @@ void uart_fini ( UART *uart )
  * @retval true  : success.
  * @retval false : failed.
  */
-bool uart_ioctl ( UART *uart, int cmd, void *param )
+bool uart_ioctl ( Uart *uart, int cmd, void *param )
 {
-	UART::Param *uart_param = reinterpret_cast<UART::Param*>(param);
+	Uart::Param *uart_param = reinterpret_cast<Uart::Param*>(param);
 
 	bool result = true;
 
 
 	switch( cmd )
 	{
-	case UART::IOCTL_GET:
+	case Uart::IOCTL_GET:
 		uart_param->mode = uart->param_.mode;
 		uart_param->baud = uart->param_.baud;
 	break;
 
-	case UART::IOCTL_SET:
+	case Uart::IOCTL_SET:
 		/*
 		 * Check input parameters on current values.
 		 */
 		switch( uart_param->mode )
 		{
-		case UART::MODE_8N1:
-		case UART::MODE_8E2:
-		case UART::MODE_LOOP:
+		case Uart::MODE_8N1:
+		case Uart::MODE_8E2:
+		case Uart::MODE_LOOP:
 		break;
 
 		default:
@@ -197,15 +197,15 @@ bool uart_ioctl ( UART *uart, int cmd, void *param )
 
 		switch( uart_param->baud )
 		{
-		case UART::BAUD_4800:
-		case UART::BAUD_9600:
-		case UART::BAUD_19200:
-		case UART::BAUD_38400:
-		case UART::BAUD_57600:
-		case UART::BAUD_115200:
-		case UART::BAUD_230400:
-		case UART::BAUD_460800:
-		case UART::BAUD_921600:
+		case Uart::BAUD_4800:
+		case Uart::BAUD_9600:
+		case Uart::BAUD_19200:
+		case Uart::BAUD_38400:
+		case Uart::BAUD_57600:
+		case Uart::BAUD_115200:
+		case Uart::BAUD_230400:
+		case Uart::BAUD_460800:
+		case Uart::BAUD_921600:
 		break;
 
 		default:
@@ -234,11 +234,11 @@ bool uart_ioctl ( UART *uart, int cmd, void *param )
  * @brief
  * Return <true> if uart ready to TX.
  */
-bool uart_txrdy ( UART *uart )
+bool uart_txrdy ( Uart *uart )
 {
-	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
+	Uart::MemMap *regs = reinterpret_cast<Uart::MemMap*>( const_cast<void*>(uart->basemem_) );
 
-	return ( regs->status & static_cast<uint32>(UART::REG_STAT_TX) );
+	return ( regs->status & static_cast<uint32>(Uart::REG_STAT_TX) );
 }
 
 
@@ -246,11 +246,11 @@ bool uart_txrdy ( UART *uart )
  * @brief
  * Return <true> if exist data on RX.
  */
-bool uart_rxrdy ( UART *uart )
+bool uart_rxrdy ( Uart *uart )
 {
-	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
+	Uart::MemMap *regs = reinterpret_cast<Uart::MemMap*>( const_cast<void*>(uart->basemem_) );
 
-	return ( regs->status & static_cast<uint32>(UART::REG_STAT_RX) );
+	return ( regs->status & static_cast<uint32>(Uart::REG_STAT_RX) );
 }
 
 
@@ -258,9 +258,9 @@ bool uart_rxrdy ( UART *uart )
  * @brief
  * Write char to UART TX buffer.
  */
-void uart_tx ( UART *uart, size_t c )
+void uart_tx ( Uart *uart, size_t c )
 {
-	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
+	Uart::MemMap *regs = reinterpret_cast<Uart::MemMap*>( const_cast<void*>(uart->basemem_) );
 
 	regs->tx = static_cast<uint32>(c);
 }
@@ -270,9 +270,9 @@ void uart_tx ( UART *uart, size_t c )
  * @brief
  * Read char from UART RX buffer.
  */
-size_t uart_rx ( UART *uart )
+size_t uart_rx ( Uart *uart )
 {
-	UART::MemMap *regs = reinterpret_cast<UART::MemMap*>( const_cast<void*>(uart->basemem_) );
+	Uart::MemMap *regs = reinterpret_cast<Uart::MemMap*>( const_cast<void*>(uart->basemem_) );
 
 	return regs->rx;
 }
@@ -284,12 +284,12 @@ int main ( void )
 	/*
 	 * UART parameters.
 	 */
-	device::UART::Param uart_param;
+	device::Uart::Param uart_param;
 
 	/*
  	 * UART device descriptor.
 	 */
-	device::UART uart( (const void *)0x80004000 );
+	device::Uart uart( (const void *)0x80004000 );
 
 	return 0;
 }

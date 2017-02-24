@@ -78,8 +78,8 @@ int main ( void )
 	printf( "*** Example work of two PT object ***\n");
 
 	while( true ) {
-		PT( pt_foo );
-		PT( pt_bar );
+		PT( pt_foo, PT_FLAG_NONE );
+		PT( pt_bar, PT_FLAG_NONE );
 	}
 
 	return 0;

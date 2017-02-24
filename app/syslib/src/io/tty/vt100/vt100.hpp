@@ -1,22 +1,18 @@
 #ifndef VT100_HPP_
 #define VT100_HPP_
 /**
- * @file     vt100.hpp
+ * @file     Vt100.hpp
  * @brief    VT-100 IO service.
  * @author   Gerasimov A.S.
- * @note
- * Header dependencies:
- *
- * #include "tty.h"
  */
 #include <stddef.h>
 
-namespace sys {
+namespace tty {
 
 /**
  * General TTY type.
  */
-class VT100 : public TTY {
+class Vt100 : public TeleType {
 public:
 	/**
 	 * @brief
@@ -24,7 +20,7 @@ public:
 	 *
 	 * @param [in] : address of IO object.
 	 */
-	VT100( InOut *io );
+	Vt100( io::InOut *io );
 
 private:
 	/*
@@ -50,10 +46,10 @@ private:
 	/*
 	 * VT100 Emplementation SND/RCV methods.
 	 */
-	friend size_t vt100_rcv ( void *ctx, char *buffer, size_t bufsize );
-	friend void   vt100_snd ( void *ctx, const char *esc, const char *param );
+	friend size_t vt100_rcv ( Vt100 *tty, char *buffer, size_t bufsize );
+	friend void   vt100_snd ( Vt100 *tty, const char *esc, const char *param );
 };
 
-} /* namespace sys */
+} /* namespace tty */
 
 #endif  /* VT100_HPP_ */

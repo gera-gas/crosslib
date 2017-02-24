@@ -1,16 +1,17 @@
 /**
- * @file     ui_input.cpp
+ * @file     UserInput.cpp
  * @brief    User interface (UI) input handlers.
  * @author   Gerasimov A.S.
  */
 #include <stddef.h>
 #include <stdbool.h>
-#include "hal/hal.hpp"
-#include "io/io.hpp"
-#include "io/tty/tty.hpp"
-#include "regexp/regexp.hpp"
-#include "buffer/buffer.hpp"
-#include "ui/ui.hpp"
+#include "hal/Port.hpp"
+#include "io/InOut.hpp"
+#include "io/tty/TeleType.hpp"
+#include "regexp/FilterString.hpp"
+#include "buffer/Array.hpp"
+#include "buffer/List.hpp"
+#include "ui/UserInput.hpp"
 #if defined(USE_BUILTIN_LIBC)
 #include <memory.h>
 #include <string.h>
@@ -21,14 +22,14 @@
 #include "stdio/stdio.h"
 #endif
 
-namespace sys {
+namespace ui {
 
 /**
  * @brief
  * Start UI input procedure and manage
  * of users input.
  */
-void UI_Input::start ( void )
+void UserInput::start ( void )
 {
 	size_t i;
 	size_t len;
@@ -38,7 +39,7 @@ void UI_Input::start ( void )
 	/*
 	 * Check parameters on exist.
 	 */
-	if( paramlist_.size() == 0 ) {
+	if( paramlist_.len() == 0 ) {
 		return;
 	}
 
@@ -85,7 +86,6 @@ void UI_Input::start ( void )
 		}
 	}
 	
-
 	param = paramlist_.first();
 	/*
 	 * Set cursor position to first argument.
@@ -116,7 +116,7 @@ void UI_Input::start ( void )
 			if( param == paramlist_.head() )
 			{
 				param = paramlist_.last();
-				i = paramlist_.size();
+				i = paramlist_.len();
 			}
 
 			tty_->cursor_set( strlen(param->startinfo_) + strlen(param->buffer_) + 1, i );
@@ -214,4 +214,21 @@ void UI_Input::start ( void )
 	} /* for */
 }
 
-} /* namespace sys */
+
+/**
+ * @brief
+ * Create object of UI input parameters.
+ *
+ * @param buffer    : [out] address of output buffer.
+ * @param bufsize   : [in] output buffer size in sizeof(char).
+ * @param startinfo : [in] point to string with preliminary input information.
+ * @param filter    : [in] point to filter object or NULL (optional).
+ */
+UserInput::Parameter::Parameter ( char *buffer, size_t bufsize, const char *startinfo, regexp::FilterString *filter=NULL ) :
+	prev(NULL), next(NULL),
+	buffer_(buffer), bufsize_(bufsize),
+	startinfo_(startinfo),
+	filter_(filter)
+{ }
+
+} /* namespace ui */

@@ -1,15 +1,16 @@
 /**
- * @file     zfm70.cpp
- * @brief    Driver for ZFM70 optical fingerprint sanner.
+ * @file     Zfm70.cpp
+ * @brief    Driver for ZFM70 optical fingerprint scanner.
  * @author   Gerasimov A.S.
  */
 #include <stddef.h>
 #include "typedef.h"
 #include "gmacro.h"
-#include "hal/hal.hpp"
-#include "io/io.hpp"
-#include "fingerprint/fingerprint.hpp"
-#include "fingerprint/zfm70/zfm70.hpp"
+#include "hal/Port.hpp"
+#include "hal/Device.hpp"
+#include "io/InOut.hpp"
+#include "fingerprint/Fingerprint.hpp"
+#include "fingerprint/zfm70/Zfm70.hpp"
 #if defined(USE_BUILTIN_LIBC)
 #include <memory.h>
 #else
@@ -32,7 +33,7 @@ namespace dev {
  * @param   data : [in] pointer to the buffer with data.
  * @param   len  : [in] length of data in bytes.
  */
-void ZFM70::package_snd ( enum PID pid, const uint8 *data, size_t len )
+void Zfm70::package_snd ( enum PID pid, const uint8 *data, size_t len )
 {
 	size_t i;
 	uint16 chksum = 0;
@@ -84,7 +85,7 @@ void ZFM70::package_snd ( enum PID pid, const uint8 *data, size_t len )
  * @retval true  : successfully received package, otherwise '0'.
  * @retval false : bad receive.
  */
-bool ZFM70::package_rcv( enum PID *pid, uint8 *data, uint16 *len )
+bool Zfm70::package_rcv( enum PID *pid, uint8 *data, uint16 *len )
 {
 	size_t i;
 	uint16 chksum = 0;
@@ -167,7 +168,7 @@ bool ZFM70::package_rcv( enum PID *pid, uint8 *data, uint16 *len )
  * @return
  * Confirmation code from zfm70.
  */
-enum ZFM70::Acknowledge ZFM70::cmd_transaction ( uint8 *data, uint16 *len )
+enum Zfm70::Acknowledge Zfm70::cmd_transaction ( uint8 *data, uint16 *len )
 {
 	enum PID pid;
 
@@ -183,7 +184,7 @@ enum ZFM70::Acknowledge ZFM70::cmd_transaction ( uint8 *data, uint16 *len )
 		return ACK_FAIL_COMMUNICATE;
 	}
 
-	return (enum ZFM70::Acknowledge)data[0];
+	return (enum Zfm70::Acknowledge)data[0];
 }
 
 
@@ -194,7 +195,7 @@ enum ZFM70::Acknowledge ZFM70::cmd_transaction ( uint8 *data, uint16 *len )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::handshake ( void )
+enum Zfm70::Acknowledge Zfm70::handshake ( void )
 {
 	uint8  buffer[2];
 	uint16 length;
@@ -221,7 +222,7 @@ enum ZFM70::Acknowledge ZFM70::handshake ( void )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::get_image ( void )
+enum Zfm70::Acknowledge Zfm70::get_image ( void )
 {
 	uint8  buffer[2];
 	uint16 length;
@@ -250,7 +251,7 @@ enum ZFM70::Acknowledge ZFM70::get_image ( void )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::img2Tz ( uint8 bufid )
+enum Zfm70::Acknowledge Zfm70::img2Tz ( uint8 bufid )
 {
 	uint8  buffer[2];
 	uint16 length;
@@ -277,7 +278,7 @@ enum ZFM70::Acknowledge ZFM70::img2Tz ( uint8 bufid )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::create_model ( void )
+enum Zfm70::Acknowledge Zfm70::create_model ( void )
 {
 	uint8  buffer[2];
 	uint16 length;
@@ -306,7 +307,7 @@ enum ZFM70::Acknowledge ZFM70::create_model ( void )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::store_model ( uint16 id )
+enum Zfm70::Acknowledge Zfm70::store_model ( uint16 id )
 {
 	uint8  buffer[4];
 	uint16 length;
@@ -337,7 +338,7 @@ enum ZFM70::Acknowledge ZFM70::store_model ( uint16 id )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::load_model ( uint16 id )
+enum Zfm70::Acknowledge Zfm70::load_model ( uint16 id )
 {
 	uint8  buffer[4];
 	uint16 length;
@@ -368,7 +369,7 @@ enum ZFM70::Acknowledge ZFM70::load_model ( uint16 id )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::delete_model ( uint16 id )
+enum Zfm70::Acknowledge Zfm70::delete_model ( uint16 id )
 {
 	uint8  buffer[5];
 	uint16 length;
@@ -398,7 +399,7 @@ enum ZFM70::Acknowledge ZFM70::delete_model ( uint16 id )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::empty_base ( void )
+enum Zfm70::Acknowledge Zfm70::empty_base ( void )
 {
 	uint8  buffer[1];
 	uint16 length;
@@ -427,7 +428,7 @@ enum ZFM70::Acknowledge ZFM70::empty_base ( void )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::search ( uint8 bufid, uint16 *pageid )
+enum Zfm70::Acknowledge Zfm70::search ( uint8 bufid, uint16 *pageid )
 {
 	uint8  buffer[6];
 	uint16 length;
@@ -463,7 +464,7 @@ enum ZFM70::Acknowledge ZFM70::search ( uint8 bufid, uint16 *pageid )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::get_template ( uint16 *tmpnum )
+enum Zfm70::Acknowledge Zfm70::get_template ( uint16 *tmpnum )
 {
 	uint8  buffer[3];
 	uint16 length;
@@ -496,7 +497,7 @@ enum ZFM70::Acknowledge ZFM70::get_template ( uint16 *tmpnum )
  * @return
  * Return confirmation from fingerprint device.
  */
-enum ZFM70::Acknowledge ZFM70::read_info ( SystemParam *sys_param )
+enum Zfm70::Acknowledge Zfm70::read_info ( SystemParam *sys_param )
 {
 	uint8  buffer[sizeof(SystemParam) + 1];
 	uint16 length;
@@ -526,15 +527,15 @@ enum ZFM70::Acknowledge ZFM70::read_info ( SystemParam *sys_param )
  * @retval true  : success.
  * @retval false : failed.
  */
-bool zfm70_info ( ZFM70 *zfm70, void *outbuffer )
+bool zfm70_info ( Zfm70 *zfm70, void *outbuffer )
 {
-	enum ZFM70::Acknowledge ack;
+	enum Zfm70::Acknowledge ack;
 
 	//delay(1000);
 
 	ack = zfm70->handshake( );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return false;
@@ -542,9 +543,9 @@ bool zfm70_info ( ZFM70 *zfm70, void *outbuffer )
 
 	//delay(1000);
 
-	ack = zfm70->read_info( (ZFM70::SystemParam *)outbuffer );
+	ack = zfm70->read_info( (Zfm70::SystemParam *)outbuffer );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return false;
@@ -561,9 +562,9 @@ bool zfm70_info ( ZFM70 *zfm70, void *outbuffer )
  * @retval >=0 : Page ID (Flash location of the template).
  * @retval  <0 : failed.
  */
-int zfm70_enroll ( ZFM70 *zfm70 )
+int zfm70_enroll ( Zfm70 *zfm70 )
 {
-	enum ZFM70::Acknowledge ack;
+	enum Zfm70::Acknowledge ack;
 
 	for( int i = 0; i < 2; )
 	{
@@ -573,9 +574,9 @@ int zfm70_enroll ( ZFM70 *zfm70 )
 		do {
 			ack = zfm70->get_image( );
 		}
-		while( ack == ZFM70::ACK_NO_FINGER );
+		while( ack == Zfm70::ACK_NO_FINGER );
 
-		if( ack != ZFM70::ACK_COMPLETE )
+		if( ack != Zfm70::ACK_COMPLETE )
 		{
 			zfm70->errorcode = ack;
 			return -1;
@@ -586,7 +587,7 @@ int zfm70_enroll ( ZFM70 *zfm70 )
 		 */
 		ack = zfm70->img2Tz( ++i );
 
-		if( ack != ZFM70::ACK_COMPLETE )
+		if( ack != Zfm70::ACK_COMPLETE )
 		{
 			zfm70->errorcode = ack;
 			return -1;
@@ -598,7 +599,7 @@ int zfm70_enroll ( ZFM70 *zfm70 )
 	 */
 	ack = zfm70->create_model( );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return -1;
@@ -610,7 +611,7 @@ int zfm70_enroll ( ZFM70 *zfm70 )
 	 */
 	ack = zfm70->get_template( &tmpnum );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return -1;
@@ -621,7 +622,7 @@ int zfm70_enroll ( ZFM70 *zfm70 )
 	 */
 	ack = zfm70->store_model( tmpnum );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return -1;
@@ -640,13 +641,13 @@ int zfm70_enroll ( ZFM70 *zfm70 )
  * @retval true  : success.
  * @retval false : failed.
  */
-bool zfm70_remove ( ZFM70 *zfm70, int pageid )
+bool zfm70_remove ( Zfm70 *zfm70, int pageid )
 {
-	enum ZFM70::Acknowledge ack;
+	enum Zfm70::Acknowledge ack;
 
 	ack = zfm70->delete_model( pageid );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return false;
@@ -663,13 +664,13 @@ bool zfm70_remove ( ZFM70 *zfm70, int pageid )
  * @retval true  : success.
  * @retval false : failed.
  */
-bool zfm70_clear ( ZFM70 *zfm70 )
+bool zfm70_clear ( Zfm70 *zfm70 )
 {
-	enum ZFM70::Acknowledge ack;
+	enum Zfm70::Acknowledge ack;
 
 	ack = zfm70->empty_base( );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return false;
@@ -686,9 +687,9 @@ bool zfm70_clear ( ZFM70 *zfm70 )
  * @retval >=0 : Page ID (Flash location of the template).
  * @retval  <0 : failed.
  */
-int zfm70_identify ( ZFM70 *zfm70 )
+int zfm70_identify ( Zfm70 *zfm70 )
 {
-	enum ZFM70::Acknowledge ack;
+	enum Zfm70::Acknowledge ack;
 	
 	/*
 	 * Create finger image.
@@ -696,9 +697,9 @@ int zfm70_identify ( ZFM70 *zfm70 )
 	do {
 		ack = zfm70->get_image( );
 	}
-	while( ack == ZFM70::ACK_NO_FINGER );
+	while( ack == Zfm70::ACK_NO_FINGER );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return -1;
@@ -709,7 +710,7 @@ int zfm70_identify ( ZFM70 *zfm70 )
 	 */
 	ack = zfm70->img2Tz( 1 );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return -1;
@@ -721,7 +722,7 @@ int zfm70_identify ( ZFM70 *zfm70 )
 	 */
 	ack = zfm70->search( 1, &pageid );
 
-	if( ack != ZFM70::ACK_COMPLETE )
+	if( ack != Zfm70::ACK_COMPLETE )
 	{
 		zfm70->errorcode = ack;
 		return -1;
@@ -738,7 +739,7 @@ int zfm70_identify ( ZFM70 *zfm70 )
  * @param fp_port        : [in] Point to device IO object.
  * @param module_address : [in] Package address (optional).
  */
-ZFM70::ZFM70 ( sys::DevicePort *fp_port, uint32 module_address = 0xFFFFFFFF ) :
+Zfm70::Zfm70 ( hal::Port *fp_port, uint32 module_address = 0xFFFFFFFF ) :
 	Fingerprint(fp_port),
 	io_(fp_port),
 	module_address_(module_address)

@@ -5,11 +5,6 @@ set( PROJECT_OUT       ${CMAKE_CURRENT_BINARY_DIR} )
 set( PROJECT_INSTALL   ${CMAKE_CURRENT_BINARY_DIR}/export )
 set( PROJECT_GENERATED ${CMAKE_CURRENT_SOURCE_DIR}/common/generated )
 
-add_subdirectory( app/libc )
-add_subdirectory( app/gcclib )
-add_subdirectory( app/syslib )
-add_subdirectory( app/devlib )
-
 ################################################################################
 # CONFIGURE
 ################################################################################
@@ -19,7 +14,7 @@ add_subdirectory( app/devlib )
 # Build demo executables.
 #
 if( DEFINED BUILD_DEMO )
-    add_subdirectory( app/demo )
+    set( BUILD_DEMO "ENABLE" )
 endif()
 
 # -DASSERT=[0,1,2]
@@ -121,8 +116,26 @@ if( DEFINED CPUINIT_CXX )
     set( CPUINIT_CXX "1" )
 endif()
 
+# -DCXX_RTTI
+#
+# If defined, build class with RTTI supports.
+#
+if( DEFINED CXX_RTTI )
+    set( CXX_RTTI "1" )
+endif()
+
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/config.h.in ${PROJECT_GENERATED}/config.h @ONLY)
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/typedef.h.in ${PROJECT_GENERATED}/typedef.h @ONLY)
+
+# add subprojects.
+add_subdirectory( app/libc )
+add_subdirectory( app/gcclib )
+add_subdirectory( app/syslib )
+add_subdirectory( app/devlib )
+
+if( ${BUILD_DEMO} MATCHES "ENABLE" )
+    add_subdirectory( app/demo )
+endif()
 
 # Install common headers.
 file( GLOB_RECURSE COMMON_HEADERS ${PROJECT_ROOT}/common/*.h )

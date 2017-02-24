@@ -78,7 +78,7 @@ typedef struct pt_st {
 /**
  * Starting PT without arguments.
  */
-#define PT( pt ) pt_start( &pt, NULL, NULL )
+#define PT( pt, flags ) pt_start( &pt, NULL, NULL, flags )
 
 /**
  * Starting PT and wait until they will be finished.

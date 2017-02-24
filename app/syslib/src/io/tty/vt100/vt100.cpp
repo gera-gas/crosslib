@@ -1,16 +1,16 @@
 /**
- * @file     vt100.cpp
+ * @file     Vt100.cpp
  * @brief    VT-100 IO service.
  * @author   Gerasimov A.S.
  * @note
  */
 #include <stddef.h>
-#include "hal/hal.hpp"
-#include "io/io.hpp"
-#include "io/tty/tty.hpp"
-#include "io/tty/vt100/vt100.hpp"
+#include "hal/Port.hpp"
+#include "io/InOut.hpp"
+#include "io/tty/TeleType.hpp"
+#include "io/tty/vt100/Vt100.hpp"
 
-namespace sys {
+namespace tty {
 
 /**
  * @brief 
@@ -23,12 +23,10 @@ namespace sys {
  * @return
  * Received message size in bytes.
  */
-size_t vt100_rcv ( void *ctx, char *buffer, size_t bufsize )
+size_t vt100_rcv ( Vt100 *tty, char *buffer, size_t bufsize )
 {
 	char   c;
 	size_t len;
-
-	VT100 *tty = reinterpret_cast<VT100*>(ctx);
 
 	for( len = 0; ; )
 	{
@@ -73,10 +71,8 @@ size_t vt100_rcv ( void *ctx, char *buffer, size_t bufsize )
  * @param esc   : [in] string with ESC sequence.
  * @param param : [in] string with parameters for sequence or NULL.
  */
-void vt100_snd ( void *ctx, const char *esc, const char *param )
+void vt100_snd ( Vt100 *tty, const char *esc, const char *param )
 {
-	VT100 *tty = reinterpret_cast<VT100*>(ctx);
-
 	/*
 	 * Output body of ESC string.
 	 *
@@ -109,8 +105,8 @@ void vt100_snd ( void *ctx, const char *esc, const char *param )
  *
  * @param [in] : address of IO object.
  */
-VT100::VT100( InOut *io ) :
-	TTY(io),
+Vt100::Vt100( io::InOut *io ) :
+	TeleType(io),
 	/*
 	 * VT100 ESC sequences definition.
 	 */
@@ -154,8 +150,8 @@ VT100::VT100( InOut *io ) :
 	/*
 	 * Redefine public TTY methods to VT100 methods.
 	 */
-	rcv_ = vt100_rcv;
-	snd_ = vt100_snd;
+	rcv_ = reinterpret_cast<size_t (*)(void*,char*,size_t)>(vt100_rcv);
+	snd_ = reinterpret_cast<void (*)(void*,const char*,const char*)>(vt100_snd);
 }
 
-} /* namespace sys */
+} /* namespace tty */

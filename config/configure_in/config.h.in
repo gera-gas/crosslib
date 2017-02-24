@@ -39,4 +39,9 @@
  */
 #cmakedefine CPUINIT_CXX @CPUINIT_CXX@
 
+/**
+ * If defined, build class with RTTI supports.
+ */
+#cmakedefine CXX_RTTI @CXX_RTTI@
+
 #endif  /*  CONFIG_H_  */

@@ -1,8 +1,8 @@
 #ifndef ZFM70_HPP_
 #define ZFM70_HPP_
 /**
- * @file     zfm70.hpp
- * @brief    Driver for ZFM70 optical fingerprint sanner.
+ * @file     Zfm70.hpp
+ * @brief    Driver for ZFM70 optical fingerprint scanner.
  * @author   Gerasimov A.S.
  * @note
  * More information and DEMO windows application
@@ -10,8 +10,8 @@
  *
  * Header dependencies:
  *
- * #include "io.h"
- * #include "fingerprint.h"
+ * #include "io.hpp"
+ * #include "fingerprint.hpp"
  */
 #include <stddef.h>
 #include "typedef.h"
@@ -19,19 +19,19 @@
 namespace dev {
 
 /**
- * Driver for ZFM70 optical fingerprint sanner.
+ * Driver for ZFM70 optical fingerprint scanner.
  */
-class ZFM70 : public Fingerprint {
+class Zfm70 : public Fingerprint {
 public:
 	/**
 	 * ZFM70 device descriptor consctructor.
 	 */
-	ZFM70 ( sys::DevicePort *, uint32 );
+	Zfm70 ( hal::Port *, uint32 );
 
 	/**
 	 * ZFM70 device commands.
 	 */
-	enum Commands {
+	enum Command {
 		CMD_GETIMG        = 0x01,
 		CMD_IMG2TZ        = 0x02,
 		CMD_MATCH         = 0x03,
@@ -124,7 +124,7 @@ private:
 	/*
 	 * Object for IO.
 	 */
-	sys::InOut io_;
+	io::InOut io_;
 
 	/**
 	 * Package identifier type definition
@@ -179,11 +179,11 @@ private:
 	/*
 	 * Functions for overriding parent virtual methods.
 	 */
-	friend bool zfm70_info     ( ZFM70 *zfm70, void *outbuffer );
-	friend int  zfm70_enroll   ( ZFM70 *zfm70 );
-	friend bool zfm70_remove   ( ZFM70 *zfm70, int pageid );
-	friend bool zfm70_clear    ( ZFM70 *zfm70 );
-	friend int  zfm70_identify ( ZFM70 *zfm70 );
+	friend bool zfm70_info     ( Zfm70 *zfm70, void *outbuffer );
+	friend int  zfm70_enroll   ( Zfm70 *zfm70 );
+	friend bool zfm70_remove   ( Zfm70 *zfm70, int pageid );
+	friend bool zfm70_clear    ( Zfm70 *zfm70 );
+	friend int  zfm70_identify ( Zfm70 *zfm70 );
 };
 
 } /* namespace dev */

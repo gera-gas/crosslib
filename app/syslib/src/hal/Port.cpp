@@ -1,20 +1,20 @@
 /**
- * @file     hal.cpp
+ * @file     Port.cpp
  * @brief    Hardware Abstraction Level (HAL).
  * @author   Gerasimov A.S.
  * @date     2013-08-07 15:26:14 +0400
  */
-#include "hal.hpp"
+#include "hal/Port.hpp"
 
-namespace sys {
+namespace hal {
 
 /**
  * @brief
- * Device contructor.
+ * Port contructor.
  *
  * @param basemem : [in] Base address of device.
  */
-DevicePort::DevicePort( const void *basemem ) :
+Port::Port( const void *basemem ) :
 	basemem_(basemem),
 	tx_buffer_(NULL),
 	tx_bufsize_(0),
@@ -38,4 +38,4 @@ DevicePort::DevicePort( const void *basemem ) :
 	irq_callback_tx_ = reinterpret_cast<void (*)(void*)>(dummy_loop);
 };
 
-} /* namespace sys */
+} /* namespace hal */
