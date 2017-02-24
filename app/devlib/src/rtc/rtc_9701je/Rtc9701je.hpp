@@ -50,6 +50,14 @@ private:
 	 */ 
 	void  byte_snd ( uint8 regnum, uint8 databyte );
 	uint8 byte_rcv ( uint8 regnum );
+
+	/*
+	 * Device specifically methods for RTC API.
+	 */
+	friend void rtc9701je_get_time ( Rtc9701je *rtc9701je, Rtc::Time *time );
+	friend void rtc9701je_set_time ( Rtc9701je *rtc9701je, const Rtc::Time *time );
+	friend void rtc9701je_get_date ( Rtc9701je *rtc9701je, Rtc::Date *date );
+	friend void rtc9701je_set_date ( Rtc9701je *rtc9701je, const Rtc::Date *date );
 };
 
 } /* namespace dev */

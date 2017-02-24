@@ -69,6 +69,54 @@ uint8 Rtc9701je::byte_rcv ( uint8 regnum )
 
 /**
  * @brief
+ * Get time driver methods.
+ */
+void rtc9701je_get_time ( Rtc9701je *rtc9701je, Rtc::Time *time )
+{
+	time->second = rtc9701je->byte_rcv( REGS->sec );
+	time->minute = rtc9701je->byte_rcv( REGS->min );
+	time->hour   = rtc9701je->byte_rcv( REGS->hour );
+}
+
+
+/**
+ * @brief
+ * Set time driver methods.
+ */
+void rtc9701je_set_time ( Rtc9701je *rtc9701je, const Rtc::Time *time )
+{
+	rtc9701je->byte_snd( REGS->sec,  time->second );
+	rtc9701je->byte_snd( REGS->min,  time->minute );
+	rtc9701je->byte_snd( REGS->hour, time->hour   );
+}
+
+
+/**
+ * @brief
+ * Get date driver methods.
+ */
+void rtc9701je_get_date ( Rtc9701je *rtc9701je, Rtc::Date *date )
+{
+	date->day   = rtc9701je->byte_rcv( REGS->day );
+	date->month = rtc9701je->byte_rcv( REGS->month );
+	date->year  = rtc9701je->byte_rcv( REGS->year );
+}
+
+
+/**
+ * @brief
+ * Set date driver methods.
+ */
+void rtc9701je_set_date ( Rtc9701je *rtc9701je, const Rtc::Date *date )
+{
+	rtc9701je->byte_snd( REGS->day,   date->day   );
+	rtc9701je->byte_snd( REGS->month, date->month );
+	rtc9701je->byte_snd( REGS->year,  date->year  );
+}
+
+
+/**
+ * @brief
  * RRTC-9701JE device descriptor consctructor.
  *
  * @param fp_port        : [in] Point to device IO object.
@@ -78,7 +126,10 @@ Rtc9701je::Rtc9701je ( hal::Port *rtc_port ) :
 	Rtc(rtc_port),
 	io_(rtc_port)
 {
-	;
+	get_time_ = reinterpret_cast<void (*)(void*, Rtc::Time*)>(rtc9701je_get_time);
+	set_time_ = reinterpret_cast<void (*)(void*, const Rtc::Time*)>(rtc9701je_set_time);
+	get_date_ = reinterpret_cast<void (*)(void*, Rtc::Date*)>(rtc9701je_get_date);
+	set_date_ = reinterpret_cast<void (*)(void*, const Rtc::Date*)>(rtc9701je_set_date);
 }
 
 } /* namespace dev */
