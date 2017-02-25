@@ -36,6 +36,16 @@ private:
 
 template <class T> T* Singleton<T>::singleton_=NULL;
 
+/**
+ * @brief
+ * Create global singleton object.
+ *
+ * @param t : [in] Type (class) name.
+ * @param n : [in] Object name.
+ */
+#define SINGLETON( t, n )\
+	typedef helper::Singleton<t> n;
+
 } /* namespace helper */
 
 #endif /* SINGLETON_HPP_ */

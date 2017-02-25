@@ -25,3 +25,6 @@ target_link_libraries( ${APP_NAME}_pt libsys.a )
 
 add_executable( ${APP_NAME}_fixlock ${SRC_PATH}/demo_fixlock.c )
 target_link_libraries( ${APP_NAME}_fixlock libsys.a )
+
+add_executable( ${APP_NAME}_singleton ${SRC_PATH}/demo_singleton.cpp )
+target_link_libraries( ${APP_NAME}_singleton libsys.a )
