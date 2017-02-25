@@ -14,20 +14,30 @@
 namespace buffer {
 
 /**
- * Implementation of doubly linked list.
+ * List core type.
  */
-template <class T> class List : public Array {
+template <class T> class ListCore
+{
 public:
 	T *prev;
 	T *next;
 
+	ListCore( T *init ) : prev(init), next(init) { }
+};
+
+
+/**
+ * Implementation of doubly linked list.
+ */
+template <class T> class List : public ListCore<T>,
+                                public Array {
+public:
 	/**
 	 * Default list constructor.
 	 */
 	List ( void ) :
-		Array(),
-		prev(TOCAST(T,this)),
-		next(TOCAST(T,this))
+		ListCore<T>(TOCAST(T,this)),
+		Array()
 	{ }
 
 	/**
@@ -35,11 +45,11 @@ public:
 	 */
 	void add_tail ( T *e )
 	{
-		e->prev = prev;
+		e->prev = this->prev;
 		e->next = TOCAST(T,this);
 
-		prev->next = e;
-		prev       = e;
+		this->prev->next = e;
+		this->prev       = e;
 
 		length++;
 	}

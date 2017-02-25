@@ -28,7 +28,7 @@ endif()
 if( ${ASSERT} MATCHES "[012]" )
     set( CFG_ASSERTION ${ASSERT} )
 else()
-    set( CFG_ASSERTION "0" )
+    set( CFG_ASSERTION "1" )
 endif()
 
 # -Dint8=<C-type name>

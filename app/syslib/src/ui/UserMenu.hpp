@@ -84,9 +84,7 @@ public:
 		current_item_(NULL),
 		current_item_idx_(0),
 		title_(title)
-	{
-		;
-	}
+	{ }
 
 	/**
 	 * @brief
