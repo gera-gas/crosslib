@@ -13,7 +13,7 @@
 #include "buffer/List.hpp"
 #include "ui/UserInput.hpp"
 #if defined(USE_BUILTIN_LIBC)
-#include <memory.h>
+//#include <memory.h>
 #include <string.h>
 #include <stdio.h>
 #else

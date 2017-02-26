@@ -12,7 +12,7 @@
 #include "fingerprint/Fingerprint.hpp"
 #include "fingerprint/zfm70/Zfm70.hpp"
 #if defined(USE_BUILTIN_LIBC)
-#include <memory.h>
+#include <string.h>
 #else
 #include "memory/memory.h"
 #endif

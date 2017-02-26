@@ -27,4 +27,4 @@ endif()
 # Set build flags.
 set( CMAKE_C_FLAGS "-mthumb -mcpu=cortex-m3 -Wall -mlittle-endian" CACHE INTERNAL "c compiler flags")
 set( CMAKE_CXX_FLAGS "-mthumb -mcpu=cortex-m3 -Wall" CACHE INTERNAL "cxx compiler flags")
-set( CMAKE_EXE_LINKER_FLAGS "-nostartfiles -mthumb -mcpu=cortex-m3 -L${TOOLCHAIN_DIR_LIB}" CACHE INTERNAL "exe link flags")
+set( CMAKE_EXE_LINKER_FLAGS "-nostartfiles -mthumb -mcpu=cortex-m3 -Xlinker -L${TOOLCHAIN_DIR_LIB}" CACHE INTERNAL "exe link flags")

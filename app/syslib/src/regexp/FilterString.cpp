@@ -32,7 +32,11 @@ bool FilterString::match ( char c )
 	switch( filter_type_ )
 	{
 	case TYPE_BINCHAR:
+#if ( defined(USE_BUILTIN_LIBC) || defined(USE_REGEXP_LOCALE) )
+		if( c != '0' && c != '1' )
+#else
 		if( !ascii_isbdigit( c ) )
+#endif
 		{
 			result = false;
 		}
@@ -40,7 +44,11 @@ bool FilterString::match ( char c )
 	break;
 
 	case TYPE_DECCHAR:
+#if ( defined(USE_BUILTIN_LIBC) || defined(USE_REGEXP_LOCALE) )
+		if( !isdigit( c ) )
+#else
 		if( !ascii_isdigit( c ) )
+#endif
 		{
 			result = false;
 		}
@@ -48,7 +56,11 @@ bool FilterString::match ( char c )
 	break;
 
 	case TYPE_HEXCHAR:
+#if ( defined(USE_BUILTIN_LIBC) || defined(USE_REGEXP_LOCALE) )
+		if( !isxdigit( c ) )
+#else
 		if( !ascii_isxdigit( c ) )
+#endif
 		{
 			result = false;
 		}
