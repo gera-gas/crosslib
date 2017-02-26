@@ -26,17 +26,13 @@ namespace dev {
  */
 void Rtc9701je::byte_snd ( uint8 regnum, uint8 databyte )
 {
-	uint16  request;
-	
 	/*
 	 * Create command 16-bit word for write.
 	 * bit[0] = 1 ==> read  (LSB -> MSB)
 	 * bit[0] = 0 ==> write (LSB -> MSB)
 	 */
-	request = ((regnum & 0x7F) << 8) | databyte;
-	
-	io_.putc( HPART16(request) );
-	io_.putc( LPART16(request) );
+	io_.putc( regnum & 0x7F );
+	io_.putc( databyte );
 }
 
 
@@ -51,17 +47,13 @@ void Rtc9701je::byte_snd ( uint8 regnum, uint8 databyte )
  */
 uint8 Rtc9701je::byte_rcv ( uint8 regnum )
 {
-	uint16  request;
-	
 	/*
 	 * Create command 16-bit word for read.
 	 * bit[0] = 1 ==> read  (LSB -> MSB)
 	 * bit[0] = 0 ==> write (LSB -> MSB)
 	 */
-	request = ((regnum | 0x80) << 8) | 0;
-	
-	io_.putc( HPART16(request) );
-	io_.putc( LPART16(request) );
+	io_.putc( regnum | 0x80 );
+	io_.putc( 0 );
 
 	return io_.getch( );
 }

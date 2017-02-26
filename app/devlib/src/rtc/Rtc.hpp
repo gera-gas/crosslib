@@ -12,6 +12,7 @@
  */
 #include <stddef.h>
 #include "typedef.h"
+#include "gmacro.h"
 #include "dummy.h"
 
 namespace dev {
@@ -94,16 +95,20 @@ public:
 	}
 
 	/**
+	 * @brief
 	 * Convert byte from BCD to ASCII.
+	 *
+	 * @param bcd_byte : [in] input byte in bcd format.
+	 * @param buffer   : [out] address of output buffer.
+	 *
+	 * @note
+	 * Buffer size must be greater or equal 3 byte.
 	 */
-	uint32 bcd2ascii ( uint8 bcd_byte )
+	void bcd2ascii ( uint8 bcd_byte, char buffer[3] )
 	{
-		uint32 ascii_data;
-	
-		ascii_data  = ( (bcd_byte & 0x000000F0) ^ 0x300 ) << 20;
-		ascii_data |= ( (bcd_byte & 0x0000000F) ^ 0x30 ) << 16;
-	
-		return ascii_data;
+		buffer[0] = HPART8(bcd_byte) + '0';
+		buffer[1] = LPART8(bcd_byte) + '0';
+		buffer[2] = '\0';
 	}
 
  	/**
