@@ -42,8 +42,6 @@ endif()
 set( LDSCRIPT_DEFAULT "${TOOLCHAIN_DIR_LD}/msp430.x" CACHE INTERNAL "")
 
 # Set general options.
-#set( CMAKE_C_FLAGS "-mmcu=msp430f5529 -Wall -gdwarf-2" CACHE INTERNAL "c compiler flags")
 set( CMAKE_C_FLAGS "-mmcu=msp430f5529 -Wall" CACHE INTERNAL "c compiler flags")
-#set( CMAKE_EXE_LINKER_FLAGS "-mmcu=msp430f5529 -L${TOOLCHAIN_DIR_LD} -L${TOOLCHAIN_DIR_LDM} -L${TOOLCHAIN_DIR_LIB}" CACHE INTERNAL "exe link flags")
+set( CMAKE_CXX_FLAGS "-mmcu=msp430f5529 -Wall" CACHE INTERNAL "cxx compiler flags")
 set( CMAKE_EXE_LINKER_FLAGS "-mmcu=msp430f5529 -L${TOOLCHAIN_DIR_LDM}" CACHE INTERNAL "exe link flags")
-

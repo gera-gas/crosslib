@@ -34,7 +34,7 @@ private:
 	Singleton& operator= (Singleton const&);
 };
 
-template <class T> T* Singleton<T>::singleton_=NULL;
+template <class T> T* Singleton<T>::singleton_ = NULL;
 
 /**
  * @brief

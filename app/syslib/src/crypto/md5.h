@@ -1,5 +1,5 @@
-#ifndef _MD5_H
-#define _MD5_H
+#ifndef MD5_H_
+#define MD5_H_
 /**
  *  @file     md5.h
  *  @brief    MD5 hash algorithm implementaion.
@@ -24,4 +24,4 @@ bool md5_final  ( MD5_ctx *pctx, void *md );
 }
 #endif
 
-#endif  /*  _MD5_H  */
+#endif  /*  MD5_H_  */

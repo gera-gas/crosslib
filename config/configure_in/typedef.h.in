@@ -12,13 +12,9 @@
 #include <stdint.h>
 #endif
 
-#define IN
-#define OUT
-#define nil  0
+#define nil 0
 
 #ifndef __ASM__
-
-#define IO volatile
 
 #ifndef NULL
 #define NULL ((void *)nil)
