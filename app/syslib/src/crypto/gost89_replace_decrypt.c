@@ -24,7 +24,7 @@ void gost89_replace_decrypt ( gost89_ctx_t *ctx, uint32 *dst, const uint32 *src,
 
 	for( c0 = ( ((len-1) >> 3) + 1 ); c0; c0-- )
 	{
-		gost_block_decrypt( ctx, dst, src );
+		gost89_block_decrypt( ctx, dst, src );
 		
 		src += 2;
 		dst += 2;

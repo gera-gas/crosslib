@@ -27,7 +27,7 @@ void gost89_gamming ( gost89_ctx_t *ctx, uint32 *dst, const uint32 *src, size_t 
 	         uint32  gamma[2];
 	
 	
-	gost_block_encrypt( ctx, gamma, ctx->sync_message );
+	gost89_block_encrypt( ctx, gamma, ctx->sync_message );
 	
 	n1 = gamma[0];
 	n2 = gamma[1];
@@ -45,7 +45,7 @@ void gost89_gamming ( gost89_ctx_t *ctx, uint32 *dst, const uint32 *src, size_t 
 		gamma[0] = n1;
 		gamma[1] = n2;
 		
-		gost_block_encrypt( gamma, gamma );
+		gost89_block_encrypt( ctx, gamma, gamma );
 		
 		*dst++ = gamma[0] ^ *src++;
 		*dst++ = gamma[1] ^ *src++;
