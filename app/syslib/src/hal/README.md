@@ -59,15 +59,15 @@ public:
 		/*
 		 * Set exported driver methods.
 		 */
-		init_  = reinterpret_cast<void (*)(void*)>(uart_init);
-		fini_  = reinterpret_cast<void (*)(void*)>(uart_fini);
-		ioctl_ = reinterpret_cast<bool (*)(void*,int,void*)>(uart_ioctl);
+		virtual_init  = reinterpret_cast<void (*)(void*)>(uart_init);
+		virtual_fini  = reinterpret_cast<void (*)(void*)>(uart_fini);
+		virtual_ioctl = reinterpret_cast<bool (*)(void*,int,void*)>(uart_ioctl);
 
-		tx_ready_ = reinterpret_cast<bool (*)(void*)>(uart_txrdy);
-		rx_ready_ = reinterpret_cast<bool (*)(void*)>(uart_rxrdy);
+		virtual_tx_ready = reinterpret_cast<bool (*)(void*)>(uart_txrdy);
+		virtual_rx_ready = reinterpret_cast<bool (*)(void*)>(uart_rxrdy);
 
-		tx_ = reinterpret_cast<void (*)(void*,size_t)>(uart_tx);
-		rx_ = reinterpret_cast<size_t (*)(void*)>(uart_rx);
+		virtual_tx = reinterpret_cast<void (*)(void*,size_t)>(uart_tx);
+		virtual_rx = reinterpret_cast<size_t (*)(void*)>(uart_rx);
 	};
 
 protected:

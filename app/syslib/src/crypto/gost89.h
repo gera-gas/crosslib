@@ -5,6 +5,8 @@
  *  @brief   Export GOST 28147-89 functions.
  *  @author  Gerasimov A.S.
  */
+#include <stddef.h>
+
 typedef struct gost89_ctx_st {
 	uint32  key[8];
 	uint32  sync_message[2];

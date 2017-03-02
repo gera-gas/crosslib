@@ -79,24 +79,26 @@ public:
 	/*
 	 * Public (virtual) TTY methods.
 	 */
-
 	size_t rcv ( char *s, size_t n )
 	{
-		return rcv_( this, s, n );
+		return virtual_rcv( this, s, n );
 	}
 
 	void snd ( const char *s, const char *p=NULL )
 	{
-		snd_( this, s, p );
+		virtual_snd( this, s, p );
 	}
+
+	typedef size_t (*rcv_t) ( void *, char *, size_t );
+	typedef void (*snd_t) ( void *, const char *, const char * );
 
 protected:
 	io::InOut *io_;
 	/*
 	 * Points to TTY IO methods.
 	 */
-	size_t (*rcv_) ( void *, char *, size_t );
-	void   (*snd_) ( void *, const char *, const char * );
+	rcv_t virtual_rcv;
+	snd_t virtual_snd;
 };
 
 } /* namespace tty */

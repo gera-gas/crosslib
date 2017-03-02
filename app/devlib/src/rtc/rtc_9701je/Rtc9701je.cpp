@@ -118,10 +118,10 @@ Rtc9701je::Rtc9701je ( hal::Port *rtc_port ) :
 	Rtc(rtc_port),
 	io_(rtc_port)
 {
-	get_time_ = reinterpret_cast<void (*)(void*, Rtc::Time*)>(rtc9701je_get_time);
-	set_time_ = reinterpret_cast<void (*)(void*, const Rtc::Time*)>(rtc9701je_set_time);
-	get_date_ = reinterpret_cast<void (*)(void*, Rtc::Date*)>(rtc9701je_get_date);
-	set_date_ = reinterpret_cast<void (*)(void*, const Rtc::Date*)>(rtc9701je_set_date);
+	virtual_get_time = reinterpret_cast<void (*)(void*, Rtc::Time*)>(rtc9701je_get_time);
+	virtual_set_time = reinterpret_cast<void (*)(void*, const Rtc::Time*)>(rtc9701je_set_time);
+	virtual_get_date = reinterpret_cast<void (*)(void*, Rtc::Date*)>(rtc9701je_get_date);
+	virtual_set_date = reinterpret_cast<void (*)(void*, const Rtc::Date*)>(rtc9701je_set_date);
 }
 
 } /* namespace dev */

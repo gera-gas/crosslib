@@ -33,94 +33,94 @@ public:
 
 	void init ( void )
 	{
-		init_( this );
+		virtual_init( this );
 	};
 
 	void fini ( void )
 	{
-		fini_( this );
+		virtual_fini( this );
 	}
 
 	bool ioctl ( int cmd, void *param )
 	{
-		return ioctl_( this, cmd, param );
+		return virtual_ioctl( this, cmd, param );
 	}
 
 	bool tx_ready ( void )
 	{
-		return tx_ready_( this );
+		return virtual_tx_ready( this );
 	}
 
 	bool rx_ready ( void )
 	{
-		return rx_ready_( this );
+		return virtual_rx_ready( this );
 	};
 
 	void tx ( size_t data )
 	{
-		tx_( this, data );
+		virtual_tx( this, data );
 	}
 
 	size_t rx ( void )
 	{
-		return rx_( this );
+		return virtual_rx( this );
 	}
 
 	void irq_callback_rx ( void )
 	{
-		irq_callback_rx_( this );
+		virtual_irq_callback_rx( this );
 	}
 
 	void irq_callback_tx ( void )
 	{
-		irq_callback_tx_( this );
+		virtual_irq_callback_tx( this );
 	}
 
 protected:
 	/**
 	 * Driver method for startup initializing device and configure by default.
 	 */
-	void (*init_) ( void * );
+	void (*virtual_init) ( void * );
 
 	/**
 	 * Driver method for disable and power down device method.
 	 */
-	void (*fini_) ( void * );
+	void (*virtual_fini) ( void * );
 
 	/**
 	 * Driver method for device custom control.
 	 */
-	bool (*ioctl_) ( void *, int cmd, void *param );
+	bool (*virtual_ioctl) ( void *, int cmd, void *param );
 
 	/**
 	 * Driver method for check to transmitter ready.
 	 */
-	bool (*tx_ready_) ( void * );
+	bool (*virtual_tx_ready) ( void * );
 
 	/**
 	 * Driver method for check to receiver ready.
 	 */
-	bool (*rx_ready_) ( void * );
+	bool (*virtual_rx_ready) ( void * );
 
 	/**
 	 * Driver method for write data to port.
 	 */
-	void (*tx_) ( void *, size_t data );
+	void (*virtual_tx) ( void *, size_t data );
 
 	/**
 	 * Driver method for read data from port.
 	 */
-	size_t (*rx_) ( void * );
+	size_t (*virtual_rx) ( void * );
 
 	/**
 	 * Driver method for IRQ receive handler.
 	 */
-	void (*irq_callback_rx_) ( void * );
+	void (*virtual_irq_callback_rx) ( void * );
 
 	/**
 	 * Driver method for IRQ transmit handler.
 	 */
-	void (*irq_callback_tx_) ( void * );
+	void (*virtual_irq_callback_tx) ( void * );
 
 	/*
 	 * Device base memory address.

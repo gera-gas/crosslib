@@ -58,8 +58,8 @@ TeleType::TeleType( io::InOut *io ) :
 	 */
 	io_(io)
 {
-	snd_ = reinterpret_cast<void (*)(void *, const char *, const char *)>(dummy_loop);
-	rcv_ = reinterpret_cast<size_t (*)(void *, char *, size_t)>(dummy_loop);
+	virtual_snd = reinterpret_cast<snd_t>(dummy_loop);
+	virtual_rcv = reinterpret_cast<rcv_t>(dummy_loop);
 }
 
 

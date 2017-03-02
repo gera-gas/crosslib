@@ -26,11 +26,11 @@ public:
 	Fingerprint ( hal::Port *fp_port ) :
 		Device(fp_port)
 	{
-		info_     = reinterpret_cast<bool (*)(void*, void*)>(dummy_loop);
-		enroll_   = reinterpret_cast<int (*)(void*)>(dummy_loop);
-		remove_   = reinterpret_cast<bool (*)(void*, int)>(dummy_loop);
-		clear_    = reinterpret_cast<bool (*)(void*)>(dummy_loop);
-		identify_ = reinterpret_cast<int (*)(void*)>(dummy_loop);
+		virtual_info     = reinterpret_cast<bool (*)(void*, void*)>(dummy_loop);
+		virtual_enroll   = reinterpret_cast<int (*)(void*)>(dummy_loop);
+		virtual_remove   = reinterpret_cast<bool (*)(void*, int)>(dummy_loop);
+		virtual_clear    = reinterpret_cast<bool (*)(void*)>(dummy_loop);
+		virtual_identify = reinterpret_cast<int (*)(void*)>(dummy_loop);
 	}
 
 	/**
@@ -44,7 +44,7 @@ public:
 	 */
 	bool info ( void *outbuffer )
 	{
-		return info_( this, outbuffer );
+		return virtual_info( this, outbuffer );
 	}
 
 	/**
@@ -56,7 +56,7 @@ public:
 	 */
 	int enroll ( void )
 	{
-		return enroll_( this );
+		return virtual_enroll( this );
 	}
 
 	/**
@@ -70,7 +70,7 @@ public:
 	 */
 	bool remove ( int pageid )
 	{
-		return remove_( this, pageid );
+		return virtual_remove( this, pageid );
 	}
 
 	/**
@@ -82,7 +82,7 @@ public:
 	 */
 	bool clear ( void )
 	{
-		return clear_( this );
+		return virtual_clear( this );
 	}
 
 	/**
@@ -94,18 +94,18 @@ public:
 	 */
 	int identify ( void )
 	{
-		return identify_( this );
+		return virtual_identify( this );
 	}
 
 protected:
 	/*
 	 * Overrided point to main API methods.
 	 */
-	bool (*info_)( void *, void * );
-	int  (*enroll_)( void * );
-	bool (*remove_)( void *, int );
-	bool (*clear_)( void * );
-	int  (*identify_)( void * );
+	bool (*virtual_info)( void *, void * );
+	int  (*virtual_enroll)( void * );
+	bool (*virtual_remove)( void *, int );
+	bool (*virtual_clear)( void * );
+	int  (*virtual_identify)( void * );
 };
 
 } /* namespace dev */

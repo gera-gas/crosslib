@@ -150,8 +150,8 @@ Vt100::Vt100( io::InOut *io ) :
 	/*
 	 * Redefine public TTY methods to VT100 methods.
 	 */
-	rcv_ = reinterpret_cast<size_t (*)(void*,char*,size_t)>(vt100_rcv);
-	snd_ = reinterpret_cast<void (*)(void*,const char*,const char*)>(vt100_snd);
+	virtual_rcv = reinterpret_cast<rcv_t>(vt100_rcv);
+	virtual_snd = reinterpret_cast<snd_t>(vt100_snd);
 }
 
 } /* namespace tty */

@@ -4,8 +4,8 @@
  *  @author  Gerasimov A.S.
  */
 #include "typedef.h"
-#include "memory/memory.h"
 #include "crypto/gost89.h"
+#include "memory/memory.h"
 
 
 /**

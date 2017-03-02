@@ -12,14 +12,13 @@ namespace io {
  * @brief
  * Put char to output device.
  *
- * @param ioctx : [in] IO object.
- * @param c     : [in] char for output.
+ * @param c : [in] char for output.
  */
-void io_putc ( InOut *ioctx, char c )
+void InOut::putc ( char c )
 {
-	while( !ioctx->port_->tx_ready() );
+	while( !port_->tx_ready() );
 
-	ioctx->port_->tx( c );
+	port_->tx( c );
 }
 
 
@@ -27,10 +26,9 @@ void io_putc ( InOut *ioctx, char c )
  * @brief
  * Put string to output device.
  *
- * @param ioctx : [in] IO object.
- * @param pstr  : [in] string for output.
+ * @param pstr : [in] string for output.
  */
-void io_puts ( InOut *ioctx, const char *pstr )
+void InOut::puts ( const char *pstr )
 {
 	char c;
 
@@ -42,7 +40,7 @@ void io_puts ( InOut *ioctx, const char *pstr )
 			break;
 		}
 
-		io_putc( ioctx, c );
+		putc( c );
 	}
 }
 
@@ -51,17 +49,14 @@ void io_puts ( InOut *ioctx, const char *pstr )
  * @brief
  * Get char from IO device.
  *
- * @param ioctx : [in] IO object.
- * @param pstr  : [in] string for output.
- *
  * @return
- * Return char.
+ * Return received char from IO device.
  */
-char io_getch ( InOut *ioctx )
+char InOut::getch ( void )
 {
-	while( !ioctx->port_->rx_ready() );
+	while( !port_->rx_ready() );
 
-	return ioctx->port_->rx( );
+	return port_->rx( );
 }
 
 
@@ -69,20 +64,19 @@ char io_getch ( InOut *ioctx )
  * @brief
  * Read data from IO device.
  *
- * @param ioctx : [in] IO context.
  * @param pdata : [in] address of destination buffer.
  * @param size  : [in] size for reading in bytes.
  *
  * @return
  * Data size wrote to device.
  */
-size_t io_read ( InOut *ioctx, char *pdata, size_t size )
+size_t InOut::read ( char *pdata, size_t size )
 {
 	size_t i;
 
 	for( i = 0; i < size; i++ )
 	{
-		pdata[i] = io_getch( ioctx );
+		pdata[i] = getch( );
 	}
 
 	return i;
@@ -93,20 +87,19 @@ size_t io_read ( InOut *ioctx, char *pdata, size_t size )
  * @brief
  * Write data to output device.
  *
- * @param ioctx : [in] IO context.
  * @param pdata : [in] address of input buffer.
  * @param size  : [in] size for reading in bytes.
  *
  * @return
  * Data size wrote to device.
  */
-size_t io_write ( InOut *ioctx, const char *pdata, size_t size )
+size_t InOut::write ( const char *pdata, size_t size )
 {
 	size_t i;
 
 	for( i = 0; i < size; i++ )
 	{
-		io_putc( ioctx, pdata[i] );
+		putc( pdata[i] );
 	}
 
 	return i;
@@ -120,9 +113,9 @@ size_t io_write ( InOut *ioctx, const char *pdata, size_t size )
  * @retval true  : char exist.
  * @retval false : no chars on receive.
  */
-bool io_kbhit ( InOut *ioctx )
+bool InOut::kbhit ( void )
 {
-	if( ioctx->port_->rx_ready() )
+	if( port_->rx_ready() )
 	{
 		return true;
 	}
@@ -138,16 +131,7 @@ bool io_kbhit ( InOut *ioctx )
  * @param [in] : address of IO device object.
  */
 InOut::InOut ( hal::Port *port ) :
-	port_(port) {
-	/*
-	 * Set default IO methods.
-	 */
-	putc_  = io_putc;
-	puts_  = io_puts;
-	getch_ = io_getch;
-	read_  = io_read;
-	write_ = io_write;
-	kbhit_ = io_kbhit;
-};
+	port_(port)
+{ };
 
 } /* namespace io */

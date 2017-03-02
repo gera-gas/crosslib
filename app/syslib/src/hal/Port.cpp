@@ -24,18 +24,18 @@ Port::Port( const void *basemem ) :
 	 * Set driver methods to loop function,
 	 * spcial for catch by debugger.
 	 */
-	init_  = reinterpret_cast<void (*)(void*)>(dummy_loop);
-	fini_  = reinterpret_cast<void (*)(void*)>(dummy_loop);
-	ioctl_ = reinterpret_cast<bool (*)(void*,int,void*)>(dummy_loop);
+	virtual_init  = reinterpret_cast<void (*)(void*)>(dummy_loop);
+	virtual_fini  = reinterpret_cast<void (*)(void*)>(dummy_loop);
+	virtual_ioctl = reinterpret_cast<bool (*)(void*,int,void*)>(dummy_loop);
 
-	tx_ready_ = reinterpret_cast<bool (*)(void*)>(dummy_loop);
-	rx_ready_ = reinterpret_cast<bool (*)(void*)>(dummy_loop);
+	virtual_tx_ready = reinterpret_cast<bool (*)(void*)>(dummy_loop);
+	virtual_rx_ready = reinterpret_cast<bool (*)(void*)>(dummy_loop);
 
-	tx_ = reinterpret_cast<void (*)(void*,size_t)>(dummy_loop);
-	rx_ = reinterpret_cast<size_t (*)(void*)>(dummy_loop);
+	virtual_tx = reinterpret_cast<void (*)(void*,size_t)>(dummy_loop);
+	virtual_rx = reinterpret_cast<size_t (*)(void*)>(dummy_loop);
 
-	irq_callback_rx_ = reinterpret_cast<void (*)(void*)>(dummy_loop);
-	irq_callback_tx_ = reinterpret_cast<void (*)(void*)>(dummy_loop);
+	virtual_irq_callback_rx = reinterpret_cast<void (*)(void*)>(dummy_loop);
+	virtual_irq_callback_tx = reinterpret_cast<void (*)(void*)>(dummy_loop);
 };
 
 } /* namespace hal */

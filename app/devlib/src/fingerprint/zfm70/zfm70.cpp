@@ -744,11 +744,11 @@ Zfm70::Zfm70 ( hal::Port *fp_port, uint32 module_address = 0xFFFFFFFF ) :
 	io_(fp_port),
 	module_address_(module_address)
 {
-	info_     = reinterpret_cast<bool (*)(void*, void*)>(zfm70_info);
-	enroll_   = reinterpret_cast<int (*)(void*)>(zfm70_enroll);
-	remove_   = reinterpret_cast<bool (*)(void*, int)>(zfm70_remove);
-	clear_    = reinterpret_cast<bool (*)(void*)>(zfm70_clear);
-	identify_ = reinterpret_cast<int (*)(void*)>(zfm70_identify);
+	virtual_info     = reinterpret_cast<bool (*)(void*, void*)>(zfm70_info);
+	virtual_enroll   = reinterpret_cast<int (*)(void*)>(zfm70_enroll);
+	virtual_remove   = reinterpret_cast<bool (*)(void*, int)>(zfm70_remove);
+	virtual_clear    = reinterpret_cast<bool (*)(void*)>(zfm70_clear);
+	virtual_identify = reinterpret_cast<int (*)(void*)>(zfm70_identify);
 }
 
 } /* namespace dev */

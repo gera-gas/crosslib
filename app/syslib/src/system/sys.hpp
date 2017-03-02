@@ -7,8 +7,8 @@
  */
 #include "dummy.h"
 #include "io.hpp"
-#include "Board.hpp"
-#include "Application.hpp"
+#include "BoardLayout.hpp"
+#include "AppLayout.hpp"
 
 /**
  * Check method to realization.

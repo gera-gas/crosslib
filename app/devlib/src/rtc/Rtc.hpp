@@ -41,14 +41,7 @@ public:
 	/**
 	 * RTC consctructor.
 	 */
-	Rtc ( hal::Port *rtc_port ) :
-		Device(rtc_port)
-	{
-		get_time_ = reinterpret_cast<void (*)(void*, Rtc::Time*)>(dummy_loop);
-		set_time_ = reinterpret_cast<void (*)(void*, const Rtc::Time*)>(dummy_loop);
-		get_date_ = reinterpret_cast<void (*)(void*, Rtc::Date*)>(dummy_loop);
-		set_date_ = reinterpret_cast<void (*)(void*, const Rtc::Date*)>(dummy_loop);
-	}
+	Rtc ( hal::Port *rtc_port );
 
 	/**
 	 * @brief
@@ -58,7 +51,7 @@ public:
 	 */
 	void get_time ( Rtc::Time *time )
 	{
-		get_time_( this, time );
+		virtual_get_time( this, time );
 	}
 
 	/**
@@ -69,7 +62,7 @@ public:
 	 */
 	void set_time ( const Rtc::Time *time )
 	{
-		set_time_( this, time );
+		virtual_set_time( this, time );
 	}
 
 	/**
@@ -80,7 +73,7 @@ public:
 	 */
 	void get_date ( Rtc::Date *date )
 	{
-		get_date_( this, date );
+		virtual_get_date( this, date );
 	}
 
 	/**
@@ -91,7 +84,7 @@ public:
 	 */
 	void set_date ( const Rtc::Date *date )
 	{
-		set_date_( this, date );
+		virtual_set_date( this, date );
 	}
 
 	/**
@@ -128,10 +121,10 @@ protected:
 	/*
 	 * Overrided point to main API methods.
 	 */
-	void (*get_time_)( void *, Rtc::Time * );
-	void (*set_time_)( void *, const Rtc::Time * );
-	void (*get_date_)( void *, Rtc::Date * );
-	void (*set_date_)( void *, const Rtc::Date * );
+	void (*virtual_get_time)( void *, Rtc::Time * );
+	void (*virtual_set_time)( void *, const Rtc::Time * );
+	void (*virtual_get_date)( void *, Rtc::Date * );
+	void (*virtual_set_date)( void *, const Rtc::Date * );
 };
 
 } /* namespace dev */
