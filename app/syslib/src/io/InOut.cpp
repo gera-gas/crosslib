@@ -3,6 +3,7 @@
  * @brief   Input/Output methods emplementation.
  * @author  Gerasimov A.S.
  */
+#include "hal/Module.hpp"
 #include "hal/Port.hpp"
 #include "io/InOut.hpp"
 

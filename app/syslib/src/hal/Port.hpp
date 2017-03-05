@@ -2,12 +2,11 @@
 #define PORT_HPP_
 /**
  * @file     Port.hpp
- * @brief    Hardware Abstraction Level (HAL).
+ * @brief    Hardware Abstraction Layer (HAL).
  * @author   Gerasimov A.S.
  * @date     2013-08-07 15:26:14 +0400
  */
 #include <stddef.h>
-#include "dummy.h"
 
 namespace hal {
 
@@ -17,7 +16,7 @@ namespace hal {
  * interaction or channel devices (UART port, SPI
  * and any IO port devices).
  */
-class Port {
+class Port : public hal::Module {
 public:
 	/**
 	 * @brief
@@ -30,97 +29,76 @@ public:
 	/*
 	 * Public (virtual) driver methods.
 	 */
+#if defined(CXX_RTTI)
+	virtual bool ioctl ( int, void * ) = 0;
+	virtual bool tx_ready ( void ) = 0;
+	virtual bool rx_ready ( void ) = 0;
+	virtual void tx ( size_t ) = 0;
+	virtual size_t rx ( void ) = 0;
+	virtual void irq_callback_rx ( void ) = 0;
+	virtual void irq_callback_tx ( size_t ) = 0;
+#else
+	bool ioctl ( int, void * );
+	bool tx_ready ( void );
+	bool rx_ready ( void );
+	void tx ( size_t  );
+	size_t rx ( void );
+	void irq_callback_rx ( void );
+	void irq_callback_tx ( size_t );
+	/*
+	 * Define types for virtual methods.
+	 */
+	typedef bool   (*callback_ioctl_t) ( void*, int, void* );
+	typedef bool   (*callback_ready_t) ( void* );
+	typedef void   (*callback_tx_t)    ( void*, size_t );
+	typedef size_t (*callback_rx_t)    ( void* );
+#endif
 
-	void init ( void )
-	{
-		virtual_init( this );
-	};
-
-	void fini ( void )
-	{
-		virtual_fini( this );
-	}
-
-	bool ioctl ( int cmd, void *param )
-	{
-		return virtual_ioctl( this, cmd, param );
-	}
-
-	bool tx_ready ( void )
-	{
-		return virtual_tx_ready( this );
-	}
-
-	bool rx_ready ( void )
-	{
-		return virtual_rx_ready( this );
-	};
-
-	void tx ( size_t data )
-	{
-		virtual_tx( this, data );
-	}
-
-	size_t rx ( void )
-	{
-		return virtual_rx( this );
-	}
-
-	void irq_callback_rx ( void )
-	{
-		virtual_irq_callback_rx( this );
-	}
-
-	void irq_callback_tx ( void )
-	{
-		virtual_irq_callback_tx( this );
-	}
+	/*
+	 * Port data exchange methods.
+	 * These functions do not return until fully worked out.
+	 */
+	void snd ( size_t );
+	size_t rcv ( void );
 
 protected:
-	/**
-	 * Driver method for startup initializing device and configure by default.
-	 */
-	void (*virtual_init) ( void * );
 
-	/**
-	 * Driver method for disable and power down device method.
-	 */
-	void (*virtual_fini) ( void * );
-
+#if !defined(CXX_RTTI)
 	/**
 	 * Driver method for device custom control.
 	 */
-	bool (*virtual_ioctl) ( void *, int cmd, void *param );
+	callback_ioctl_t virtual_ioctl;
 
 	/**
 	 * Driver method for check to transmitter ready.
 	 */
-	bool (*virtual_tx_ready) ( void * );
+	callback_ready_t virtual_tx_ready;
 
 	/**
 	 * Driver method for check to receiver ready.
 	 */
-	bool (*virtual_rx_ready) ( void * );
+	callback_ready_t virtual_rx_ready;
 
 	/**
 	 * Driver method for write data to port.
 	 */
-	void (*virtual_tx) ( void *, size_t data );
-
-	/**
-	 * Driver method for read data from port.
-	 */
-	size_t (*virtual_rx) ( void * );
-
-	/**
-	 * Driver method for IRQ receive handler.
-	 */
-	void (*virtual_irq_callback_rx) ( void * );
+	callback_tx_t virtual_tx;
 
 	/**
 	 * Driver method for IRQ transmit handler.
 	 */
-	void (*virtual_irq_callback_tx) ( void * );
+	callback_tx_t virtual_tx_irq;
+
+	/**
+	 * Driver method for read data from port.
+	 */
+	callback_rx_t virtual_rx;
+
+	/**
+	 * Driver method for IRQ receive handler.
+	 */
+	callback_rx_t virtual_rx_irq;
+#endif
 
 	/*
 	 * Device base memory address.
@@ -128,14 +106,14 @@ protected:
 	const void *basemem_;
 
 	/*
-	 * Point to buffer for asynchronize access.
+	 * Pointer to buffer used for asynchronous access.
 	 * Using for work by IRQ.
 	 */
-	void *tx_buffer_;
-	size_t tx_bufsize_;
+	void *tx_buffer;
+	size_t tx_bufsize;
 
-	void *rx_buffer_;
-	size_t rx_bufsize_;
+	void *rx_buffer;
+	size_t rx_bufsize;
 };
 
 } /* namespace hal */

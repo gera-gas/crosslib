@@ -5,6 +5,7 @@
  * @note
  */
 #include <stddef.h>
+#include "hal/Module.hpp"
 #include "hal/Port.hpp"
 #include "io/InOut.hpp"
 #include "io/tty/TeleType.hpp"
@@ -106,47 +107,27 @@ void vt100_snd ( Vt100 *tty, const char *esc, const char *param )
  * @param [in] : address of IO object.
  */
 Vt100::Vt100( io::InOut *io ) :
-	TeleType(io),
-	/*
-	 * VT100 ESC sequences definition.
-	 */
-	vt100_esc_cursor_up_("\x1B\x5B\x41"),
-	vt100_esc_cursor_down_("\x1B\x5B\x42"),
-	vt100_esc_cursor_left_("\x1B\x5B\x44"),
-	vt100_esc_cursor_right_("\x1B\x5B\x43"),
-	vt100_esc_cursor_home_("\x1B\x5B\x48"),
-	vt100_esc_cursor_off_("\x1B\x5B\x3F\x32\x35\x6C"),
-	vt100_esc_cursor_on_("\x1B\x5B\x3F\x32\x35\x68"),
-	vt100_esc_clear_screen_("\x1B\x5B\x32\x4A"),
-	vt100_esc_clear_char_ ("\x1B\x5B\x58"),
-	vt100_esc_clear_string_("\x1B\x5B\x4B"),
-	vt100_esc_outmode_normal_("\x1B\x5B\x30\x6D"),
-	vt100_esc_outmode_reverse_("\x1B\x5B\x37m"),
-	vt100_esc_outmode_underline_("\x1B\x5B\x30\x3B\x34\x6D"),
-	vt100_esc_status_on_("\x1B\x5B\x31\x61"),
-	vt100_esc_status_off_("\x1B\x5B\x30\x61"),
-	vt100_esc_charcode_ ("\x1B\x5B\x67")
+	TeleType(io)
 {
 	/*
 	 * Redefine public ESC to VT100 ESC sequences.
 	 */
-	esc_cursor_up         = vt100_esc_cursor_up_;
-	esc_cursor_down       = vt100_esc_cursor_down_;
-	esc_cursor_left       = vt100_esc_cursor_left_;
-	esc_cursor_right      = vt100_esc_cursor_right_;
-	esc_cursor_home       = vt100_esc_cursor_home_;
-	esc_cursor_off        = vt100_esc_cursor_off_;
-	esc_cursor_on         = vt100_esc_cursor_on_;
-	esc_clear_screen      = vt100_esc_clear_screen_;
-	esc_clear_char        = vt100_esc_clear_char_;
-	esc_clear_string      = vt100_esc_clear_string_;
-	esc_outmode_normal    = vt100_esc_outmode_normal_;
-	esc_outmode_reverse   = vt100_esc_outmode_reverse_;
-	esc_outmode_underline = vt100_esc_outmode_underline_;
-	esc_status_on         = vt100_esc_status_on_;
-	esc_status_off        = vt100_esc_status_off_;
-	esc_charcode          = vt100_esc_charcode_;
-
+	esc_cursor_up         = "\x1B\x5B\x41";
+	esc_cursor_down       = "\x1B\x5B\x42";
+	esc_cursor_left       = "\x1B\x5B\x44";
+	esc_cursor_right      = "\x1B\x5B\x43";
+	esc_cursor_home       = "\x1B\x5B\x48";
+	esc_cursor_off        = "\x1B\x5B\x3F\x32\x35\x6C";
+	esc_cursor_on         = "\x1B\x5B\x3F\x32\x35\x68";
+	esc_clear_screen      = "\x1B\x5B\x32\x4A";
+	esc_clear_char        = "\x1B\x5B\x58";
+	esc_clear_string      = "\x1B\x5B\x4B";
+	esc_outmode_normal    = "\x1B\x5B\x30\x6D";
+	esc_outmode_reverse   = "\x1B\x5B\x37m";
+	esc_outmode_underline = "\x1B\x5B\x30\x3B\x34\x6D";
+	esc_status_on         = "\x1B\x5B\x31\x61";
+	esc_status_off        = "\x1B\x5B\x30\x61";
+	esc_charcode          = "\x1B\x5B\x67";
 	/*
 	 * Redefine public TTY methods to VT100 methods.
 	 */

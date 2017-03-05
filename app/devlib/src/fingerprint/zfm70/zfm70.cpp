@@ -6,6 +6,7 @@
 #include <stddef.h>
 #include "typedef.h"
 #include "gmacro.h"
+#include "hal/Module.hpp"
 #include "hal/Port.hpp"
 #include "hal/Device.hpp"
 #include "io/InOut.hpp"
@@ -39,38 +40,38 @@ void Zfm70::package_snd ( enum PID pid, const uint8 *data, size_t len )
 	uint16 chksum = 0;
 
 	/* Send header of package */
-	io_.putc( HPART16( PKG_HEADER ) );
-	io_.putc( LPART16( PKG_HEADER ) );
+	port->snd( HPART16( PKG_HEADER ) );
+	port->snd( LPART16( PKG_HEADER ) );
 
 	/* Send address */
-	io_.putc( I32_BYTE1(module_address_) );
-	io_.putc( I32_BYTE2(module_address_) );
-	io_.putc( I32_BYTE3(module_address_) );
-	io_.putc( I32_BYTE4(module_address_) );
+	port->snd( I32_BYTE1(module_address_) );
+	port->snd( I32_BYTE2(module_address_) );
+	port->snd( I32_BYTE3(module_address_) );
+	port->snd( I32_BYTE4(module_address_) );
 
 	/* Send package identifier */
-	io_.putc( pid );
+	port->snd( pid );
 	chksum += pid;
 
 	/* Send length */
 	uint8 hilen = (uint8)HPART16( len + 2 );
 	uint8 lolen = (uint8)LPART16( len + 2 );
 
-	io_.putc( hilen );
+	port->snd( hilen );
 	chksum += hilen;
-	io_.putc( lolen );
+	port->snd( lolen );
 	chksum += lolen;
 
 	/* Send data */
 	for( i = 0; i < len; i++ )
 	{
-		io_.putc( data[i] );
+		port->snd( data[i] );
 		chksum += data[i];
 	}
 
 	/* Send checksum */
-	io_.putc( HPART16( chksum ) );
-	io_.putc( LPART16( chksum ) );
+	port->snd( HPART16( chksum ) );
+	port->snd( LPART16( chksum ) );
 }
 
 
@@ -93,28 +94,28 @@ bool Zfm70::package_rcv( enum PID *pid, uint8 *data, uint16 *len )
 	uint16 tmp16;
 
 	/* Wait for header of package */
-	if( (uint8)io_.getch( ) != (uint8)HPART16( PKG_HEADER ) ) {
+	if( (uint8)port->rcv( ) != (uint8)HPART16( PKG_HEADER ) ) {
 		return false;
 	}
-	if( (uint8)io_.getch( ) != (uint8)LPART16( PKG_HEADER ) ) {
+	if( (uint8)port->rcv( ) != (uint8)LPART16( PKG_HEADER ) ) {
 		return false;
 	}
 
 	/* Wait for address */
-	if( (uint8)io_.getch( ) != (uint8)I32_BYTE1(module_address_) ) {
+	if( (uint8)port->rcv( ) != (uint8)I32_BYTE1(module_address_) ) {
 		return false;
 	}
-	if( (uint8)io_.getch( ) != (uint8)I32_BYTE2(module_address_) ) {
+	if( (uint8)port->rcv( ) != (uint8)I32_BYTE2(module_address_) ) {
 		return false;
 	}
-	if( (uint8)io_.getch( ) != (uint8)I32_BYTE3(module_address_) ) {
+	if( (uint8)port->rcv( ) != (uint8)I32_BYTE3(module_address_) ) {
 		return false;
 	}
-	if( (uint8)io_.getch( ) != (uint8)I32_BYTE4(module_address_) ) {
+	if( (uint8)port->rcv( ) != (uint8)I32_BYTE4(module_address_) ) {
 		return false;
 	}
 
-	*pid = (enum PID)io_.getch( );
+	*pid = (enum PID)port->rcv( );
 	/*
 	 * Check PID field.
 	 */
@@ -127,10 +128,10 @@ bool Zfm70::package_rcv( enum PID *pid, uint8 *data, uint16 *len )
 	chksum += *pid;
 
 	/* Wait for length of data */
-	tmp = io_.getch( );
+	tmp = port->rcv( );
 	chksum += tmp;
 	*len = tmp << 8;
-	tmp = io_.getch( );
+	tmp = port->rcv( );
 	chksum += tmp;
 	*len |= tmp;
 
@@ -140,13 +141,13 @@ bool Zfm70::package_rcv( enum PID *pid, uint8 *data, uint16 *len )
 	/* Wait for data */
 	for( i = 0; i < *len; i++ )
 	{
-		data[i] = io_.getch( );
+		data[i] = port->rcv( );
 		chksum += data[i];
 	}
 
 	/* Wait for checksum */
-	tmp16  = io_.getch( ) << 8;
-	tmp16 |= io_.getch( );
+	tmp16  = port->rcv( ) << 8;
+	tmp16 |= port->rcv( );
 
 	/* Match checksum */
 	if( tmp16 != chksum )
@@ -741,7 +742,6 @@ int zfm70_identify ( Zfm70 *zfm70 )
  */
 Zfm70::Zfm70 ( hal::Port *fp_port, uint32 module_address = 0xFFFFFFFF ) :
 	Fingerprint(fp_port),
-	io_(fp_port),
 	module_address_(module_address)
 {
 	virtual_info     = reinterpret_cast<bool (*)(void*, void*)>(zfm70_info);

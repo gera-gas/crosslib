@@ -121,11 +121,6 @@ public:
 	}
 
 private:
-	/*
-	 * Object for IO.
-	 */
-	io::InOut io_;
-
 	/**
 	 * Package identifier type definition
 	 */

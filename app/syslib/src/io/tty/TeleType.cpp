@@ -13,6 +13,7 @@
 #include "stdio/stdio.h"
 #endif
 #include "dummy.h"
+#include "hal/Module.hpp"
 #include "hal/Port.hpp"
 #include "io/InOut.hpp"
 #include "io/tty/TeleType.hpp"

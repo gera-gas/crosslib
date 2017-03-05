@@ -23,3 +23,8 @@ void dummy_loop ( void )
 {
 	while( 1 );
 }
+
+void dummy_trap ( void )
+{
+	__builtin_trap( );
+}

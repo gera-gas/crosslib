@@ -11,6 +11,7 @@
  * #include "buffer/List.hpp"
  */
 #include <stddef.h>
+#include "dummy.h"
 
 namespace ui {
 

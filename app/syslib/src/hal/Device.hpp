@@ -2,7 +2,7 @@
 #define DEVICE_HPP_
 /**
  * @file     Device.hpp
- * @brief    Hardware Abstraction Level (HAL).
+ * @brief    Hardware Abstraction Layer (HAL).
  * @author   Gerasimov A.S.
  * @date     2013-08-07 15:26:14 +0400
  */
@@ -35,7 +35,7 @@ public:
 
 protected:
 	/*
-	 * Point to port device through device connected.
+	 * Point to port device through service device connected.
 	 */
 	Port *port;
 
@@ -43,7 +43,6 @@ protected:
 	 * Contain specific error code.
 	 */
 	int errorcode;
-
 };
 
 } /* namespace hal */

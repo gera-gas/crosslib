@@ -14,6 +14,7 @@
 #include "string/string.h"
 #include "stdio/stdio.h"
 #endif
+#include "hal/Module.hpp"
 #include "hal/Port.hpp"
 #include "io/InOut.hpp"
 #include "io/tty/TeleType.hpp"

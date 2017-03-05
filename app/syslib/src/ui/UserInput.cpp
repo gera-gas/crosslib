@@ -5,6 +5,7 @@
  */
 #include <stddef.h>
 #include <stdbool.h>
+#include "hal/Module.hpp"
 #include "hal/Port.hpp"
 #include "io/InOut.hpp"
 #include "io/tty/TeleType.hpp"

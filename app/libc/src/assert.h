@@ -14,7 +14,7 @@
 #if CFG_ASSERTION == 1
 #define assert(exp) do {\
     if( !(exp) ) {\
-        for(;;); \
+        __builtin_trap; \
     }\
 } while (0)
 

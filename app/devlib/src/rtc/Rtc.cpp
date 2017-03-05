@@ -4,6 +4,7 @@
  * @author   Gerasimov A.S.
  * @note
  */
+#include "hal/Module.hpp"
 #include <stddef.h>
 #include "typedef.h"
 #include "hal/Port.hpp"

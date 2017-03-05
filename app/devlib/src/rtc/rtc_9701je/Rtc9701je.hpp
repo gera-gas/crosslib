@@ -19,11 +19,6 @@ public:
 
 private:
 	/*
-	 * Object for IO.
-	 */
-	io::InOut io_;
-
-	/*
 	 * RTC Register table.
 	 */
 	struct RegisterTable {

@@ -14,6 +14,7 @@ extern "C" {
  int dummy_ret1  ( void );
 void dummy_empty ( void );
 void dummy_loop  ( void );
+void dummy_trap  ( void );
 
 #ifdef __cplusplus
 }

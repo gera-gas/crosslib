@@ -6,6 +6,7 @@
 #include <stddef.h>
 #include "typedef.h"
 #include "gmacro.h"
+#include "hal/Module.hpp"
 #include "hal/Port.hpp"
 #include "hal/Device.hpp"
 #include "io/InOut.hpp"
@@ -31,8 +32,8 @@ void Rtc9701je::byte_snd ( uint8 regnum, uint8 databyte )
 	 * bit[0] = 1 ==> read  (LSB -> MSB)
 	 * bit[0] = 0 ==> write (LSB -> MSB)
 	 */
-	io_.putc( regnum & 0x7F );
-	io_.putc( databyte );
+	port->snd( regnum & 0x7F );
+	port->snd( databyte );
 }
 
 
@@ -52,10 +53,10 @@ uint8 Rtc9701je::byte_rcv ( uint8 regnum )
 	 * bit[0] = 1 ==> read  (LSB -> MSB)
 	 * bit[0] = 0 ==> write (LSB -> MSB)
 	 */
-	io_.putc( regnum | 0x80 );
-	io_.putc( 0 );
+	port->snd( regnum | 0x80 );
+	port->snd( 0 );
 
-	return io_.getch( );
+	return port->rcv( );
 }
 
 
@@ -115,8 +116,7 @@ void rtc9701je_set_date ( Rtc9701je *rtc9701je, const Rtc::Date *date )
  * @param module_address : [in] Package address (optional).
  */
 Rtc9701je::Rtc9701je ( hal::Port *rtc_port ) :
-	Rtc(rtc_port),
-	io_(rtc_port)
+	Rtc(rtc_port)
 {
 	virtual_get_time = reinterpret_cast<void (*)(void*, Rtc::Time*)>(rtc9701je_get_time);
 	virtual_set_time = reinterpret_cast<void (*)(void*, const Rtc::Time*)>(rtc9701je_set_time);

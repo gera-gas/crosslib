@@ -6,7 +6,22 @@
  * @author   Gerasimov A.S.
  * @date     2013-08-07 15:26:14 +0400
  */
+#include "helpers.hpp"
+#include "Module.hpp"
 #include "Port.hpp"
 #include "Device.hpp"
+#include "Board.hpp"
+#include "Service.hpp"
+#include "Application.hpp"
+#include "Clock.hpp"
+
+namespace hal {
+SINGLETON( Clock, clock );
+}
+
+/**
+ * Check method to realization.
+ */
+#define SUPPORTED( m ) ((m) != dummy_trap)
 
 #endif /* HAL_HPP_ */
