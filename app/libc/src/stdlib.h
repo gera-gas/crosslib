@@ -10,6 +10,8 @@
 extern "C" {
 #endif
 
+void abort ( void );
+
 void *bsearch ( const void *,
                 const void *,
                 size_t, size_t,

@@ -8,13 +8,15 @@
  *  @note     Controlled by definitions from 'config.h'
  */
 #include "config.h"
+#include <stdbool.h>
 
 #undef assert
 
 #if CFG_ASSERTION == 1
 #define assert(exp) do {\
     if( !(exp) ) {\
-        __builtin_trap; \
+        __builtin_trap(); \
+        while(true); \
     }\
 } while (0)
 
