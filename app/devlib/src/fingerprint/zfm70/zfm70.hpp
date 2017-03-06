@@ -26,7 +26,7 @@ public:
 	/**
 	 * ZFM70 device descriptor consctructor.
 	 */
-	Zfm70 ( hal::Port *, uint32 );
+	Zfm70 ( hal::Port *fp_port, uint32 module_address = 0xFFFFFFFF );
 
 	/**
 	 * ZFM70 device commands.

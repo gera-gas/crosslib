@@ -740,7 +740,7 @@ int zfm70_identify ( Zfm70 *zfm70 )
  * @param fp_port        : [in] Point to device IO object.
  * @param module_address : [in] Package address (optional).
  */
-Zfm70::Zfm70 ( hal::Port *fp_port, uint32 module_address = 0xFFFFFFFF ) :
+Zfm70::Zfm70 ( hal::Port *fp_port, uint32 module_address ) :
 	Fingerprint(fp_port),
 	module_address_(module_address)
 {
