@@ -35,16 +35,12 @@ public:
 	virtual bool rx_ready ( void ) = 0;
 	virtual void tx ( size_t ) = 0;
 	virtual size_t rx ( void ) = 0;
-	virtual void irq_callback_rx ( void ) = 0;
-	virtual void irq_callback_tx ( size_t ) = 0;
 #else
 	bool ioctl ( int, void * );
 	bool tx_ready ( void );
 	bool rx_ready ( void );
 	void tx ( size_t  );
 	size_t rx ( void );
-	void irq_callback_rx ( void );
-	void irq_callback_tx ( size_t );
 	/*
 	 * Define types for virtual methods.
 	 */
@@ -85,35 +81,15 @@ protected:
 	TxPrototype virtual_tx;
 
 	/**
-	 * Driver method for IRQ transmit handler.
-	 */
-	TxPrototype virtual_tx_irq;
-
-	/**
 	 * Driver method for read data from port.
 	 */
 	RxPrototype virtual_rx;
-
-	/**
-	 * Driver method for IRQ receive handler.
-	 */
-	RxPrototype virtual_rx_irq;
 #endif
 
 	/*
 	 * Device base memory address.
 	 */
 	const void *base_memory;
-
-	/*
-	 * Pointer to buffer used for asynchronous access.
-	 * Using for work by IRQ.
-	 */
-	void *tx_buffer;
-	size_t tx_bufsize;
-
-	void *rx_buffer;
-	size_t rx_bufsize;
 };
 
 } /* namespace hal */

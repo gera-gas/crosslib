@@ -27,8 +27,8 @@ Module::Module( void ) :
 	errorcode(0)
 {
 #if !defined(CXX_RTTI)
-	virtual_init  = reinterpret_cast<ModulePrototype>(dummy_trap);
-	virtual_fini  = reinterpret_cast<ModulePrototype>(dummy_trap);
+	virtual_init  = reinterpret_cast<ModulePrototype>(dummy_empty);
+	virtual_fini  = reinterpret_cast<ModulePrototype>(dummy_empty);
 #endif
 };
 
