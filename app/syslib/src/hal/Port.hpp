@@ -16,7 +16,7 @@ namespace hal {
  * interaction or channel devices (UART port, SPI
  * and any IO port devices).
  */
-class Port : public hal::Module {
+class Port : public Module {
 public:
 	/**
 	 * @brief
@@ -48,10 +48,10 @@ public:
 	/*
 	 * Define types for virtual methods.
 	 */
-	typedef bool   (*callback_ioctl_t) ( void*, int, void* );
-	typedef bool   (*callback_ready_t) ( void* );
-	typedef void   (*callback_tx_t)    ( void*, size_t );
-	typedef size_t (*callback_rx_t)    ( void* );
+	typedef bool   (*IoctlPrototype) ( void*, int, void* );
+	typedef bool   (*ReadyPrototype) ( void* );
+	typedef void   (*TxPrototype)    ( void*, size_t );
+	typedef size_t (*RxPrototype)    ( void* );
 #endif
 
 	/*
@@ -67,43 +67,43 @@ protected:
 	/**
 	 * Driver method for device custom control.
 	 */
-	callback_ioctl_t virtual_ioctl;
+	IoctlPrototype virtual_ioctl;
 
 	/**
 	 * Driver method for check to transmitter ready.
 	 */
-	callback_ready_t virtual_tx_ready;
+	ReadyPrototype virtual_tx_ready;
 
 	/**
 	 * Driver method for check to receiver ready.
 	 */
-	callback_ready_t virtual_rx_ready;
+	ReadyPrototype virtual_rx_ready;
 
 	/**
 	 * Driver method for write data to port.
 	 */
-	callback_tx_t virtual_tx;
+	TxPrototype virtual_tx;
 
 	/**
 	 * Driver method for IRQ transmit handler.
 	 */
-	callback_tx_t virtual_tx_irq;
+	TxPrototype virtual_tx_irq;
 
 	/**
 	 * Driver method for read data from port.
 	 */
-	callback_rx_t virtual_rx;
+	RxPrototype virtual_rx;
 
 	/**
 	 * Driver method for IRQ receive handler.
 	 */
-	callback_rx_t virtual_rx_irq;
+	RxPrototype virtual_rx_irq;
 #endif
 
 	/*
 	 * Device base memory address.
 	 */
-	const void *basemem_;
+	const void *base_memory;
 
 	/*
 	 * Pointer to buffer used for asynchronous access.

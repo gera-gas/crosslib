@@ -73,23 +73,23 @@ size_t Port::rcv ( void )
  */
 Port::Port( const void *basemem ) :
 	Module(),
-	basemem_(basemem),
+	base_memory(basemem),
 	tx_buffer(NULL),
 	tx_bufsize(0),
 	rx_buffer(NULL),
 	rx_bufsize(0)
 {
 #if !defined(CXX_RTTI)
-	virtual_ioctl = reinterpret_cast<callback_ioctl_t>(dummy_trap);
+	virtual_ioctl = reinterpret_cast<IoctlPrototype>(dummy_trap);
 
-	virtual_tx_ready = reinterpret_cast<callback_ready_t>(dummy_trap);
-	virtual_rx_ready = reinterpret_cast<callback_ready_t>(dummy_trap);
+	virtual_tx_ready = reinterpret_cast<ReadyPrototype>(dummy_trap);
+	virtual_rx_ready = reinterpret_cast<ReadyPrototype>(dummy_trap);
 
-	virtual_tx     = reinterpret_cast<callback_tx_t>(dummy_trap);
-	virtual_tx_irq = reinterpret_cast<callback_tx_t>(dummy_trap);
+	virtual_tx     = reinterpret_cast<TxPrototype>(dummy_trap);
+	virtual_tx_irq = reinterpret_cast<TxPrototype>(dummy_trap);
 
-	virtual_rx     = reinterpret_cast<callback_rx_t>(dummy_trap);
-	virtual_rx_irq = reinterpret_cast<callback_rx_t>(dummy_trap);
+	virtual_rx     = reinterpret_cast<RxPrototype>(dummy_trap);
+	virtual_rx_irq = reinterpret_cast<RxPrototype>(dummy_trap);
 #endif
 };
 

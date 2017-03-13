@@ -21,9 +21,9 @@ public:
 	void init ( void );
 	void fini ( void );
 private:
-	static int m_object_counter;
+	static int object_counter_;
 
-	Board *m_board;
+	Board *board_;
 };
 
 } /* namespace hal */

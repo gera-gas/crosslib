@@ -7,7 +7,7 @@
  */
 #include <stddef.h>
 
-namespace hal {
+namespace time {
 
 /**
  * Clock service class.
@@ -15,16 +15,18 @@ namespace hal {
 class Clock
 {
 public:
-	static void init ( Board *board );
+	typedef void (*uDelayPrototype) ( size_t );
+
+	static void init ( uDelayPrototype );
 
 	static void udelay ( size_t usec );
 	static void mdelay ( size_t msec );
 	static void  delay ( size_t sec );
 
 private:
-	static Board *m_board;
+	static uDelayPrototype udelay_;
 };
 
-} /* namespace hal */
+} /* namespace time */
 
 #endif /* CLOCK_HPP_ */

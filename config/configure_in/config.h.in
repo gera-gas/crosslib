@@ -44,4 +44,10 @@
  */
 #cmakedefine CXX_RTTI @CXX_RTTI@
 
+/**
+ * Enable fatal error details store.
+ * Error details: source code file, line, function name.
+ */
+#cmakedefine CFG_ERROR_DETAILS @CFG_ERROR_DETAILS@
+
 #endif  /*  CONFIG_H_  */

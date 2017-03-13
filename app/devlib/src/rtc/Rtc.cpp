@@ -10,7 +10,7 @@
 #include "hal/Port.hpp"
 #include "hal/Device.hpp"
 #include "io/InOut.hpp"
-#include "Rtc.hpp"
+#include "rtc/Rtc.hpp"
 
 namespace dev {
 

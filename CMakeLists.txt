@@ -124,6 +124,15 @@ if( DEFINED CXX_RTTI )
     set( CXX_RTTI "1" )
 endif()
 
+# -DCFG_ERROR_DETAILS
+#
+# Enable fatal error details store.
+# Error details: source code file, line, function name.
+#
+if( DEFINED CFG_ERROR_DETAILS )
+    set( CFG_ERROR_DETAILS "1" )
+endif()
+
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/config.h.in ${PROJECT_GENERATED}/config.h @ONLY)
 configure_file( ${CMAKE_CURRENT_SOURCE_DIR}/config/configure_in/typedef.h.in ${PROJECT_GENERATED}/typedef.h @ONLY)
 

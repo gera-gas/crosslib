@@ -23,21 +23,32 @@ public:
 	void init ( void );
 	void fini ( void );
 
-	typedef void (*module_t) (void*);
+	typedef void (*ModulePrototype) (void*);
 #endif
+	/**
+	 * Return device specifically error code.
+	 */
+	int get_error ( void ) const
+	{
+		return errorcode;
+	}
 
 protected:
+	/**
+	 * Contain specific error code.
+	 */
+	int errorcode;
 
 #if !defined(CXX_RTTI)
 	/**
 	 * Method for startup initializing and configure by default.
 	 */
-	module_t virtual_init;
+	ModulePrototype virtual_init;
 
 	/**
 	 * Shutdown method.
 	 */
-	module_t virtual_fini;
+	ModulePrototype virtual_fini;
 #endif
 };
 

@@ -15,34 +15,21 @@ namespace hal {
  * In this context under service device to have in mind
  * Flash, RTC, and also external devices connected by Port.
  */
-class Device {
+class Device : public Module {
 public:
 	/**
 	 * Device constructor.
 	 */
-	Device( Port *io_port ) :
-		port(io_port),
-		errorcode(0)
+	Device( Port *device_port ) :
+		Module(),
+		port(device_port)
 	{ }
 
-	/**
-	 * Return device specifically error code.
-	 */
-	int get_error ( void ) const
-	{
-		return errorcode;
-	}
-
 protected:
-	/*
-	 * Point to port device through service device connected.
+	/**
+	 * Pointer to connection port.
 	 */
 	Port *port;
-
-	/**
-	 * Contain specific error code.
-	 */
-	int errorcode;
 };
 
 } /* namespace hal */

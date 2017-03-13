@@ -6,23 +6,21 @@
 #include "config.h"
 #include "assert.h"
 #include "dummy.h"
-#include "hal/Module.hpp"
-#include "hal/Board.hpp"
-#include "hal/clock/Clock.hpp"
+#include "time/Clock.hpp"
 
-namespace hal {
+namespace time {
 
-Board *Clock::m_board = NULL;
+Clock::uDelayPrototype Clock::udelay_ = reinterpret_cast<Clock::uDelayPrototype>(dummy_trap);
 
 /**
  * @brief
- * Board layout constructor.
+ * Clock constructor.
  *
- * @param board : [in] pointer to board implementation object.
+ * @param udelay_func : [in] pointer to microsecond delay function.
  */
-void Clock::init ( Board *board )
+void Clock::init ( uDelayPrototype udelay_func )
 {
-	m_board = board;
+	udelay_ = udelay_func;
 }
 
 /**
@@ -30,9 +28,7 @@ void Clock::init ( Board *board )
  */
 void Clock::udelay ( size_t usec )
 {
-	assert(m_board != NULL);
-
-	m_board->udelay( usec );
+	udelay_( usec );
 }
 
 /**
@@ -57,4 +53,4 @@ void Clock::delay ( size_t sec )
 	}
 }
 
-} /* namespace sys */
+} /* namespace time */

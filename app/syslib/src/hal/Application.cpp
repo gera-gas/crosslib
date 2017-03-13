@@ -14,7 +14,7 @@ namespace hal {
 /**
  * Counter of Application object.
  */
-int Application::m_object_counter = 0;
+int Application::object_counter_ = 0;
 
 /**
  * @brief
@@ -25,14 +25,14 @@ int Application::m_object_counter = 0;
 Application::Application ( Service *service ) :
 	Module()
 {
-	if( m_object_counter != 0 ) {
+	if( object_counter_ != 0 ) {
 		dummy_trap( );
 	}
-	m_object_counter++;
-	m_service = service;
+	object_counter_++;
+	service_ = service;
 
 #if !defined(CXX_RTTI)
-	virtual_start = reinterpret_cast<module_t>(dummy_trap);
+	virtual_start = reinterpret_cast<ModulePrototype>(dummy_trap);
 #endif
 }
 
@@ -42,7 +42,7 @@ Application::Application ( Service *service ) :
  */
 void Application::init ( void )
 {
-	m_service->init( );
+	service_->init( );
 
 	virtual_init( this );
 }
@@ -60,7 +60,7 @@ void Application::start ( void )
  */
 void Application::fini ( void )
 {
-	m_service->fini( );
+	service_->fini( );
 
 	virtual_fini( this );
 }

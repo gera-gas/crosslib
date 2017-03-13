@@ -23,11 +23,12 @@ void Module::fini ( void )
 }
 #endif
 
-Module::Module( void )
+Module::Module( void ) :
+	errorcode(0)
 {
 #if !defined(CXX_RTTI)
-	virtual_init  = reinterpret_cast<module_t>(dummy_trap);
-	virtual_fini  = reinterpret_cast<module_t>(dummy_trap);
+	virtual_init  = reinterpret_cast<ModulePrototype>(dummy_trap);
+	virtual_fini  = reinterpret_cast<ModulePrototype>(dummy_trap);
 #endif
 };
 

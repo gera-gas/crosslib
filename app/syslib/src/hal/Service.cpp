@@ -7,14 +7,13 @@
 #include "hal/Module.hpp"
 #include "hal/Board.hpp"
 #include "hal/Service.hpp"
-#include "hal/clock/Clock.hpp"
 
 namespace hal {
 
 /**
  * Counter of Service object.
  */
-int Service::m_object_counter = 0;
+int Service::object_counter_ = 0;
 
 /**
  * @brief
@@ -25,13 +24,13 @@ int Service::m_object_counter = 0;
 Service::Service( Board *board ) :
 	Module()
 {
-	if( m_object_counter != 0 ) {
+	if( object_counter_ != 0 ) {
 		dummy_trap( );
 	}
 
-	m_object_counter++;
+	object_counter_++;
 
-	m_board = board;
+	board_ = board;
 }
 
 #if !defined(CXX_RTTI)
@@ -40,9 +39,7 @@ Service::Service( Board *board ) :
  */
 void Service::init ( void )
 {
-	m_board->init( );
-
-	Clock::init( m_board );
+	board_->init( );
 
 	virtual_init( this );
 }
@@ -52,7 +49,7 @@ void Service::init ( void )
  */
 void Service::fini ( void )
 {
-	m_board->fini( );
+	board_->fini( );
 
 	virtual_fini( this );
 }

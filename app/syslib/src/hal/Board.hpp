@@ -18,21 +18,8 @@ class Board : public Module
 public:
 	Board ( void );
 
-#if defined(CXX_RTTI)
-	virtual void udelay ( size_t usec ) = 0;
-#else
-	void udelay ( size_t usec );
-#endif
-
-protected:
-#if !defined(CXX_RTTI)
-	typedef void (*udelay_t) ( size_t );
-
-	udelay_t virtual_udelay;
-#endif
-
 private:
-	static int m_object_counter;
+	static int object_counter_;
 };
 
 } /* namespace hal */

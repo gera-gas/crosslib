@@ -13,11 +13,6 @@
 #include "Board.hpp"
 #include "Service.hpp"
 #include "Application.hpp"
-#include "Clock.hpp"
-
-namespace hal {
-SINGLETON( Clock, clock );
-}
 
 /**
  * Check method to realization.

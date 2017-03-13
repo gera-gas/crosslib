@@ -23,12 +23,11 @@ public:
 	void fini  ( void );
 
 protected:
-	module_t virtual_start;
+	ModulePrototype virtual_start;
 
 private:
-	static int m_object_counter;
-
-	Service *m_service;
+	static int object_counter_;
+	Service *service_;
 };
 
 } /* namespace hal */
