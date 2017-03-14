@@ -5,6 +5,7 @@
  * @brief    Export of time service classes.
  * @author   Gerasimov A.S.
  */
+#include "helpers.hpp"
 #include "hal.hpp"
 #include "Clock.hpp"
 

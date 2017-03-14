@@ -5,6 +5,7 @@
  * @brief    Export of error service classes.
  * @author   Gerasimov A.S.
  */
+#include "helpers.hpp"
 #include "FatalError.hpp"
 
 namespace error {

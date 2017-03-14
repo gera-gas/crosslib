@@ -23,7 +23,7 @@ fptr_t FatalError::handler = dummy_loop;
  * Fix error information and run error handler.
  */
 #if defined(CFG_ERROR_DETAILS)
-void FatalError::fix ( int errcode, char *file, char *func, size_t line )
+void FatalError::fix ( int errcode, const char *file, const char *func, size_t line )
 #else
 void FatalError::fix ( int errcode )
 #endif
@@ -31,8 +31,8 @@ void FatalError::fix ( int errcode )
 	errorcode = errcode;
 
 #if defined(CFG_ERROR_DETAILS)
-	source_file = file;
-	source_func = func;
+	source_file = const_cast<char*>(file);
+	source_func = const_cast<char*>(func);
 	source_line = line;
 #endif
 

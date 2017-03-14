@@ -34,7 +34,7 @@ public:
 	 * Fix error information and run error handler.
 	 */
 #if defined(CFG_ERROR_DETAILS)
-	static void fix ( int errcode, char *file, char *func, size_t line );
+	static void fix ( int errcode, const char *file, const char *func, size_t line );
 #else
 	static void fix ( int errcode );
 #endif
@@ -49,8 +49,8 @@ public:
 #define FATAL_ERROR( errcode )\
 	error::FatalError::fix( errcode )
 #else
-#define FATAL_ERROR( errorcode )\
-	error::FatalError::fix( errcode, __FILE__, __FUNC__, __LINE__ )
+#define FATAL_ERROR( errcode )\
+	error::FatalError::fix( errcode, __FILE__, __FUNCTION__, __LINE__ )
 #endif
 
 #endif /* FATAL_ERROR_HPP_ */
