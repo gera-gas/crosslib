@@ -3,6 +3,8 @@
  * @author Gerasimov A.S.
  * @brief  Board base API.
  */
+#include "config.h"
+#include "assert.h"
 #include "dummy.h"
 #include "hal/Module.hpp"
 #include "hal/Board.hpp"
@@ -20,9 +22,7 @@ int Board::object_counter_ = 0;
 Board::Board ( void ) :
 	Module()
 {
-	if( object_counter_ != 0 ) {
-		dummy_trap( );
-	}
+	assert( object_counter_ == 0 );
 
 	object_counter_++;
 }

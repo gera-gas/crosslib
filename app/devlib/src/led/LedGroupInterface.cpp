@@ -3,6 +3,8 @@
  * @brief   Led common interface.
  * @author  Gerasimov A.S.
  */
+#include "config.h"
+#include "assert.h"
 #include "led/LedGroupInterface.hpp"
 #include "dummy.h"
 
@@ -22,6 +24,16 @@ LedGroupInterface::LedGroupInterface ( void )
 #if !defined(CXX_RTTI)
 void LedGroupInterface::light_on ( void )
 {
+	if( color.red ) {
+		assert( supported_colors.red );
+	}
+	if( color.green ) {
+		assert( supported_colors.green );
+	}
+	if( color.blue ) {
+		assert( supported_colors.blue );
+	}
+
 	virtual_light_on( this );
 }
 

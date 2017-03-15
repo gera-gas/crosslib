@@ -3,6 +3,8 @@
  * @author Gerasimov A.S.
  * @brief  Service Layer intreface.
  */
+#include "config.h"
+#include "assert.h"
 #include "dummy.h"
 #include "hal/Module.hpp"
 #include "hal/Board.hpp"
@@ -24,9 +26,7 @@ int ServiceLayer::object_counter_ = 0;
 ServiceLayer::ServiceLayer( Board *board ) :
 	Module()
 {
-	if( object_counter_ != 0 ) {
-		dummy_trap( );
-	}
+	assert( object_counter_ == 0 );
 
 	object_counter_++;
 

@@ -53,6 +53,10 @@ CPU boot code of [devlib]/[cpu]/[...].
 ###### -DCXX_RTTI
 If defined, build class with RTTI supports.
 
+###### -DCFG_ERROR_DETAILS
+Enable fatal error details store.
+Error details: source code file, line, function name.
+
 ## Build
 Library building is expected as part of your top CMake project.
 Examples of standalone build you can find in `[tools]` directory.

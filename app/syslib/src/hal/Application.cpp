@@ -3,6 +3,8 @@
  * @author Gerasimov A.S.
  * @brief  Application lyout.
  */
+#include "config.h"
+#include "assert.h"
 #include "dummy.h"
 #include "hal/Module.hpp"
 #include "hal/Board.hpp"
@@ -25,9 +27,8 @@ int Application::object_counter_ = 0;
 Application::Application ( ServiceLayer *service ) :
 	Module()
 {
-	if( object_counter_ != 0 ) {
-		dummy_trap( );
-	}
+	assert( object_counter_ == 0 );
+
 	object_counter_++;
 	service_ = service;
 
