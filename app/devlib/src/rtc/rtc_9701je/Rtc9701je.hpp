@@ -13,7 +13,7 @@ namespace dev {
 /**
  * Driver for Epson Real Time Clock RTC-9701JE.
  */
-class Rtc9701je : public Rtc {
+class Rtc9701je : public RtcGroupInterface {
 public:
 	Rtc9701je ( hal::Port * );
 
@@ -49,10 +49,10 @@ private:
 	/*
 	 * Device specifically methods for RTC API.
 	 */
-	friend void rtc9701je_get_time ( Rtc9701je *rtc9701je, Rtc::Time *time );
-	friend void rtc9701je_set_time ( Rtc9701je *rtc9701je, const Rtc::Time *time );
-	friend void rtc9701je_get_date ( Rtc9701je *rtc9701je, Rtc::Date *date );
-	friend void rtc9701je_set_date ( Rtc9701je *rtc9701je, const Rtc::Date *date );
+	friend void rtc9701je_get_time ( Rtc9701je *rtc9701je, RtcGroupInterface::Time *time );
+	friend void rtc9701je_set_time ( Rtc9701je *rtc9701je, const RtcGroupInterface::Time *time );
+	friend void rtc9701je_get_date ( Rtc9701je *rtc9701je, RtcGroupInterface::Date *date );
+	friend void rtc9701je_set_date ( Rtc9701je *rtc9701je, const RtcGroupInterface::Date *date );
 };
 
 } /* namespace dev */

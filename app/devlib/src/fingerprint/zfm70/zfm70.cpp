@@ -10,7 +10,7 @@
 #include "hal/Port.hpp"
 #include "hal/Device.hpp"
 #include "io/InOut.hpp"
-#include "fingerprint/Fingerprint.hpp"
+#include "fingerprint/FingerprintGroupInterface.hpp"
 #include "fingerprint/zfm70/Zfm70.hpp"
 #if defined(USE_BUILTIN_LIBC)
 #include <string.h>
@@ -741,7 +741,7 @@ int zfm70_identify ( Zfm70 *zfm70 )
  * @param module_address : [in] Package address (optional).
  */
 Zfm70::Zfm70 ( hal::Port *fp_port, uint32 module_address ) :
-	Fingerprint(fp_port),
+	FingerprintGroupInterface(fp_port),
 	module_address_(module_address)
 {
 	virtual_info     = reinterpret_cast<bool (*)(void*, void*)>(zfm70_info);

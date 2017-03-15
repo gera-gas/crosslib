@@ -1,8 +1,8 @@
-#ifndef LED_HPP_
-#define LED_HPP_
+#ifndef LED_GROUP_INTERFACE_HPP_
+#define LED_GROUP_INTERFACE_HPP_
 /**
- * @file    Led.hpp
- * @brief   Led base API.
+ * @file    LedGroupInterface.hpp
+ * @brief   Led common group interface.
  * @author  Gerasimov A.S.
  */
 #include <stddef.h>
@@ -10,9 +10,9 @@
 
 namespace dev {
 
-class Led {
+class LedGroupInterface {
 public:
-	Led( void );
+	LedGroupInterface( void );
 
 	/**
 	 * Palette describe type.
@@ -68,4 +68,4 @@ private:
 
 } /* namespace dev */
 
-#endif /* LED_HPP_ */
+#endif /* LED_GROUP_INTREFACE_HPP_ */

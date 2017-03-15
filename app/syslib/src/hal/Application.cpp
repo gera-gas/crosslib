@@ -6,7 +6,7 @@
 #include "dummy.h"
 #include "hal/Module.hpp"
 #include "hal/Board.hpp"
-#include "hal/Service.hpp"
+#include "hal/ServiceLayer.hpp"
 #include "hal/Application.hpp"
 
 namespace hal {
@@ -22,7 +22,7 @@ int Application::object_counter_ = 0;
  *
  * @param board : [in] pointer to service implementation object.
  */
-Application::Application ( Service *service ) :
+Application::Application ( ServiceLayer *service ) :
 	Module()
 {
 	if( object_counter_ != 0 ) {

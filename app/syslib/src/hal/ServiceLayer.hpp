@@ -1,7 +1,7 @@
-#ifndef SERVICE_HPP_
-#define SERVICE_HPP_
+#ifndef SERVICE_LAYER_HPP_
+#define SERVICE_LAYER_HPP_
 /**
- * @file   Service.hpp
+ * @file   ServiceLayer.hpp
  * @author Gerasimov A.S.
  * @brief  Service Layout.
  * @note   This is middle layer between application and hardware layers.
@@ -13,10 +13,10 @@ namespace hal {
 /**
  * Service layout class.
  */
-class Service : public Module
+class ServiceLayer : public Module
 {
 public:
-	Service( Board* );
+	ServiceLayer( Board* );
 
 	void init ( void );
 	void fini ( void );

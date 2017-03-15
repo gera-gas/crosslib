@@ -16,7 +16,7 @@ namespace hal {
 class Application : public Module
 {
 public:
-	Application( Service* );
+	Application( ServiceLayer* );
 
 	void init  ( void );
 	void start ( void );
@@ -27,7 +27,7 @@ protected:
 
 private:
 	static int object_counter_;
-	Service *service_;
+	ServiceLayer *service_;
 };
 
 } /* namespace hal */

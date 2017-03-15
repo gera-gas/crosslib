@@ -10,7 +10,7 @@
 #include "hal/Port.hpp"
 #include "hal/Device.hpp"
 #include "io/InOut.hpp"
-#include "rtc/Rtc.hpp"
+#include "rtc/RtcGroupInterface.hpp"
 #include "rtc/rtc_9701je/Rtc9701je.hpp"
 
 /* Set RTC internal registers */
@@ -64,7 +64,7 @@ uint8 Rtc9701je::byte_rcv ( uint8 regnum )
  * @brief
  * Get time driver methods.
  */
-void rtc9701je_get_time ( Rtc9701je *rtc9701je, Rtc::Time *time )
+void rtc9701je_get_time ( Rtc9701je *rtc9701je, RtcGroupInterface::Time *time )
 {
 	time->second = rtc9701je->byte_rcv( REGS->sec );
 	time->minute = rtc9701je->byte_rcv( REGS->min );
@@ -76,7 +76,7 @@ void rtc9701je_get_time ( Rtc9701je *rtc9701je, Rtc::Time *time )
  * @brief
  * Set time driver methods.
  */
-void rtc9701je_set_time ( Rtc9701je *rtc9701je, const Rtc::Time *time )
+void rtc9701je_set_time ( Rtc9701je *rtc9701je, const RtcGroupInterface::Time *time )
 {
 	rtc9701je->byte_snd( REGS->sec,  time->second );
 	rtc9701je->byte_snd( REGS->min,  time->minute );
@@ -88,7 +88,7 @@ void rtc9701je_set_time ( Rtc9701je *rtc9701je, const Rtc::Time *time )
  * @brief
  * Get date driver methods.
  */
-void rtc9701je_get_date ( Rtc9701je *rtc9701je, Rtc::Date *date )
+void rtc9701je_get_date ( Rtc9701je *rtc9701je, RtcGroupInterface::Date *date )
 {
 	date->day   = rtc9701je->byte_rcv( REGS->day );
 	date->month = rtc9701je->byte_rcv( REGS->month );
@@ -100,7 +100,7 @@ void rtc9701je_get_date ( Rtc9701je *rtc9701je, Rtc::Date *date )
  * @brief
  * Set date driver methods.
  */
-void rtc9701je_set_date ( Rtc9701je *rtc9701je, const Rtc::Date *date )
+void rtc9701je_set_date ( Rtc9701je *rtc9701je, const RtcGroupInterface::Date *date )
 {
 	rtc9701je->byte_snd( REGS->day,   date->day   );
 	rtc9701je->byte_snd( REGS->month, date->month );
@@ -116,12 +116,12 @@ void rtc9701je_set_date ( Rtc9701je *rtc9701je, const Rtc::Date *date )
  * @param module_address : [in] Package address (optional).
  */
 Rtc9701je::Rtc9701je ( hal::Port *rtc_port ) :
-	Rtc(rtc_port)
+	RtcGroupInterface(rtc_port)
 {
-	virtual_get_time = reinterpret_cast<void (*)(void*, Rtc::Time*)>(rtc9701je_get_time);
-	virtual_set_time = reinterpret_cast<void (*)(void*, const Rtc::Time*)>(rtc9701je_set_time);
-	virtual_get_date = reinterpret_cast<void (*)(void*, Rtc::Date*)>(rtc9701je_get_date);
-	virtual_set_date = reinterpret_cast<void (*)(void*, const Rtc::Date*)>(rtc9701je_set_date);
+	virtual_get_time = reinterpret_cast<void (*)(void*, RtcGroupInterface::Time*)>(rtc9701je_get_time);
+	virtual_set_time = reinterpret_cast<void (*)(void*, const RtcGroupInterface::Time*)>(rtc9701je_set_time);
+	virtual_get_date = reinterpret_cast<void (*)(void*, RtcGroupInterface::Date*)>(rtc9701je_get_date);
+	virtual_set_date = reinterpret_cast<void (*)(void*, const RtcGroupInterface::Date*)>(rtc9701je_set_date);
 }
 
 } /* namespace dev */

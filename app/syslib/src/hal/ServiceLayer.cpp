@@ -1,19 +1,19 @@
 /**
- * @file   Service.cpp
+ * @file   ServiceLayer.cpp
  * @author Gerasimov A.S.
- * @brief  Service layout.
+ * @brief  Service Layer intreface.
  */
 #include "dummy.h"
 #include "hal/Module.hpp"
 #include "hal/Board.hpp"
-#include "hal/Service.hpp"
+#include "hal/ServiceLayer.hpp"
 
 namespace hal {
 
 /**
  * Counter of Service object.
  */
-int Service::object_counter_ = 0;
+int ServiceLayer::object_counter_ = 0;
 
 /**
  * @brief
@@ -21,7 +21,7 @@ int Service::object_counter_ = 0;
  *
  * @param board : [in] pointer to board implementation object.
  */
-Service::Service( Board *board ) :
+ServiceLayer::ServiceLayer( Board *board ) :
 	Module()
 {
 	if( object_counter_ != 0 ) {
@@ -37,7 +37,7 @@ Service::Service( Board *board ) :
 /**
  * Service initialize method.
  */
-void Service::init ( void )
+void ServiceLayer::init ( void )
 {
 	board_->init( );
 
@@ -47,7 +47,7 @@ void Service::init ( void )
 /**
  * Service finalize method.
  */
-void Service::fini ( void )
+void ServiceLayer::fini ( void )
 {
 	board_->fini( );
 

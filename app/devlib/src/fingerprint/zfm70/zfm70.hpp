@@ -21,7 +21,7 @@ namespace dev {
 /**
  * Driver for ZFM70 optical fingerprint scanner.
  */
-class Zfm70 : public Fingerprint {
+class Zfm70 : public FingerprintGroupInterface {
 public:
 	/**
 	 * ZFM70 device descriptor consctructor.
