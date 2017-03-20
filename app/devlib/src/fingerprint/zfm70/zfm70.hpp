@@ -16,7 +16,7 @@
 #include <stddef.h>
 #include "typedef.h"
 
-namespace dev {
+namespace fingerprint {
 
 /**
  * Driver for ZFM70 optical fingerprint scanner.
@@ -181,6 +181,6 @@ private:
 	friend int  zfm70_identify ( Zfm70 *zfm70 );
 };
 
-} /* namespace dev */
+} /* namespace fingerprint */
 
 #endif  /* ZFM70_HPP_ */

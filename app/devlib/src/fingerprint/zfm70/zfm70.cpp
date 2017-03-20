@@ -24,7 +24,7 @@
 /* Max length of packege */
 #define PKG_MAXLEN  ((uint16)64)
 
-namespace dev {
+namespace fingerprint {
 
 /**
  * @brief
@@ -751,4 +751,4 @@ Zfm70::Zfm70 ( hal::Port *fp_port, uint32 module_address ) :
 	virtual_identify = reinterpret_cast<int (*)(void*)>(zfm70_identify);
 }
 
-} /* namespace dev */
+} /* namespace fingerprint */

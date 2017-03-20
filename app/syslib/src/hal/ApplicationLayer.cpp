@@ -1,22 +1,22 @@
 /**
- * @file   Application.cpp
+ * @file   ApplicationLayer.cpp
  * @author Gerasimov A.S.
- * @brief  Application lyout.
+ * @brief  Application (top) layer.
  */
 #include "config.h"
 #include "assert.h"
 #include "dummy.h"
 #include "hal/Module.hpp"
-#include "hal/Board.hpp"
+#include "hal/BoardLayer.hpp"
 #include "hal/ServiceLayer.hpp"
-#include "hal/Application.hpp"
+#include "hal/ApplicationLayer.hpp"
 
 namespace hal {
 
 /**
  * Counter of Application object.
  */
-int Application::object_counter_ = 0;
+int ApplicationLayer::object_counter_ = 0;
 
 /**
  * @brief
@@ -24,7 +24,7 @@ int Application::object_counter_ = 0;
  *
  * @param board : [in] pointer to service implementation object.
  */
-Application::Application ( ServiceLayer *service ) :
+ApplicationLayer::ApplicationLayer ( ServiceLayer *service ) :
 	Module()
 {
 	assert( object_counter_ == 0 );
@@ -41,7 +41,7 @@ Application::Application ( ServiceLayer *service ) :
 /**
  * Application initialize method.
  */
-void Application::init ( void )
+void ApplicationLayer::init ( void )
 {
 	service_->init( );
 
@@ -51,7 +51,7 @@ void Application::init ( void )
 /**
  * Application finalize method.
  */
-void Application::start ( void )
+void ApplicationLayer::start ( void )
 {
 	virtual_start( this );
 }
@@ -59,7 +59,7 @@ void Application::start ( void )
 /**
  * Application finalize method.
  */
-void Application::fini ( void )
+void ApplicationLayer::fini ( void )
 {
 	service_->fini( );
 

@@ -16,7 +16,7 @@
 /* Set RTC internal registers */
 #define REGS  ((Rtc9701je::RegisterTable*)0)
 
-namespace dev {
+namespace rtc {
 
 /**
  * @brief
@@ -124,4 +124,4 @@ Rtc9701je::Rtc9701je ( hal::Port *rtc_port ) :
 	virtual_set_date = reinterpret_cast<void (*)(void*, const RtcGroupInterface::Date*)>(rtc9701je_set_date);
 }
 
-} /* namespace dev */
+} /* namespace rtc */

@@ -1,10 +1,9 @@
-#ifndef APPLICATION_HPP_
-#define APPLICATION_HPP_
+#ifndef APPLICATION_LAYER_HPP_
+#define APPLICATION_LAYER_HPP_
 /**
- * @file   Application.hpp
+ * @file   ApplicationLayer.hpp
  * @author Gerasimov A.S.
- * @brief  Service API.
- * @note   Application (top) layer.
+ * @brief  Application (top) layer.
  */
 #include <stddef.h>
 
@@ -13,10 +12,10 @@ namespace hal {
 /**
  * Application layout.
  */
-class Application : public Module
+class ApplicationLayer : public Module
 {
 public:
-	Application( ServiceLayer* );
+	ApplicationLayer ( ServiceLayer* );
 
 	void init  ( void );
 	void start ( void );
@@ -32,4 +31,4 @@ private:
 
 } /* namespace hal */
 
-#endif /* APPLICATION */
+#endif /* APPLICATION_LAYER_HPP_ */

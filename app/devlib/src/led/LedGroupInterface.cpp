@@ -21,6 +21,7 @@ LedGroupInterface::LedGroupInterface ( void )
 	virtual_light_off = reinterpret_cast<LightPrototype>(dummy_trap);
 }
 
+
 #if !defined(CXX_RTTI)
 void LedGroupInterface::light_on ( void )
 {
@@ -37,11 +38,13 @@ void LedGroupInterface::light_on ( void )
 	virtual_light_on( this );
 }
 
+
 void LedGroupInterface::light_off ( void )
 {
 	virtual_light_off( this );
 }
 #endif
+
 
 void LedGroupInterface::blink ( void )
 {

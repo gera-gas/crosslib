@@ -8,7 +8,7 @@
 #include <stddef.h>
 #include "typedef.h"
 
-namespace dev {
+namespace rtc {
 
 /**
  * Driver for Epson Real Time Clock RTC-9701JE.
@@ -55,6 +55,6 @@ private:
 	friend void rtc9701je_set_date ( Rtc9701je *rtc9701je, const RtcGroupInterface::Date *date );
 };
 
-} /* namespace dev */
+} /* namespace rtc */
 
 #endif  /* RTC_9701JE_HPP_ */

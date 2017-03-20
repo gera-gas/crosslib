@@ -10,9 +10,9 @@
 #include "Module.hpp"
 #include "Port.hpp"
 #include "Device.hpp"
-#include "Board.hpp"
+#include "BoardLayer.hpp"
 #include "ServiceLayer.hpp"
-#include "Application.hpp"
+#include "ApplicationLayer.hpp"
 
 /**
  * Check method to realization.

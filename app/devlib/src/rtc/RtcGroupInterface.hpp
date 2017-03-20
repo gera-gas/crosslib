@@ -15,7 +15,7 @@
 #include "gmacro.h"
 #include "dummy.h"
 
-namespace dev {
+namespace rtc {
 
 /**
  * API class for RTC devices.
@@ -38,59 +38,17 @@ public:
 		uint8  year;
 	};
 
-	/**
-	 * RTC consctructor.
-	 */
 	RtcGroupInterface ( hal::Port *rtc_port );
 
-	/**
-	 * @brief
-	 * Get time from RTC.
-	 *
-	 * @param time : [out] Point to time structure.
-	 */
-	void get_time ( RtcGroupInterface::Time *time )
-	{
-		virtual_get_time( this, time );
-	}
+	void get_time ( RtcGroupInterface::Time *time );
+	void set_time ( const RtcGroupInterface::Time *time );
+	void get_date ( RtcGroupInterface::Date *date );
+	void set_date ( const RtcGroupInterface::Date *date );
 
-	/**
-	 * @brief
-	 * Set time to RTC.
-	 *
-	 * @param time : [in] Point to time structure.
-	 */
-	void set_time ( const RtcGroupInterface::Time *time )
-	{
-		virtual_set_time( this, time );
-	}
+	void bcd_tostr ( uint8 bcd_byte, char buffer[3] );
 
-	/**
-	 * @brief
-	 * Get date from RTC.
-	 *
-	 * @param date : [out] Point to time structure.
-	 */
-	void get_date ( RtcGroupInterface::Date *date )
-	{
-		virtual_get_date( this, date );
-	}
-
-	/**
-	 * @brief
-	 * Set date to RTC.
-	 *
-	 * @param date : [in] Point to time structure.
-	 */
-	void set_date ( const RtcGroupInterface::Date *date )
-	{
-		virtual_set_date( this, date );
-	}
-
-	void bcd2ascii ( uint8 bcd_byte, char buffer[3] );
-
-	uint8 bcd2dec ( uint8 bcd_byte );
-	uint8 dec2bcd ( uint8 dec_byte );
+	uint8 bcd_todec ( uint8 bcd_byte );
+	uint8 dec_tobcd ( uint8 dec_byte );
 
 protected:
 	/*
@@ -102,6 +60,6 @@ protected:
 	void (*virtual_set_date)( void *, const RtcGroupInterface::Date * );
 };
 
-} /* namespace dev */
+} /* namespace rtc */
 
 #endif  /* RTC_GROUP_INTERFACE_HPP_ */

@@ -16,14 +16,14 @@ namespace hal {
 class ServiceLayer : public Module
 {
 public:
-	ServiceLayer( Board* );
+	ServiceLayer( BoardLayer* );
 
 	void init ( void );
 	void fini ( void );
 private:
 	static int object_counter_;
 
-	Board *board_;
+	BoardLayer *board_;
 };
 
 } /* namespace hal */

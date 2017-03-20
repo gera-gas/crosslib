@@ -7,7 +7,7 @@
 #include "assert.h"
 #include "dummy.h"
 #include "hal/Module.hpp"
-#include "hal/Board.hpp"
+#include "hal/BoardLayer.hpp"
 #include "hal/ServiceLayer.hpp"
 
 namespace hal {
@@ -23,7 +23,7 @@ int ServiceLayer::object_counter_ = 0;
  *
  * @param board : [in] pointer to board implementation object.
  */
-ServiceLayer::ServiceLayer( Board *board ) :
+ServiceLayer::ServiceLayer( BoardLayer *board ) :
 	Module()
 {
 	assert( object_counter_ == 0 );

@@ -15,16 +15,19 @@ WatchdogGroupInterface::WatchdogGroupInterface ( void )
 	virtual_ack     = reinterpret_cast<WatchdogPrototype>(dummy_trap);
 }
 
+
 #if !defined(CXX_RTTI)
 void WatchdogGroupInterface::disable ( void )
 {
 	virtual_disable( this );
 }
 
+
 void WatchdogGroupInterface::enable ( void )
 {
 	virtual_enable( this );
 }
+
 
 void WatchdogGroupInterface::ack ( void )
 {

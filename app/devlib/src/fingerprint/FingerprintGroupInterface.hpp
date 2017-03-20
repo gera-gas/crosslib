@@ -13,7 +13,7 @@
 #include <stddef.h>
 #include "dummy.h"
 
-namespace dev {
+namespace fingerprint {
 
 /**
  * API class for fingerprint scanner devices.
@@ -108,6 +108,6 @@ protected:
 	int  (*virtual_identify)( void * );
 };
 
-} /* namespace dev */
+} /* namespace fingerprint */
 
-#endif  /* FINGERPRINT_HPP_ */
+#endif  /* FINGERPRINT_GROUP_INTERFACE_HPP_ */
