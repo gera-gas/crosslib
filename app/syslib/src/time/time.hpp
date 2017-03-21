@@ -10,7 +10,6 @@
 #include "hal.hpp"
 #include "Clock.hpp"
 #include "Timer.hpp"
-#include "TimerManager.hpp"
 
 namespace time {
 SINGLETON( Clock, clock );

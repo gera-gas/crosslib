@@ -55,6 +55,15 @@ public:
 	}
 
 	/**
+	 * Delete custom element from list.
+	 */
+	void delete_item ( T *e )
+	{
+		e->next->prev = e->prev;
+		e->prev->next = e->next;
+	}
+
+	/**
 	 * Return head address.
 	 */
 	T* head ( void ) {
