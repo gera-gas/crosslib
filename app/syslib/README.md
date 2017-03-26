@@ -7,7 +7,7 @@ Modules for creation multitask application.
 * [fixlock](../demo/src/demo_fixlock.c) -- Simple and fast non-blocking lock-free mechanism. Fixlock it's a fixing limit objects for synchronize. May be used for multi thread control and CPUs interaction through shared memory.
 
 ### hal
-Hardware Abstraction Level (HAL). Example [here](src/hal/README.md#hal_uart_anchor).
+Hardware Abstraction Layer (HAL). Example [here](src/hal/README.md#hal_uart_anchor).
 
 ### crc
 Cyclic redundancy check functions.

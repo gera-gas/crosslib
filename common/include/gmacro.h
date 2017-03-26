@@ -9,71 +9,63 @@
 #include "typedef.h"
 
 /**
- *  @def  SWAP16( v )
- *  @brief
- *  «агружает 2 байта из адреса 'v' с переворотом.
+ *  @def   SWAP16( v )
+ *  @brief Swap load 2 bytes from <v> address.
  */
 #define SWAP16( v )\
 	( (pvUINT8(v+1) << 8) | pvUINT8(v) )
 
 /**
- *  @def SWAP32( v )
- *  @brief
- *  «агружает 4 байта из адреса 'v' с переворотом.
+ *  @def   SWAP32( v )
+ *  @brief Swap load 4 bytes from <v> address.
  */
 #define SWAP32( v )\
 	( (pvUINT8((v)+3) << 24) | (pvUINT8((v)+2) << 16) | (pvUINT8((v)+1) << 8) | pvUINT8(v) )
 
 /**
- *  @def LOAD32( v )
- *  @brief
- *  «агружает 4 байта из адреса 'v'.
+ *  @def   LOAD32( v )
+ *  @brief Load 4 bytes from <v> address.
  */
 #define LOAD32( v )\
 	( (pvUINT8(v) << 24) | (pvUINT8((v)+1) << 16) | (pvUINT8((v)+2) << 8) | pvUINT8((v)+3) )
 
 /**
- *  @def LOAD16( v )
- *  @brief
- *  «агружает 2 байта из адреса 'v'.
+ *  @def   LOAD16( v )
+ *  @brief Load 2 bytes from <v> address.
  */
 #define LOAD16( v )\
 	( (pvUINT8((v)) << 8) | pvUINT8((v)+1) )
 
 /**
- *  @def MAKESTR( left, right )
- *  @brief
- *  —оединение выражени€ 'left' и 'right' в одну строку.
+ *  @def   MAKESTR( left, right )
+ *  @brief Glue <left> and <right> to single constant.
  */
 #define MAKESTR( left, right )\
 	left##right
 
 /**
- *  @def TOSTR( str )
- *  @brief
- *  ѕреобразование константы 'str' в строку
+ *  @def   TOSTR( str )
+ *  @brief Transform <str> constant to string.
  */
 #define  TOSTR( str )  _TOSTR( str )
 #define _TOSTR( str )  #str
 
 /**
- *  @def SHIFT_L( v, s )
- *  @brief
- *  ÷иклический сдвиг влево.
+ *  @def   SHIFT_L( v, s )
+ *  @brief Right barrel shift.
  *
- *  @param v [in] : сдвигаемое значение.
- *  @param s [in] : количество разр€дов дл€ сдвига.
+ *  @param v [in] : shifted value.
+ *  @param s [in] : number bits to move.
  */
 #define SHIFT_L( v, s )\
 	( ((v) << s) | ((v) >> (sizeof(v) * 8) - (s)) )
 
 /**
- *  @def SHIFT_R( v, s )
- *  @brief
- *  ÷иклический сдвиг вправо.
+ *  @def   SHIFT_R( v, s )
+ *  @brief Left barrel shift.
  *
- *  @param v [in] : сдвигаемое значение.
- *  @param s [in] : количество разр€дов дл€ сдвига.
+ *  @param v [in] : shifted value.
+ *  @param s [in] : number bits to move.
  */
 #define SHIFT_R( v, s )\
 	( ((v) >> s) | ((v) << (sizeof(v) * 8) - (s)) )
@@ -81,8 +73,7 @@
 
 /*  ____________________________________________________________________________
  *
- *  ћакросы обращени€ к €чейке пам€ти
- *  через указатель типа.
+ *  Pointer macroses of access.
  *  ____________________________________________________________________________
  */
 #define pTYPE( t, v )\
@@ -116,8 +107,7 @@
 
 /*  ____________________________________________________________________________
  *
- *  ¬ыделение старшей/младшей части
- *  из указанного типа данных.
+ *  Half selections from word.
  *  ____________________________________________________________________________
  */
 #define LPART8( w )\
@@ -149,11 +139,10 @@
 #define I32_BYTE3( v )  ( ((v) >> 8)  & 0xFF )
 #define I32_BYTE4( v )  ( ((v) >> 0)  & 0xFF )
 
+
 /*  ____________________________________________________________________________
  *
- *  ћакрос подсчитывает кол-во единичных бит в 32-х разр€дном слове,
- *  переданного в качестве параметра "v32" и возвращает вычисленное значение.
- *  
+ *  Calculate bit numbers into 32-bit word.
  *  "Hacker's Delight": by Henry S. Warren, Jr.
  *  ____________________________________________________________________________
  */
@@ -196,7 +185,7 @@
 	((n) * 1024 * 1024 * 1024)
 
 /*
- *  ¬ычисл€ет количество элементов массива.  */
+ *  Calculate array size.  */
 #define ARRAY_SIZE( m )\
 	sizeof(m)/sizeof(m[0])
 
